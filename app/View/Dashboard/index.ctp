@@ -8,7 +8,12 @@
 </header>
 
 <article class="dashboard index">
-	<h2><?php echo __('Dashboard');?></h2>
+	<h2>
+		<?php
+			echo $this->Html->image('icons/32/application.png', array('class' => 'icon', 'alt' => __('Dashboard', true)));
+			echo __('Dashboard');
+		?>
+	</h2>
 
 	<h3><?php echo __('Calendar'); ?></h3>
 

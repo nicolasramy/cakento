@@ -5,8 +5,14 @@ App::uses('AppController', 'Controller');
  *
  * @property Task $Task
  */
-class TasksController extends AppController {
-
+class TasksController extends AppController
+{
+	public $uses = array
+	(
+		'Task',
+		'Milestone',
+		'Project'
+	);
 
 /**
  * index method
@@ -16,6 +22,16 @@ class TasksController extends AppController {
 	public function index() {
 		$this->Task->recursive = 0;
 		$this->set('tasks', $this->paginate());
+
+		$_params = array
+		(
+			'conditions' => array('Project.status <' => 2),
+			'order' => array('Project.name ASC'),
+			'group' => array('Project.name')
+		);
+
+		$projects = $this->Project->find('list', $_params);
+		$this->set('projects', $projects);
 	}
 
 /**

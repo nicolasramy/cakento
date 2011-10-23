@@ -38,6 +38,7 @@ section header #breadcrumbs ol li a:hover{text-decoration:none;}
  */
 section article{padding:0.5em 2em 2em;}
 section article h2{font-weight:bold;font-size:2em;padding:0 0 5px 15px;border-bottom:1px solid #000000;}
+section article h2 .icon{vertical-align:text-bottom;margin-right:16px;}
 section article table{width:100%;}
 section article table thead td{border-bottom:2px solid #1161d9;padding:0 15px 5px 10px;}
 section article table thead td a:hover{color:#444444;text-decoration:none;}

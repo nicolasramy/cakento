@@ -10,7 +10,12 @@
 </header>
 
 <article class="projects index">
-	<h2><?php echo __('Projects');?></h2>
+	<h2>
+		<?php
+			echo $this->Html->image('icons/32/folder.png', array('class' => 'icon', 'alt' => __('Projects', true)));
+			echo __('Projects');
+		?>
+	</h2>
 
 	<div class="toolbar">
 		<ul class="buttons">
@@ -18,6 +23,20 @@
 			<?php echo $this->Html->link(
 					$this->Html->image('icons/16/folder--plus.png', array('class' => 'icon', 'alt' => __('New Project', true))) . __('New Project', true),
 					array('controller' => 'projects', 'action' => 'add'),
+					array('escape' => false));
+				?>
+			</li>
+			<li>
+			<?php echo $this->Html->link(
+					$this->Html->image('icons/16/bookmark.png', array('class' => 'icon', 'alt' => __('List Milestones', true))) . __('List Milestones', true),
+					array('controller' => 'milestones', 'action' => 'index'),
+					array('escape' => false));
+				?>
+			</li>
+			<li>
+			<?php echo $this->Html->link(
+					$this->Html->image('icons/16/sticky-note.png', array('class' => 'icon', 'alt' => __('List Tasks', true))) . __('List Tasks', true),
+					array('controller' => 'tasks', 'action' => 'index'),
 					array('escape' => false));
 				?>
 			</li>
@@ -34,9 +53,9 @@
 			</td>
 			<td class="a-right"><?php echo $this->Paginator->sort('id');?></td>
 			<td class="a-center"><?php echo $this->Paginator->sort('status');?></td>
-			<td class="a-center"><?php echo $this->Paginator->sort('reference');?></td>
 			<td><?php echo $this->Paginator->sort('name');?></td>
-			<td><?php echo $this->Paginator->sort('title');?></td>
+			<td class="a-center"><?php echo $this->Paginator->sort('milestones');?></td>
+			<td class="a-center"><?php echo $this->Paginator->sort('tasks');?></td>
 			<td class="a-center"><?php echo $this->Paginator->sort('due');?></td>
 			<td class="a-right"><?php echo $this->Paginator->sort('budget');?></td>
 			<td class="a-right"><?php echo $this->Paginator->sort('estimation');?></td>
@@ -75,9 +94,19 @@
 					array('escape' => false));
 				?>
 			</td>
-			<td class="a-center"><?php echo h($project['Project']['reference']); ?>&nbsp;</td>
 			<td><?php echo h($project['Project']['name']); ?>&nbsp;</td>
-			<td><?php echo h($project['Project']['title']); ?>&nbsp;</td>
+			<td class="a-center">
+				<?php echo isset($project_milestones_finished[$project['Project']['id']]) ? h($project_milestones_finished[$project['Project']['id']]) : 0; ?>
+				&nbsp;/&nbsp;
+				<?php echo isset($project_milestones[$project['Project']['id']]) ? h($project_milestones[$project['Project']['id']]) : 0; ?>
+			</td>
+			<td class="a-center">
+				<?php //echo h($project['Project']['milestones']); ?>
+				&nbsp;/&nbsp;
+				<?php //echo h($milestone_tasks[$project_milestones[$project['Project']['id']]]); ?>
+			</td>
+
+
 			<td class="a-center"><?php echo h($project['Project']['due']); ?>&nbsp;</td>
 			<td class="a-right"><?php echo h($project['Project']['budget']); ?>&nbsp;H</td>
 			<td class="a-right"><?php echo h(round(($project['Project']['budget'] * 24.99 * 1.196), 2)); ?>&nbsp;€</td>
@@ -121,6 +150,13 @@
 	?>
 	</div>
 </article>
+
+<article>
+	<?php //var_dump($projects); ?>
+	<?php var_dump($milestone_tasks); ?>
+	<?php //var_dump($tasks); ?>
+</article>
+
 <article class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>

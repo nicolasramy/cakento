@@ -11,13 +11,18 @@
 </header>
 
 <article class="milestones index">
-	<h2><?php echo __('Milestones');?></h2>
+	<h2>
+		<?php
+			echo $this->Html->image('icons/32/bookmark.png', array('class' => 'icon', 'alt' => __('Milestones', true)));
+			echo __('Milestones');
+		?>
+	</h2>
 
 	<div class="toolbar">
 		<ul class="buttons">
 			<li>
 			<?php echo $this->Html->link(
-					$this->Html->image('icons/16/marker--plus.png', array('class' => 'icon', 'alt' => __('New Milestone', true))) . __('New Milestone', true),
+					$this->Html->image('icons/16/bookmark--plus.png', array('class' => 'icon', 'alt' => __('New Milestone', true))) . __('New Milestone', true),
 					array('controller' => 'milestones', 'action' => 'add'),
 					array('escape' => false));
 				?>

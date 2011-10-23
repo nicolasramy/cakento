@@ -12,21 +12,24 @@
 </header>
 
 <article class="tasks index">
-	<h2><?php echo __('Tasks');?></h2>
+	<h2>
+		<?php
+			echo $this->Html->image('icons/32/sticky-note.png', array('class' => 'icon', 'alt' => __('Tasks', true)));
+			echo __('Tasks');
+		?>
+	</h2>
 
 	<div class="toolbar">
 		<ul class="buttons">
 			<li>
 			<?php echo $this->Html->link(
-					$this->Html->image('icons/16/hammer--plus.png', array('class' => 'icon', 'alt' => __('New Task', true))) . __('New Task', true),
+					$this->Html->image('icons/16/sticky-note--plus.png', array('class' => 'icon', 'alt' => __('New Task', true))) . __('New Task', true),
 					array('controller' => 'tasks', 'action' => 'add'),
 					array('escape' => false));
 				?>
 			</li>
 		</ul>
 	</div>
-
-	<?php var_dump($tasks);?>
 
 	<table cellpadding="0" cellspacing="0">
 	<thead>
@@ -38,6 +41,7 @@
 			</td>
 			<td><?php echo $this->Paginator->sort('id');?></td>
 			<td class="a-center"><?php echo $this->Paginator->sort('due');?></td>
+			<td><?php echo $this->Paginator->sort('project_id');?></td>
 			<td><?php echo $this->Paginator->sort('milestone_id');?></td>
 			<td><?php echo $this->Paginator->sort('name');?></td>
 			<td><?php echo $this->Paginator->sort('assignation');?></td>
@@ -53,6 +57,9 @@
 			<td class="a-center"><?php echo $this->Form->checkbox('Task-'.$task['Task']['id']); ?>&nbsp;</td>
 			<td><?php echo h($task['Task']['id']); ?>&nbsp;</td>
 			<td class="a-center"><?php echo h($task['Task']['due']); ?>&nbsp;</td>
+			<td>
+				<?php echo $this->Html->link($projects[$task['Milestone']['project_id']], array('controller' => 'milestones', 'action' => 'view', $projects[$task['Milestone']['project_id']]['id'])); ?>
+			</td>
 			<td>
 				<?php echo $this->Html->link($task['Milestone']['name'], array('controller' => 'milestones', 'action' => 'view', $task['Milestone']['id'])); ?>
 			</td>

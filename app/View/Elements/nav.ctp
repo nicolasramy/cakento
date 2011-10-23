@@ -8,28 +8,28 @@
 	</li>
 	<li class="item">
 		<?php echo $this->Html->link(
-			$this->Html->image('icons/24/calendar-month.png', array('class' => 'icon', 'alt' => __('Calendar', true))),
+			$this->Html->image('icons/24/calendar-blue.png', array('class' => 'icon', 'alt' => __('Calendar', true))),
 			array('controller' => 'calendar', 'action' => 'index'),
 			array('escape' => false));
 		?>
 	</li>
 	<li class="item">
 		<?php echo $this->Html->link(
-			$this->Html->image('icons/24/briefcase.png', array('class' => 'icon', 'alt' => __('Projects', true))),
+			$this->Html->image('icons/24/folder.png', array('class' => 'icon', 'alt' => __('Projects', true))),
 			array('controller' => 'projects', 'action' => 'index'),
 			array('escape' => false));
 		?>
 	</li>
 	<li class="item">
 		<?php echo $this->Html->link(
-			$this->Html->image('icons/24/blue-folder.png', array('class' => 'icon', 'alt' => __('Milestones', true))),
+			$this->Html->image('icons/24/bookmark.png', array('class' => 'icon', 'alt' => __('Milestones', true))),
 			array('controller' => 'milestones', 'action' => 'index'),
 			array('escape' => false));
 		?>
 	</li>
 	<li class="item">
 		<?php echo $this->Html->link(
-			$this->Html->image('icons/24/notebook.png', array('class' => 'icon', 'alt' => __('Tasks', true))),
+			$this->Html->image('icons/24/sticky-note.png', array('class' => 'icon', 'alt' => __('Tasks', true))),
 			array('controller' => 'tasks', 'action' => 'index'),
 			array('escape' => false));
 		?>

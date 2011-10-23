@@ -5,7 +5,14 @@ App::uses('AppController', 'Controller');
  *
  * @property Project $Project
  */
-class ProjectsController extends AppController {
+class ProjectsController extends AppController
+{
+	public $uses = array
+	(
+		'Project',
+		'Milestone',
+		'Task'
+	);
 
 
 /**
@@ -13,9 +20,63 @@ class ProjectsController extends AppController {
  *
  * @return void
  */
-	public function index() {
+	public function index()
+	{
 		$this->Project->recursive = 0;
 		$this->set('projects', $this->paginate());
+
+		/**
+		 * List Tasks count by milestone_id
+		 */
+		$tasks = $this->Task->find('all');
+		$milestone_tasks = array();
+
+		foreach ($tasks as $task)
+		{
+			$milestone_tasks[$task['Task']['milestone_id']] = isset($milestone_tasks[$task['Task']['milestone_id']]) ? $milestone_tasks[$task['Task']['milestone_id']] + 1 : 1;
+		}
+
+		$this->set('milestone_tasks', $milestone_tasks);
+
+		/**
+		 * List Milestones count by project_id
+		 */
+		$milestones = $this->Milestone->find('all');
+		$project_milestones = array();
+
+		foreach ($milestones as $milestone)
+		{
+			$project_milestones[$milestone['Milestone']['project_id']] = isset($project_milestones[$milestone['Milestone']['project_id']]) ? $project_milestones[$milestone['Milestone']['project_id']] + 1 : 1;
+		}
+
+		$this->set('project_milestones', $project_milestones);
+
+		/**
+		 * List Tasks finished count by milestone_id
+		 */
+		$tasks_finished = $this->Task->find('all', array('conditions' => array('Milestone.status =' => 1)));
+		$milestone_tasks_finished = array();
+
+		foreach ($tasks as $task)
+		{
+			$milestone_tasks_finished[$task['Task']['milestone_id']] = isset($milestone_tasks_finished[$task['Task']['milestone_id']]) ? $milestone_tasks_finished[$task['Task']['milestone_id']] + 1 : 1;
+		}
+
+		$this->set('milestone_tasks_finished', $milestone_tasks_finished);
+
+		/**
+		 * List Milestones finished count by project_id
+		 */
+		$milestones_finished = $this->Milestone->find('all', array('conditions' => array('Milestone.status =' => 1)));
+		$project_milestones_finished = array();
+
+		foreach ($milestones as $milestone)
+		{
+			$project_milestones_finished[$milestone['Milestone']['project_id']] = isset($project_milestones_finished[$milestone['Milestone']['project_id']]) ? $project_milestones_finished[$milestone['Milestone']['project_id']] + 1 : 1;
+		}
+
+		$this->set('project_milestones_finished', $project_milestones_finished);
+
 	}
 
 /**
