@@ -1,4 +1,14 @@
-<div class="tasks index">
+<div id="breadcrumbs">
+	<?php
+		$this->Crumb->addElement('Dashboard', 'dashboard');
+		$this->Crumb->addElement('Tasks', 'tasks');
+		$this->Crumb->addElement('List');
+
+		echo $this->Crumb->getHtml();
+	?>
+</div>
+
+<article class="tasks index">
 	<h2><?php echo __('Tasks');?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
@@ -13,10 +23,7 @@
 	<?php
 	$i = 0;
 	foreach ($tasks as $task): ?>
-	<tr>
-		<td><?php var_dump($task); ?></td>
 
-	</tr>
 	<tr>
 		<td><?php echo h($task['Task']['id']); ?>&nbsp;</td>
 		<td><?php echo h($task['Task']['name']); ?>&nbsp;</td>
@@ -48,8 +55,8 @@
 		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
 	?>
 	</div>
-</div>
-<div class="actions">
+</article>
+<article class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__('New Task'), array('action' => 'add')); ?></li>
@@ -58,4 +65,4 @@
 		<li><?php echo $this->Html->link(__('List Tokens'), array('controller' => 'tokens', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Token'), array('controller' => 'tokens', 'action' => 'add')); ?> </li>
 	</ul>
-</div>
+</article>

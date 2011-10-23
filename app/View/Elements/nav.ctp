@@ -1,43 +1,67 @@
 <ul>
 	<li class="first item">
 		<?php echo $this->Html->link(
-			$this->Html->image('icons/32/application_view_tile.png', array('class' => 'icon', 'alt' => __('Dashboard', true))),
+			$this->Html->image('icons/24/application.png', array('class' => 'icon', 'alt' => __('Dashboard', true))),
 			array('controller' => 'dashboard', 'action' => 'index'),
 			array('escape' => false));
 		?>
 	</li>
 	<li class="item">
 		<?php echo $this->Html->link(
-			$this->Html->image('icons/32/book.png', array('class' => 'icon', 'alt' => __('Projects', true))),
+			$this->Html->image('icons/24/calendar-month.png', array('class' => 'icon', 'alt' => __('Calendar', true))),
+			array('controller' => 'calendar', 'action' => 'index'),
+			array('escape' => false));
+		?>
+	</li>
+	<li class="item">
+		<?php echo $this->Html->link(
+			$this->Html->image('icons/24/briefcase.png', array('class' => 'icon', 'alt' => __('Projects', true))),
 			array('controller' => 'projects', 'action' => 'index'),
 			array('escape' => false));
 		?>
 	</li>
 	<li class="item">
 		<?php echo $this->Html->link(
-			$this->Html->image('icons/32/calendar.png', array('class' => 'icon', 'alt' => __('Milestones', true))),
+			$this->Html->image('icons/24/blue-folder.png', array('class' => 'icon', 'alt' => __('Milestones', true))),
 			array('controller' => 'milestones', 'action' => 'index'),
 			array('escape' => false));
 		?>
 	</li>
 	<li class="item">
 		<?php echo $this->Html->link(
-			$this->Html->image('icons/32/date.png', array('class' => 'icon', 'alt' => __('Tasks', true))),
+			$this->Html->image('icons/24/notebook.png', array('class' => 'icon', 'alt' => __('Tasks', true))),
 			array('controller' => 'tasks', 'action' => 'index'),
 			array('escape' => false));
 		?>
 	</li>
 	<li class="item">
 		<?php echo $this->Html->link(
-			$this->Html->image('icons/32/hourglass.png', array('class' => 'icon', 'alt' => __('Tokens', true))),
+			$this->Html->image('icons/24/ticket.png', array('class' => 'icon', 'alt' => __('Tokens', true))),
 			array('controller' => 'tokens', 'action' => 'index'),
 			array('escape' => false));
 		?>
 	</li>
 	<li class="last item">
 		<?php echo $this->Html->link(
-			$this->Html->image('icons/32/group.png', array('class' => 'icon', 'alt' => __('Users', true))),
+			$this->Html->image('icons/24/user.png', array('class' => 'icon', 'alt' => __('Users', true))),
 			array('controller' => 'users', 'action' => 'index'),
+			array('escape' => false));
+		?>
+	</li>
+</ul>
+
+<ul class="bottom">
+	<li class="first item">
+		<?php echo $this->Html->link(
+			$this->Html->image('icons/24/equalizer.png', array('class' => 'icon', 'alt' => __('Configuration', true))),
+			array('controller' => 'dashboard', 'action' => 'configuration'),
+			array('escape' => false));
+		?>
+	</li>
+	<li class="last item">
+		<?php echo $this->Html->link(
+			$this->Html->image('icons/24/switch.png', array('class' => 'icon', 'alt' => __('LogOut', true))),
+			array('controller' => 'users', 'action' => 'logout'),
 			array('escape' => false));
 		?>
 	</li>

@@ -21,9 +21,22 @@
 		<td><?php echo h($project['Project']['due']); ?>&nbsp;</td>
 		<td><?php echo h($project['Project']['budget']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $project['Project']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $project['Project']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $project['Project']['id']), null, __('Are you sure you want to delete # %s?', $project['Project']['id'])); ?>
+			<?php echo $this->Html->link(
+				$this->Html->image('icons/16/document-search-result.png', array('class' => 'icon', 'alt' => __('View', true))),
+				array('controller' => 'projects', 'action' => 'view', $project['Project']['id']),
+				array('escape' => false));
+			?>
+			<?php echo $this->Html->link(
+				$this->Html->image('icons/16/document--pencil.png', array('class' => 'icon', 'alt' => __('Edit', true))),
+				array('controller' => 'projects', 'action' => 'edit', $project['Project']['id']),
+				array('escape' => false));
+			?>
+			<?php echo $this->Html->link(
+				$this->Html->image('icons/16/document--minus.png', array('class' => 'icon', 'alt' => __('Delete', true))),
+				array('controller' => 'projects', 'action' => 'delete', $project['Project']['id']),
+				array('escape' => false),
+				sprintf(__('Are you sure you want to delete # %s?', true), $project['Project']['id']));
+			?>
 		</td>
 	</tr>
 <?php endforeach; ?>

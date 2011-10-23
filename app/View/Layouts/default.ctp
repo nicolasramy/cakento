@@ -27,9 +27,9 @@
 		<nav>
 			<?php echo $this->element('nav'); ?>
 		</nav>
-		<article>
+		<section>
 			<?php echo $content_for_layout; ?>
-		</article>
+		</section>
 	</div>
 
 </div> <!--! end of #container -->
