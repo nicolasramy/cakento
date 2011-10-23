@@ -36,9 +36,9 @@
 			<?php echo h($task['Task']['created']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Modifed'); ?></dt>
+		<dt><?php echo __('Modified'); ?></dt>
 		<dd>
-			<?php echo h($task['Task']['modifed']); ?>
+			<?php echo h($task['Task']['modified']); ?>
 			&nbsp;
 		</dd>
 	</dl>

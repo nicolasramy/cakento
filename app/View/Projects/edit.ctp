@@ -4,10 +4,8 @@
 		<legend><?php echo __('Edit Project'); ?></legend>
 	<?php
 		echo $this->Form->input('id');
-		echo $this->Form->input('name');
 		echo $this->Form->input('due');
 		echo $this->Form->input('budget');
-		echo $this->Form->input('modifed');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit'));?>

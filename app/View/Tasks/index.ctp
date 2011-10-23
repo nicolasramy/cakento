@@ -8,13 +8,15 @@
 			<th><?php echo $this->Paginator->sort('description');?></th>
 			<th><?php echo $this->Paginator->sort('assignation');?></th>
 			<th><?php echo $this->Paginator->sort('milestone_id');?></th>
-			<th><?php echo $this->Paginator->sort('created');?></th>
-			<th><?php echo $this->Paginator->sort('modifed');?></th>
 			<th class="actions"><?php echo __('Actions');?></th>
 	</tr>
 	<?php
 	$i = 0;
 	foreach ($tasks as $task): ?>
+	<tr>
+		<td><?php var_dump($task); ?></td>
+
+	</tr>
 	<tr>
 		<td><?php echo h($task['Task']['id']); ?>&nbsp;</td>
 		<td><?php echo h($task['Task']['name']); ?>&nbsp;</td>
@@ -24,8 +26,6 @@
 		<td>
 			<?php echo $this->Html->link($task['Milestone']['name'], array('controller' => 'milestones', 'action' => 'view', $task['Milestone']['id'])); ?>
 		</td>
-		<td><?php echo h($task['Task']['created']); ?>&nbsp;</td>
-		<td><?php echo h($task['Task']['modifed']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $task['Task']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $task['Task']['id'])); ?>

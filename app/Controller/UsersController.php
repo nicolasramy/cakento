@@ -40,7 +40,11 @@ class UsersController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->User->create();
-			if ($this->User->save($this->request->data)) {
+
+			$_data = $this->request->data;
+			$_data['User']['password'] = md5($this->request->data['User']['password']);
+
+			if ($this->User->save($_data)) {
 				$this->Session->setFlash(__('The user has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -61,7 +65,11 @@ class UsersController extends AppController {
 			throw new NotFoundException(__('Invalid user'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
-			if ($this->User->save($this->request->data)) {
+
+			$_data = $this->request->data;
+			$_data['User']['password'] = md5($this->request->data['User']['password']);
+
+			if ($this->User->save($_data)) {
 				$this->Session->setFlash(__('The user has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {

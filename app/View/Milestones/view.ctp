@@ -16,6 +16,11 @@
 			<?php echo h($milestone['Milestone']['due']); ?>
 			&nbsp;
 		</dd>
+		<dt><?php echo __('Project'); ?></dt>
+		<dd>
+			<?php echo $this->Html->link($milestone['Project']['name'], array('controller' => 'projects', 'action' => 'view', $milestone['Project']['id'])); ?>
+			&nbsp;
+		</dd>
 		<dt><?php echo __('Created'); ?></dt>
 		<dd>
 			<?php echo h($milestone['Milestone']['created']); ?>
@@ -35,6 +40,8 @@
 		<li><?php echo $this->Form->postLink(__('Delete Milestone'), array('action' => 'delete', $milestone['Milestone']['id']), null, __('Are you sure you want to delete # %s?', $milestone['Milestone']['id'])); ?> </li>
 		<li><?php echo $this->Html->link(__('List Milestones'), array('action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Milestone'), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Projects'), array('controller' => 'projects', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Project'), array('controller' => 'projects', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Tasks'), array('controller' => 'tasks', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Task'), array('controller' => 'tasks', 'action' => 'add')); ?> </li>
 	</ul>

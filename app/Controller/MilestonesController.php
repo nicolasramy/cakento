@@ -47,6 +47,8 @@ class MilestonesController extends AppController {
 				$this->Session->setFlash(__('The milestone could not be saved. Please, try again.'));
 			}
 		}
+		$projects = $this->Milestone->Project->find('list');
+		$this->set(compact('projects'));
 	}
 
 /**
@@ -70,6 +72,8 @@ class MilestonesController extends AppController {
 		} else {
 			$this->request->data = $this->Milestone->read(null, $id);
 		}
+		$projects = $this->Milestone->Project->find('list');
+		$this->set(compact('projects'));
 	}
 
 /**

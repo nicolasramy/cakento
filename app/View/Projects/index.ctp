@@ -3,11 +3,11 @@
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id');?></th>
+			<th><?php echo $this->Paginator->sort('reference');?></th>
 			<th><?php echo $this->Paginator->sort('name');?></th>
+			<th><?php echo $this->Paginator->sort('title');?></th>
 			<th><?php echo $this->Paginator->sort('due');?></th>
 			<th><?php echo $this->Paginator->sort('budget');?></th>
-			<th><?php echo $this->Paginator->sort('created');?></th>
-			<th><?php echo $this->Paginator->sort('modifed');?></th>
 			<th class="actions"><?php echo __('Actions');?></th>
 	</tr>
 	<?php
@@ -15,11 +15,11 @@
 	foreach ($projects as $project): ?>
 	<tr>
 		<td><?php echo h($project['Project']['id']); ?>&nbsp;</td>
+		<td><?php echo h($project['Project']['reference']); ?>&nbsp;</td>
 		<td><?php echo h($project['Project']['name']); ?>&nbsp;</td>
+		<td><?php echo h($project['Project']['title']); ?>&nbsp;</td>
 		<td><?php echo h($project['Project']['due']); ?>&nbsp;</td>
 		<td><?php echo h($project['Project']['budget']); ?>&nbsp;</td>
-		<td><?php echo h($project['Project']['created']); ?>&nbsp;</td>
-		<td><?php echo h($project['Project']['modifed']); ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $project['Project']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $project['Project']['id'])); ?>

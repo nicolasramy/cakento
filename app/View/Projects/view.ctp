@@ -6,9 +6,19 @@
 			<?php echo h($project['Project']['id']); ?>
 			&nbsp;
 		</dd>
+		<dt><?php echo __('Reference'); ?></dt>
+		<dd>
+			<?php echo h($project['Project']['reference']); ?>
+			&nbsp;
+		</dd>
 		<dt><?php echo __('Name'); ?></dt>
 		<dd>
 			<?php echo h($project['Project']['name']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('title'); ?></dt>
+		<dd>
+			<?php echo h($project['Project']['title']); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Due'); ?></dt>

@@ -5,6 +5,7 @@
 			<th><?php echo $this->Paginator->sort('id');?></th>
 			<th><?php echo $this->Paginator->sort('name');?></th>
 			<th><?php echo $this->Paginator->sort('due');?></th>
+			<th><?php echo $this->Paginator->sort('project_id');?></th>
 			<th><?php echo $this->Paginator->sort('created');?></th>
 			<th><?php echo $this->Paginator->sort('modified');?></th>
 			<th class="actions"><?php echo __('Actions');?></th>
@@ -16,6 +17,9 @@
 		<td><?php echo h($milestone['Milestone']['id']); ?>&nbsp;</td>
 		<td><?php echo h($milestone['Milestone']['name']); ?>&nbsp;</td>
 		<td><?php echo h($milestone['Milestone']['due']); ?>&nbsp;</td>
+		<td>
+			<?php echo $this->Html->link($milestone['Project']['name'], array('controller' => 'projects', 'action' => 'view', $milestone['Project']['id'])); ?>
+		</td>
 		<td><?php echo h($milestone['Milestone']['created']); ?>&nbsp;</td>
 		<td><?php echo h($milestone['Milestone']['modified']); ?>&nbsp;</td>
 		<td class="actions">
@@ -45,6 +49,8 @@
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__('New Milestone'), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(__('List Projects'), array('controller' => 'projects', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Project'), array('controller' => 'projects', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Tasks'), array('controller' => 'tasks', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Task'), array('controller' => 'tasks', 'action' => 'add')); ?> </li>
 	</ul>

@@ -40,7 +40,17 @@ class ProjectsController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->Project->create();
-			if ($this->Project->save($this->request->data)) {
+
+			$i = 0;
+
+			$_data = $this->request->data;
+			$_data['Project']['reference'] = date('2y-m') . $i;
+			$_data['Project']['name'] = $_data['Project']['reference'] . ' : ' . $_data['Project']['title'];
+
+			var_dump($_data);
+			exit;
+
+			if ($this->Project->save($_data)) {
 				$this->Session->setFlash(__('The project has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
