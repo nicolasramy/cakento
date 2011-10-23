@@ -14,7 +14,7 @@
 
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 
-	<?php echo $this->Html->css(array('style')); ?>
+	<?php echo $this->Html->css(array('style', 'default')); ?>
 
 	<?php echo $this->Html->script(array('jquery-1.6.2.min', 'modernizr-2.0.6.min')); ?>
 </head>
@@ -22,20 +22,16 @@
 
 
 <div id="container">
-	<header>
-		<?php //echo $this->element('default_main_navigation'); ?>
-		hello User !
-	</header>
-	<div id="sidebar" role="sidebar">
-		<?php echo $this->element('sidebar'); ?>
-	</div>
+
 	<div id="main" role="main">
-		<?php echo $content_for_layout; ?>
+		<nav>
+			<?php echo $this->element('nav'); ?>
+		</nav>
+		<article>
+			<?php echo $content_for_layout; ?>
+		</article>
 	</div>
-	<footer>
-		<?php //echo $this->element('default_footer'); ?>
-		<address>darkelda.com</address>
-	</footer>
+
 </div> <!--! end of #container -->
 
 

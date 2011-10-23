@@ -29,7 +29,7 @@ class CrumbHelper extends Helper
 			$output = '<ol>';
 			$output .= '<li class="first item">';
 			$output .= '<a href="/dashboard">';
-			$output .= '<img src="/img/icons/home.png" class="icon" alt="' .  __('Dashboard', true) . '" />';
+			$output .= '<img src="/img/icons/16/application_view_tile.png" class="icon" alt="' .  __('Dashboard', true) . '" />';
 			$output .= '</a>';
 			$output .= '</li>';
 			$output .= '<li class="separator">&nbsp;</li>';

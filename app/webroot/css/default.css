@@ -1,0 +1,9 @@
+/**
+ * Navigation
+ */
+nav{width:60px;background:#073fb8;float:left;}
+nav ul{width:48px;list-style-type:none;margin:0 auto;}
+nav ul{width:48px;list-style-type:none;margin:0 auto;}
+article{margin:0 0 0 60px;padding:0 2em;}
+article #breadcrumbs ol{width:100%;list-style-type:none;margin:0;padding:5px 0 0;}
+article #breadcrumbs ol li{display:inline;}
