@@ -1,20 +1,37 @@
+<header>
 <div id="breadcrumbs">
 	<?php
 		$this->Crumb->addElement('Dashboard', 'dashboard');
-		//$crumb->addElement('List');
-
 		echo $this->Crumb->getHtml();
 	?>
 </div>
+</header>
 
-<div class="dashboard index">
+<article class="dashboard index">
 	<h2><?php echo __('Dashboard');?></h2>
 
-	<h3><?php echo __('Actions'); ?></h3>
+	<h3><?php echo __('Calendar'); ?></h3>
+
+
+
+	<h3><?php echo __('Office'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(__('List Milestones'), array('controller' => 'milestones', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Milestone'), array('controller' => 'milestones', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Appointements'), array('controller' => 'appointements', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Customers'), array('controller' => 'customers', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Customer Contacts'), array('controller' => 'customer_contacts', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Tokens'), array('controller' => 'tokens', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Token'), array('controller' => 'tokens', 'action' => 'add')); ?> </li>
 	</ul>
-</div>
+
+	<h3><?php echo __('Projects'); ?></h3>
+	<ul>
+		<li><?php echo $this->Html->link(__('List Projects'), array('controller' => 'projects', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Milestones'), array('controller' => 'milestones', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('List Tasks'), array('controller' => 'tasks', 'action' => 'index')); ?> </li>
+	</ul>
+
+	<h3><?php echo __('Configuration'); ?></h3>
+	<ul>
+		<li><?php echo $this->Html->link(__('Users'), array('controller' => 'users', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('Application'), array('controller' => 'configuration', 'action' => 'index')); ?> </li>
+	</ul>
+</article>

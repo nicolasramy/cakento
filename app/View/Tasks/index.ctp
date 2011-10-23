@@ -1,45 +1,72 @@
-<div id="breadcrumbs">
-	<?php
-		$this->Crumb->addElement('Dashboard', 'dashboard');
-		$this->Crumb->addElement('Tasks', 'tasks');
-		$this->Crumb->addElement('List');
-
-		echo $this->Crumb->getHtml();
-	?>
-</div>
+<header>
+	<div id="breadcrumbs">
+		<?php
+			$this->Crumb->addElement('Dashboard', 'dashboard');
+			$this->Crumb->addElement('Projects', 'projects');
+			$this->Crumb->addElement('Milestone', 'milestones');
+			$this->Crumb->addElement('Tasks', 'tasks');
+			$this->Crumb->addElement('List');
+			echo $this->Crumb->getHtml();
+		?>
+	</div>
+</header>
 
 <article class="tasks index">
 	<h2><?php echo __('Tasks');?></h2>
+
+	<div class="toolbar">
+		<ul class="buttons">
+			<li>
+			<?php echo $this->Html->link(
+					$this->Html->image('icons/16/hammer--plus.png', array('class' => 'icon', 'alt' => __('New Task', true))) . __('New Task', true),
+					array('controller' => 'tasks', 'action' => 'add'),
+					array('escape' => false));
+				?>
+			</li>
+		</ul>
+	</div>
+
+	<?php var_dump($tasks);?>
+
 	<table cellpadding="0" cellspacing="0">
-	<tr>
-			<th><?php echo $this->Paginator->sort('id');?></th>
-			<th><?php echo $this->Paginator->sort('name');?></th>
-			<th><?php echo $this->Paginator->sort('due');?></th>
-			<th><?php echo $this->Paginator->sort('description');?></th>
-			<th><?php echo $this->Paginator->sort('assignation');?></th>
-			<th><?php echo $this->Paginator->sort('milestone_id');?></th>
-			<th class="actions"><?php echo __('Actions');?></th>
-	</tr>
+	<thead>
+		<tr>
+			<td class="a-center">
+				<?php
+					echo $this->Html->image('icons/16/ui-check-boxes.png', array('class' => 'icon', 'alt' => h('Checkboxes', true)));
+				?>
+			</td>
+			<td><?php echo $this->Paginator->sort('id');?></td>
+			<td class="a-center"><?php echo $this->Paginator->sort('due');?></td>
+			<td><?php echo $this->Paginator->sort('milestone_id');?></td>
+			<td><?php echo $this->Paginator->sort('name');?></td>
+			<td><?php echo $this->Paginator->sort('assignation');?></td>
+			<td class="actions a-right"><?php echo __('Actions');?></td>
+		</tr>
+	</thead>
+
+	<tbody>
 	<?php
 	$i = 0;
 	foreach ($tasks as $task): ?>
+		<tr>
+			<td class="a-center"><?php echo $this->Form->checkbox('Task-'.$task['Task']['id']); ?>&nbsp;</td>
+			<td><?php echo h($task['Task']['id']); ?>&nbsp;</td>
+			<td class="a-center"><?php echo h($task['Task']['due']); ?>&nbsp;</td>
+			<td>
+				<?php echo $this->Html->link($task['Milestone']['name'], array('controller' => 'milestones', 'action' => 'view', $task['Milestone']['id'])); ?>
+			</td>
+			<td><?php echo h($task['Task']['name']); ?>&nbsp;</td>
+			<td><?php echo h($task['Task']['assignation']); ?>&nbsp;</td>
+			<td class="actions a-right">
+				<?php echo $this->Html->link(__('View'), array('action' => 'view', $task['Task']['id'])); ?>
+				<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $task['Task']['id'])); ?>
+				<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $task['Task']['id']), null, __('Are you sure you want to delete # %s?', $task['Task']['id'])); ?>
+			</td>
+		</tr>
+	<?php endforeach; ?>
+	</tbody>
 
-	<tr>
-		<td><?php echo h($task['Task']['id']); ?>&nbsp;</td>
-		<td><?php echo h($task['Task']['name']); ?>&nbsp;</td>
-		<td><?php echo h($task['Task']['due']); ?>&nbsp;</td>
-		<td><?php echo h($task['Task']['description']); ?>&nbsp;</td>
-		<td><?php echo h($task['Task']['assignation']); ?>&nbsp;</td>
-		<td>
-			<?php echo $this->Html->link($task['Milestone']['name'], array('controller' => 'milestones', 'action' => 'view', $task['Milestone']['id'])); ?>
-		</td>
-		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $task['Task']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $task['Task']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $task['Task']['id']), null, __('Are you sure you want to delete # %s?', $task['Task']['id'])); ?>
-		</td>
-	</tr>
-<?php endforeach; ?>
 	</table>
 	<p>
 	<?php

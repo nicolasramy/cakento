@@ -18,22 +18,43 @@ nav ul li{text-align:center;padding:0 0 16px;}
 section{margin:0 0 0 60px;}
 
 /**
- * Sectin > Breadcrumbs
+ * Section > Breadcrumbs
  */
-section #breadcrumbs{width:100%;height:32px;margin:0;background-color:#cccccc;}
-section #breadcrumbs ol{width:100%;height:16px;list-style-type:none;padding:8px 0;margin:0;border-bottom:1px solid #888;}
-section #breadcrumbs ol li{display:inline;padding:8px 0 8px 5px;}
+section header #breadcrumbs{width:100%;height:32px;margin:0;background-color:#cccccc;}
+section header #breadcrumbs ol{width:100%;height:16px;list-style-type:none;padding:8px 0;margin:0;border-bottom:1px solid #888;}
+section header #breadcrumbs ol li{display:inline;padding:8px 0 8px 5px;}
 
-section #breadcrumbs ol li.item{padding:8px 15px;text-align:center;background-color:#f8f8f8;border-right:1px solid #888;}
-section #breadcrumbs ol li.item:hover{background-color:#cccccc;color:#ffffff;}
-section #breadcrumbs ol li.first{padding-left:10px;}
-section #breadcrumbs ol li.last{border-width:0;padding:8px 15px;background-color:#cccccc;}
-section #breadcrumbs ol li .icon{vertical-align:text-bottom;}
+section header #breadcrumbs ol .item{padding:8px 15px;text-align:center;background-color:#f8f8f8;border-right:1px solid #888;}
+section header #breadcrumbs ol .item:hover{background-color:#cccccc;color:#ffffff;}
+section header #breadcrumbs ol .first{padding-left:10px;}
+section header #breadcrumbs ol .last{border-width:0;padding:8px 15px;background-color:#cccccc;}
+section header #breadcrumbs ol .icon{vertical-align:text-bottom;}
 
-section #breadcrumbs ol li a,
-section #breadcrumbs ol li a:hover{text-decoration:none;}
+section header #breadcrumbs ol li a,
+section header #breadcrumbs ol li a:hover{text-decoration:none;}
 
 /**
  * Article > Breadcrumbs
  */
 section article{padding:0.5em 2em 2em;}
+section article h2{font-weight:bold;font-size:2em;padding:0 0 5px 15px;border-bottom:1px solid #000000;}
+section article table{width:100%;}
+section article table thead td{border-bottom:2px solid #1161d9;padding:0 15px 5px 10px;}
+section article table thead td a:hover{color:#444444;text-decoration:none;}
+section article table thead td.actions{font-weight:bold;}
+section article table thead td.actions:hover{font-weight:bold;border-bottom:2px solid #1161d9;}
+section article table tbody td{border-bottom:1px solid #cccccc;padding:5px 10px;}
+section article table tbody tr:hover td{background-color:#e2f2f2;}
+
+section article .toolbar .buttons{width:100%;height:16px;margin:10px 0 15px;padding:0;}
+section article .toolbar .buttons {width:100%;height:16px;list-style-type:none;}
+section article .toolbar .buttons li{display:inline;padding:0 15px;}
+section article .toolbar .buttons .icon{vertical-align:text-bottom;margin-right:8px;}
+section article .toolbar .buttons a:hover{color:#444444;text-decoration:none;}
+
+/**
+ * CSS Helpers
+ */
+.a-right{text-align:right;}
+.a-left{text-align:left;}
+.a-center{text-align:center;}
