@@ -7,12 +7,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.Error
  * @since         CakePHP(tm) v 0.10.5.1732
@@ -60,7 +60,7 @@ App::uses('AppController', 'Controller');
  *
  * If you don't want to take control of the exception handling, but want to change how exceptions are
  * rendered you can use `Exception.renderer` to choose a class to render exception pages.  By default
- * `ExceptionRenderer` is used.  Your custom exception renderer class should be placed in app/Error.
+ * `ExceptionRenderer` is used.  Your custom exception renderer class should be placed in app/Lib/Error.
  *
  * Your custom renderer should expect an exception in its constructor, and implement a render method.
  * Failing to do so will cause additional errors.
@@ -100,7 +100,7 @@ class ErrorHandler {
 /**
  * Set as the default exception handler by the CakePHP bootstrap process.
  *
- * This will either use an AppError class if your application has one,
+ * This will either use custom exception renderer class if configured,
  * or use the default ExceptionRenderer.
  *
  * @param Exception $exception
@@ -158,6 +158,9 @@ class ErrorHandler {
 		}
 		$errorConfig = Configure::read('Error');
 		list($error, $log) = self::mapErrorCode($code);
+		if ($log === LOG_ERR) {
+			return self::handleFatalError($code, $description, $file, $line);
+		}
 
 		$debug = Configure::read('debug');
 		if ($debug) {
@@ -184,6 +187,36 @@ class ErrorHandler {
 	}
 
 /**
+ * Generate an error page when some fatal error happens.
+ *
+ * @param integer $code Code of error
+ * @param string $description Error description
+ * @param string $file File on which error occurred
+ * @param integer $line Line that triggered the error
+ * @return boolean
+ */
+	public static function handleFatalError($code, $description, $file, $line) {
+		$logMessage = 'Fatal Error (' . $code . '): ' . $description . ' in [' . $file . ', line ' . $line . ']';
+		CakeLog::write(LOG_ERR, $logMessage);
+
+		$exceptionHandler = Configure::read('Exception.handler');
+		if (!is_callable($exceptionHandler)) {
+			return false;
+		}
+
+		if (ob_get_level()) {
+			ob_clean();
+		}
+
+		if (Configure::read('debug')) {
+			call_user_func($exceptionHandler, new FatalErrorException($description, 500, $file, $line));
+		} else {
+			call_user_func($exceptionHandler, new InternalErrorException());
+		}
+		return false;
+	}
+
+/**
  * Map an error code into an Error word, and log location.
  *
  * @param integer $code Error code to map
@@ -198,7 +231,7 @@ class ErrorHandler {
 			case E_COMPILE_ERROR:
 			case E_USER_ERROR:
 				$error = 'Fatal Error';
-				$log = LOG_ERROR;
+				$log = LOG_ERR;
 			break;
 			case E_WARNING:
 			case E_USER_WARNING:
@@ -217,10 +250,12 @@ class ErrorHandler {
 				$log = LOG_NOTICE;
 			break;
 			case E_DEPRECATED:
+			case E_USER_DEPRECATED:
 				$error = 'Deprecated';
 				$log = LOG_NOTICE;
 			break;
 		}
 		return array($error, $log);
 	}
+
 }

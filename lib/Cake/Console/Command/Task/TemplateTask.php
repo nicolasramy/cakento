@@ -5,25 +5,27 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @since         CakePHP(tm) v 1.3
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
+App::uses('AppShell', 'Console/Command');
 App::uses('Folder', 'Utility');
+
 /**
  * Template Task can generate templated output Used in other Tasks.
  * Acts like a simplified View class.
  *
  * @package       Cake.Console.Command.Task
  */
-class TemplateTask extends Shell {
+class TemplateTask extends AppShell {
 
 /**
  * variables to add to template scope
@@ -53,11 +55,18 @@ class TemplateTask extends Shell {
  * Find the paths to all the installed shell themes in the app.
  *
  * Bake themes are directories not named `skel` inside a `Console/Templates` path.
- *
+ * They are listed in this order: app -> plugin -> default
+ * 
  * @return array Array of bake themes that are installed.
  */
 	protected function _findThemes() {
 		$paths = App::path('Console');
+
+		$plugins = App::objects('plugin');
+		foreach ($plugins as $plugin) {
+			$paths[] = $this->_pluginPath($plugin) . 'Console' . DS;
+		}
+
 		$core = current(App::core('Console'));
 		$separator = DS === '/' ? '/' : '\\\\';
 		$core = preg_replace('#shells' . $separator . '$#', '', $core);
@@ -67,10 +76,6 @@ class TemplateTask extends Shell {
 		$contents = $Folder->read();
 		$themeFolders = $contents[0];
 
-		$plugins = App::objects('plugin');
-		foreach ($plugins as $plugin) {
-			$paths[] = $this->_pluginPath($plugin) . 'Console' . DS;
-		}
 		$paths[] = $core;
 
 		// TEMPORARY TODO remove when all paths are DS terminated
@@ -103,7 +108,7 @@ class TemplateTask extends Shell {
  * Set variable values to the template scope
  *
  * @param string|array $one A string or an array of data.
- * @param mixed $two Value in case $one is a string (which then works as the key).
+ * @param string|array $two Value in case $one is a string (which then works as the key).
  *   Unused if $one is an associative array, otherwise serves as the values to $one's keys.
  * @return void
  */
@@ -145,7 +150,7 @@ class TemplateTask extends Shell {
 			extract($this->templateVars);
 			ob_start();
 			ob_implicit_flush(0);
-			include($templateFile);
+			include $templateFile;
 			$content = ob_get_clean();
 			return $content;
 		}
@@ -210,4 +215,5 @@ class TemplateTask extends Shell {
 		$this->err(__d('cake_console', 'Could not find template for %s', $filename));
 		return false;
 	}
+
 }

@@ -4,14 +4,14 @@
  *
  * PHP 5
  *
- * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * CakePHP(tm) Tests <http://book.cakephp.org/2.0/en/development/testing.html>
+ * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://book.cakephp.org/2.0/en/development/testing.html CakePHP(tm) Tests
  * @package       Cake.Test.Case
  * @since         CakePHP(tm) v 1.2.0.4206
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -19,6 +19,7 @@
 
 require_once CAKE . 'basics.php';
 App::uses('Folder', 'Utility');
+App::uses('CakeResponse', 'Network');
 
 /**
  * BasicsTest class
@@ -33,20 +34,10 @@ class BasicsTest extends CakeTestCase {
  * @return void
  */
 	public function setUp() {
+		parent::setUp();
 		App::build(array(
-			'locales' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Locale' . DS)
+			'Locale' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Locale' . DS)
 		));
-		$this->_language = Configure::read('Config.language');
-	}
-
-/**
- * tearDown method
- *
- * @return void
- */
-	public function tearDown() {
-		App::build();
-		Configure::write('Config.language', $this->_language);
 	}
 
 /**
@@ -59,26 +50,26 @@ class BasicsTest extends CakeTestCase {
 		$two = array('one' => 'one', 'two' => 'two');
 		$result = array_diff_key($one, $two);
 		$expected = array('three' => 3);
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$one = array('one' => array('value', 'value-two'), 'two' => 2, 'three' => 3);
 		$two = array('two' => 'two');
 		$result = array_diff_key($one, $two);
 		$expected = array('one' => array('value', 'value-two'), 'three' => 3);
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$one = array('one' => null, 'two' => 2, 'three' => '', 'four' => 0);
 		$two = array('two' => 'two');
 		$result = array_diff_key($one, $two);
 		$expected = array('one' => null, 'three' => '', 'four' => 0);
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$one = array('minYear' => null, 'maxYear' => null, 'separator' => '-', 'interval' => 1, 'monthNames' => true);
 		$two = array('minYear' => null, 'maxYear' => null, 'separator' => '-', 'interval' => 1, 'monthNames' => true);
 		$result = array_diff_key($one, $two);
-		$this->assertEqual($result, array());
-
+		$this->assertEquals(array(), $result);
 	}
+
 /**
  * testHttpBase method
  *
@@ -87,52 +78,52 @@ class BasicsTest extends CakeTestCase {
 	public function testEnv() {
 		$this->skipIf(!function_exists('ini_get') || ini_get('safe_mode') === '1', 'Safe mode is on.');
 
-		$__SERVER = $_SERVER;
-		$__ENV = $_ENV;
+		$server = $_SERVER;
+		$env = $_ENV;
 
 		$_SERVER['HTTP_HOST'] = 'localhost';
-		$this->assertEqual(env('HTTP_BASE'), '.localhost');
+		$this->assertEquals(env('HTTP_BASE'), '.localhost');
 
 		$_SERVER['HTTP_HOST'] = 'com.ar';
-		$this->assertEqual(env('HTTP_BASE'), '.com.ar');
+		$this->assertEquals(env('HTTP_BASE'), '.com.ar');
 
 		$_SERVER['HTTP_HOST'] = 'example.ar';
-		$this->assertEqual(env('HTTP_BASE'), '.example.ar');
+		$this->assertEquals(env('HTTP_BASE'), '.example.ar');
 
 		$_SERVER['HTTP_HOST'] = 'example.com';
-		$this->assertEqual(env('HTTP_BASE'), '.example.com');
+		$this->assertEquals(env('HTTP_BASE'), '.example.com');
 
 		$_SERVER['HTTP_HOST'] = 'www.example.com';
-		$this->assertEqual(env('HTTP_BASE'), '.example.com');
+		$this->assertEquals(env('HTTP_BASE'), '.example.com');
 
 		$_SERVER['HTTP_HOST'] = 'subdomain.example.com';
-		$this->assertEqual(env('HTTP_BASE'), '.example.com');
+		$this->assertEquals(env('HTTP_BASE'), '.example.com');
 
 		$_SERVER['HTTP_HOST'] = 'example.com.ar';
-		$this->assertEqual(env('HTTP_BASE'), '.example.com.ar');
+		$this->assertEquals(env('HTTP_BASE'), '.example.com.ar');
 
 		$_SERVER['HTTP_HOST'] = 'www.example.com.ar';
-		$this->assertEqual(env('HTTP_BASE'), '.example.com.ar');
+		$this->assertEquals(env('HTTP_BASE'), '.example.com.ar');
 
 		$_SERVER['HTTP_HOST'] = 'subdomain.example.com.ar';
-		$this->assertEqual(env('HTTP_BASE'), '.example.com.ar');
+		$this->assertEquals(env('HTTP_BASE'), '.example.com.ar');
 
 		$_SERVER['HTTP_HOST'] = 'double.subdomain.example.com';
-		$this->assertEqual(env('HTTP_BASE'), '.subdomain.example.com');
+		$this->assertEquals(env('HTTP_BASE'), '.subdomain.example.com');
 
 		$_SERVER['HTTP_HOST'] = 'double.subdomain.example.com.ar';
-		$this->assertEqual(env('HTTP_BASE'), '.subdomain.example.com.ar');
+		$this->assertEquals(env('HTTP_BASE'), '.subdomain.example.com.ar');
 
 		$_SERVER = $_ENV = array();
 
 		$_SERVER['SCRIPT_NAME'] = '/a/test/test.php';
-		$this->assertEqual(env('SCRIPT_NAME'), '/a/test/test.php');
+		$this->assertEquals(env('SCRIPT_NAME'), '/a/test/test.php');
 
 		$_SERVER = $_ENV = array();
 
 		$_ENV['CGI_MODE'] = 'BINARY';
 		$_ENV['SCRIPT_URL'] = '/a/test/test.php';
-		$this->assertEqual(env('SCRIPT_NAME'), '/a/test/test.php');
+		$this->assertEquals(env('SCRIPT_NAME'), '/a/test/test.php');
 
 		$_SERVER = $_ENV = array();
 
@@ -172,16 +163,16 @@ class BasicsTest extends CakeTestCase {
 		$this->assertNull(env('TEST_ME'));
 
 		$_ENV['TEST_ME'] = 'a';
-		$this->assertEqual(env('TEST_ME'), 'a');
+		$this->assertEquals(env('TEST_ME'), 'a');
 
 		$_SERVER['TEST_ME'] = 'b';
-		$this->assertEqual(env('TEST_ME'), 'b');
+		$this->assertEquals(env('TEST_ME'), 'b');
 
 		unset($_ENV['TEST_ME']);
-		$this->assertEqual(env('TEST_ME'), 'b');
+		$this->assertEquals(env('TEST_ME'), 'b');
 
-		$_SERVER = $__SERVER;
-		$_ENV = $__ENV;
+		$_SERVER = $server;
+		$_ENV = $env;
 	}
 
 /**
@@ -192,24 +183,24 @@ class BasicsTest extends CakeTestCase {
 	public function testH() {
 		$string = '<foo>';
 		$result = h($string);
-		$this->assertEqual('&lt;foo&gt;', $result);
+		$this->assertEquals('&lt;foo&gt;', $result);
 
 		$in = array('this & that', '<p>Which one</p>');
 		$result = h($in);
 		$expected = array('this &amp; that', '&lt;p&gt;Which one&lt;/p&gt;');
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$string = '<foo> & &nbsp;';
 		$result = h($string);
-		$this->assertEqual('&lt;foo&gt; &amp; &amp;nbsp;', $result);
+		$this->assertEquals('&lt;foo&gt; &amp; &amp;nbsp;', $result);
 
 		$string = '<foo> & &nbsp;';
 		$result = h($string, false);
-		$this->assertEqual('&lt;foo&gt; &amp; &nbsp;', $result);
+		$this->assertEquals('&lt;foo&gt; &amp; &nbsp;', $result);
 
 		$string = '<foo> & &nbsp;';
 		$result = h($string, 'UTF-8');
-		$this->assertEqual('&lt;foo&gt; &amp; &amp;nbsp;', $result);
+		$this->assertEquals('&lt;foo&gt; &amp; &amp;nbsp;', $result);
 
 		$arr = array('<foo>', '&nbsp;');
 		$result = h($arr);
@@ -217,7 +208,7 @@ class BasicsTest extends CakeTestCase {
 			'&lt;foo&gt;',
 			'&amp;nbsp;'
 		);
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$arr = array('<foo>', '&nbsp;');
 		$result = h($arr, false);
@@ -225,7 +216,7 @@ class BasicsTest extends CakeTestCase {
 			'&lt;foo&gt;',
 			'&nbsp;'
 		);
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$arr = array('f' => '<foo>', 'n' => '&nbsp;');
 		$result = h($arr, false);
@@ -233,7 +224,24 @@ class BasicsTest extends CakeTestCase {
 			'f' => '&lt;foo&gt;',
 			'n' => '&nbsp;'
 		);
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
+
+		// Test that boolean values are not converted to strings
+		$result = h(false);
+		$this->assertFalse($result);
+
+		$arr = array('foo' => false, 'bar' => true);
+		$result = h($arr);
+		$this->assertFalse($result['foo']);
+		$this->assertTrue($result['bar']);
+
+		$obj = new stdClass();
+		$result = h($obj);
+		$this->assertEquals('(object)stdClass', $result);
+
+		$obj = new CakeResponse(array('body' => 'Body content'));
+		$result = h($obj);
+		$this->assertEquals('Body content', $result);
 	}
 
 /**
@@ -244,11 +252,11 @@ class BasicsTest extends CakeTestCase {
 	public function testAm() {
 		$result = am(array('one', 'two'), 2, 3, 4);
 		$expected = array('one', 'two', 2, 3, 4);
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = am(array('one' => array(2, 3), 'two' => array('foo')), array('one' => array(4, 5)));
-		$expected = array('one' => array(4, 5),'two' => array('foo'));
-		$this->assertEqual($expected, $result);
+		$expected = array('one' => array(4, 5), 'two' => array('foo'));
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -273,7 +281,7 @@ class BasicsTest extends CakeTestCase {
 		$this->assertTrue(file_exists(CACHE . 'basics_test'));
 
 		$result = cache('basics_test');
-		$this->assertEqual($result, 'simple cache write');
+		$this->assertEquals('simple cache write', $result);
 		@unlink(CACHE . 'basics_test');
 
 		cache('basics_test', 'expired', '+1 second');
@@ -351,40 +359,40 @@ class BasicsTest extends CakeTestCase {
  *
  * @return void
  */
-	public function test__() {
+	public function testTranslate() {
 		Configure::write('Config.language', 'rule_1_po');
 
 		$result = __('Plural Rule 1');
 		$expected = 'Plural Rule 1 (translated)';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __('Plural Rule 1 (from core)');
 		$expected = 'Plural Rule 1 (from core translated)';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __('Some string with %s', 'arguments');
 		$expected = 'Some string with arguments';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __('Some string with %s %s', 'multiple', 'arguments');
 		$expected = 'Some string with multiple arguments';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __('Some string with %s %s', array('multiple', 'arguments'));
 		$expected = 'Some string with multiple arguments';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __('Testing %2$s %1$s', 'order', 'different');
 		$expected = 'Testing different order';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __('Testing %2$s %1$s', array('order', 'different'));
 		$expected = 'Testing different order';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __('Testing %.2f number', 1.2345);
 		$expected = 'Testing 1.23 number';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -392,32 +400,32 @@ class BasicsTest extends CakeTestCase {
  *
  * @return void
  */
-	public function test__n() {
+	public function testTranslatePlural() {
 		Configure::write('Config.language', 'rule_1_po');
 
 		$result = __n('%d = 1', '%d = 0 or > 1', 0);
 		$expected = '%d = 0 or > 1 (translated)';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __n('%d = 1', '%d = 0 or > 1', 1);
 		$expected = '%d = 1 (translated)';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __n('%d = 1 (from core)', '%d = 0 or > 1 (from core)', 2);
 		$expected = '%d = 0 or > 1 (from core translated)';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __n('%d item.', '%d items.', 1, 1);
 		$expected = '1 item.';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __n('%d item for id %s', '%d items for id %s', 2, 2, '1234');
 		$expected = '2 items for id 1234';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __n('%d item for id %s', '%d items for id %s', 2, array(2, '1234'));
 		$expected = '2 items for id 1234';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -425,32 +433,32 @@ class BasicsTest extends CakeTestCase {
  *
  * @return void
  */
-	public function test__d() {
+	public function testTranslateDomain() {
 		Configure::write('Config.language', 'rule_1_po');
 
 		$result = __d('default', 'Plural Rule 1');
 		$expected = 'Plural Rule 1 (translated)';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __d('core', 'Plural Rule 1');
 		$expected = 'Plural Rule 1';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __d('core', 'Plural Rule 1 (from core)');
 		$expected = 'Plural Rule 1 (from core translated)';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __d('core', 'Some string with %s', 'arguments');
 		$expected = 'Some string with arguments';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __d('core', 'Some string with %s %s', 'multiple', 'arguments');
 		$expected = 'Some string with multiple arguments';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __d('core', 'Some string with %s %s', array('multiple', 'arguments'));
 		$expected = 'Some string with multiple arguments';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -458,36 +466,36 @@ class BasicsTest extends CakeTestCase {
  *
  * @return void
  */
-	public function test__dn() {
+	public function testTranslateDomainPlural() {
 		Configure::write('Config.language', 'rule_1_po');
 
 		$result = __dn('default', '%d = 1', '%d = 0 or > 1', 0);
 		$expected = '%d = 0 or > 1 (translated)';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __dn('core', '%d = 1', '%d = 0 or > 1', 0);
 		$expected = '%d = 0 or > 1';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __dn('core', '%d = 1 (from core)', '%d = 0 or > 1 (from core)', 0);
 		$expected = '%d = 0 or > 1 (from core translated)';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __dn('default', '%d = 1', '%d = 0 or > 1', 1);
 		$expected = '%d = 1 (translated)';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __dn('core', '%d item.', '%d items.', 1, 1);
 		$expected = '1 item.';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __dn('core', '%d item for id %s', '%d items for id %s', 2, 2, '1234');
 		$expected = '2 items for id 1234';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __dn('core', '%d item for id %s', '%d items for id %s', 2, array(2, '1234'));
 		$expected = '2 items for id 1234';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -495,28 +503,28 @@ class BasicsTest extends CakeTestCase {
  *
  * @return void
  */
-	public function test__c() {
+	public function testTranslateCategory() {
 		Configure::write('Config.language', 'rule_1_po');
 
 		$result = __c('Plural Rule 1', 6);
 		$expected = 'Plural Rule 1 (translated)';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __c('Plural Rule 1 (from core)', 6);
 		$expected = 'Plural Rule 1 (from core translated)';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __c('Some string with %s', 6, 'arguments');
 		$expected = 'Some string with arguments';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __c('Some string with %s %s', 6, 'multiple', 'arguments');
 		$expected = 'Some string with multiple arguments';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __c('Some string with %s %s', 6, array('multiple', 'arguments'));
 		$expected = 'Some string with multiple arguments';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -524,36 +532,36 @@ class BasicsTest extends CakeTestCase {
  *
  * @return void
  */
-	public function test__dc() {
+	public function testTranslateDomainCategory() {
 		Configure::write('Config.language', 'rule_1_po');
 
 		$result = __dc('default', 'Plural Rule 1', 6);
 		$expected = 'Plural Rule 1 (translated)';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __dc('default', 'Plural Rule 1 (from core)', 6);
 		$expected = 'Plural Rule 1 (from core translated)';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __dc('core', 'Plural Rule 1', 6);
 		$expected = 'Plural Rule 1';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __dc('core', 'Plural Rule 1 (from core)', 6);
 		$expected = 'Plural Rule 1 (from core translated)';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __dc('core', 'Some string with %s', 6, 'arguments');
 		$expected = 'Some string with arguments';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __dc('core', 'Some string with %s %s', 6, 'multiple', 'arguments');
 		$expected = 'Some string with multiple arguments';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __dc('core', 'Some string with %s %s', 6, array('multiple', 'arguments'));
 		$expected = 'Some string with multiple arguments';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -561,32 +569,32 @@ class BasicsTest extends CakeTestCase {
  *
  * @return void
  */
-	public function test__dcn() {
+	public function testTranslateDomainCategoryPlural() {
 		Configure::write('Config.language', 'rule_1_po');
 
 		$result = __dcn('default', '%d = 1', '%d = 0 or > 1', 0, 6);
 		$expected = '%d = 0 or > 1 (translated)';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __dcn('default', '%d = 1 (from core)', '%d = 0 or > 1 (from core)', 1, 6);
 		$expected = '%d = 1 (from core translated)';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __dcn('core', '%d = 1', '%d = 0 or > 1', 0, 6);
 		$expected = '%d = 0 or > 1';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __dcn('core', '%d item.', '%d items.', 1, 6, 1);
 		$expected = '1 item.';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __dcn('core', '%d item for id %s', '%d items for id %s', 2, 6, 2, '1234');
 		$expected = '2 items for id 1234';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = __dcn('core', '%d item for id %s', '%d items for id %s', 2, 6, array(2, '1234'));
 		$expected = '2 items for id 1234';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -597,13 +605,22 @@ class BasicsTest extends CakeTestCase {
 	public function testLogError() {
 		@unlink(LOGS . 'error.log');
 
+		// disable stderr output for this test
+		if (CakeLog::stream('stderr')) {
+			CakeLog::disable('stderr');
+		}
+
 		LogError('Testing LogError() basic function');
 		LogError("Testing with\nmulti-line\nstring");
 
+		if (CakeLog::stream('stderr')) {
+			CakeLog::enable('stderr');
+		}
+
 		$result = file_get_contents(LOGS . 'error.log');
-		$this->assertPattern('/Error: Testing LogError\(\) basic function/', $result);
-		$this->assertNoPattern("/Error: Testing with\nmulti-line\nstring/", $result);
-		$this->assertPattern('/Error: Testing with multi-line string/', $result);
+		$this->assertRegExp('/Error: Testing LogError\(\) basic function/', $result);
+		$this->assertNotRegExp("/Error: Testing with\nmulti-line\nstring/", $result);
+		$this->assertRegExp('/Error: Testing with multi-line string/', $result);
 	}
 
 /**
@@ -612,7 +629,9 @@ class BasicsTest extends CakeTestCase {
  * @return void
  */
 	public function testFileExistsInPath() {
-		$this->skipUnless(function_exists('ini_set'), '%s ini_set function not available');
+		if (!function_exists('ini_set')) {
+			$this->markTestSkipped('%s ini_set function not available');
+		}
 
 		$_includePath = ini_get('include_path');
 
@@ -634,12 +653,12 @@ class BasicsTest extends CakeTestCase {
 
 		ini_set('include_path', $path . PATH_SEPARATOR . $folder1);
 
-		$this->assertEqual(fileExistsInPath('file1.php'), $file1);
-		$this->assertEqual(fileExistsInPath('file2.php'), $file2);
-		$this->assertEqual(fileExistsInPath('folder1' . DS . 'file2.php'), $file2);
-		$this->assertEqual(fileExistsInPath($file2), $file2);
-		$this->assertEqual(fileExistsInPath('file3.php'), $file3);
-		$this->assertEqual(fileExistsInPath($file4), $file4);
+		$this->assertEquals(fileExistsInPath('file1.php'), $file1);
+		$this->assertEquals(fileExistsInPath('file2.php'), $file2);
+		$this->assertEquals(fileExistsInPath('folder1' . DS . 'file2.php'), $file2);
+		$this->assertEquals(fileExistsInPath($file2), $file2);
+		$this->assertEquals(fileExistsInPath('file3.php'), $file3);
+		$this->assertEquals(fileExistsInPath($file4), $file4);
 
 		$this->assertFalse(fileExistsInPath('file1'));
 		$this->assertFalse(fileExistsInPath('file4.php'));
@@ -658,11 +677,11 @@ class BasicsTest extends CakeTestCase {
 	public function testConvertSlash() {
 		$result = convertSlash('\path\to\location\\');
 		$expected = '\path\to\location\\';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = convertSlash('/path/to/location/');
 		$expected = 'path_to_location';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -672,28 +691,143 @@ class BasicsTest extends CakeTestCase {
  */
 	public function testDebug() {
 		ob_start();
-			debug('this-is-a-test');
+		debug('this-is-a-test', false);
 		$result = ob_get_clean();
-		$pattern = '/(.+?Test(\/|\\\)Case(\/|\\\)BasicsTest\.php|';
-		$pattern .= preg_quote(substr(__FILE__, 1), '/') . ')';
-		$pattern .= '.*line.*' . (__LINE__ - 4) . '.*this-is-a-test.*/s';
-		$this->assertRegExp($pattern, $result);
+		$expectedText = <<<EXPECTED
+%s (line %d)
+########## DEBUG ##########
+'this-is-a-test'
+###########################
+EXPECTED;
+		$expected = sprintf($expectedText, str_replace(CAKE_CORE_INCLUDE_PATH, '', __FILE__), __LINE__ - 8);
+
+		$this->assertEquals($expected, $result);
 
 		ob_start();
-			debug('<div>this-is-a-test</div>', true);
+		debug('<div>this-is-a-test</div>', true);
 		$result = ob_get_clean();
-		$pattern = '/(.+?Test(\/|\\\)Case(\/|\\\)BasicsTest\.php|';
-		$pattern .= preg_quote(substr(__FILE__, 1), '/') . ')';
-		$pattern .= '.*line.*' . (__LINE__ -4) . '.*&lt;div&gt;this-is-a-test&lt;\/div&gt;.*/s';
-		$this->assertRegExp($pattern, $result);
+		$expectedHtml = <<<EXPECTED
+<div class="cake-debug-output">
+<span><strong>%s</strong> (line <strong>%d</strong>)</span>
+<pre class="cake-debug">
+&#039;&lt;div&gt;this-is-a-test&lt;/div&gt;&#039;
+</pre>
+</div>
+EXPECTED;
+		$expected = sprintf($expectedHtml, str_replace(CAKE_CORE_INCLUDE_PATH, '', __FILE__), __LINE__ - 10);
+		$this->assertEquals($expected, $result);
 
 		ob_start();
-			debug('<div>this-is-a-test</div>', false);
+		debug('<div>this-is-a-test</div>', true, true);
 		$result = ob_get_clean();
-		$pattern = '/(.+?Test(\/|\\\)Case(\/|\\\)BasicsTest\.php|';
-		$pattern .= preg_quote(substr(__FILE__, 1), '/') . ')';
-		$pattern .=	'.*line.*' . (__LINE__ - 4) . '.*\<div\>this-is-a-test\<\/div\>.*/s';
-		$this->assertRegExp($pattern, $result);
+		$expected = <<<EXPECTED
+<div class="cake-debug-output">
+<span><strong>%s</strong> (line <strong>%d</strong>)</span>
+<pre class="cake-debug">
+&#039;&lt;div&gt;this-is-a-test&lt;/div&gt;&#039;
+</pre>
+</div>
+EXPECTED;
+		$expected = sprintf($expected, str_replace(CAKE_CORE_INCLUDE_PATH, '', __FILE__), __LINE__ - 10);
+		$this->assertEquals($expected, $result);
+
+		ob_start();
+		debug('<div>this-is-a-test</div>', true, false);
+		$result = ob_get_clean();
+		$expected = <<<EXPECTED
+<div class="cake-debug-output">
+
+<pre class="cake-debug">
+&#039;&lt;div&gt;this-is-a-test&lt;/div&gt;&#039;
+</pre>
+</div>
+EXPECTED;
+		$expected = sprintf($expected, str_replace(CAKE_CORE_INCLUDE_PATH, '', __FILE__), __LINE__ - 10);
+		$this->assertEquals($expected, $result);
+
+		ob_start();
+		debug('<div>this-is-a-test</div>', null);
+		$result = ob_get_clean();
+		$expectedHtml = <<<EXPECTED
+<div class="cake-debug-output">
+<span><strong>%s</strong> (line <strong>%d</strong>)</span>
+<pre class="cake-debug">
+&#039;&lt;div&gt;this-is-a-test&lt;/div&gt;&#039;
+</pre>
+</div>
+EXPECTED;
+		$expectedText = <<<EXPECTED
+%s (line %d)
+########## DEBUG ##########
+'<div>this-is-a-test</div>'
+###########################
+EXPECTED;
+		if (php_sapi_name() == 'cli') {
+			$expected = sprintf($expectedText, str_replace(CAKE_CORE_INCLUDE_PATH, '', __FILE__), __LINE__ - 17);
+		} else {
+			$expected = sprintf($expectedHtml, str_replace(CAKE_CORE_INCLUDE_PATH, '', __FILE__), __LINE__ - 19);
+		}
+		$this->assertEquals($expected, $result);
+
+		ob_start();
+		debug('<div>this-is-a-test</div>', null, false);
+		$result = ob_get_clean();
+		$expectedHtml = <<<EXPECTED
+<div class="cake-debug-output">
+
+<pre class="cake-debug">
+&#039;&lt;div&gt;this-is-a-test&lt;/div&gt;&#039;
+</pre>
+</div>
+EXPECTED;
+		$expectedText = <<<EXPECTED
+
+########## DEBUG ##########
+'<div>this-is-a-test</div>'
+###########################
+EXPECTED;
+		if (php_sapi_name() == 'cli') {
+			$expected = sprintf($expectedText, str_replace(CAKE_CORE_INCLUDE_PATH, '', __FILE__), __LINE__ - 17);
+		} else {
+			$expected = sprintf($expectedHtml, str_replace(CAKE_CORE_INCLUDE_PATH, '', __FILE__), __LINE__ - 19);
+		}
+		$this->assertEquals($expected, $result);
+
+		ob_start();
+		debug('<div>this-is-a-test</div>', false);
+		$result = ob_get_clean();
+		$expected = <<<EXPECTED
+%s (line %d)
+########## DEBUG ##########
+'<div>this-is-a-test</div>'
+###########################
+EXPECTED;
+		$expected = sprintf($expected, str_replace(CAKE_CORE_INCLUDE_PATH, '', __FILE__), __LINE__ - 8);
+		$this->assertEquals($expected, $result);
+
+		ob_start();
+		debug('<div>this-is-a-test</div>', false, true);
+		$result = ob_get_clean();
+		$expected = <<<EXPECTED
+%s (line %d)
+########## DEBUG ##########
+'<div>this-is-a-test</div>'
+###########################
+EXPECTED;
+		$expected = sprintf($expected, str_replace(CAKE_CORE_INCLUDE_PATH, '', __FILE__), __LINE__ - 8);
+		$this->assertEquals($expected, $result);
+
+		ob_start();
+		debug('<div>this-is-a-test</div>', false, false);
+		$result = ob_get_clean();
+		$expected = <<<EXPECTED
+
+########## DEBUG ##########
+'<div>this-is-a-test</div>'
+###########################
+EXPECTED;
+		$expected = sprintf($expected, str_replace(CAKE_CORE_INCLUDE_PATH, '', __FILE__), __LINE__ - 8);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -703,16 +837,16 @@ class BasicsTest extends CakeTestCase {
  */
 	public function testPr() {
 		ob_start();
-			pr('this is a test');
+		pr('this is a test');
 		$result = ob_get_clean();
 		$expected = "<pre>this is a test</pre>";
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		ob_start();
-			pr(array('this' => 'is', 'a' => 'test'));
+		pr(array('this' => 'is', 'a' => 'test'));
 		$result = ob_get_clean();
 		$expected = "<pre>Array\n(\n    [this] => is\n    [a] => test\n)\n</pre>";
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -723,33 +857,33 @@ class BasicsTest extends CakeTestCase {
 	public function testStripslashesDeep() {
 		$this->skipIf(ini_get('magic_quotes_sybase') === '1', 'magic_quotes_sybase is on.');
 
-		$this->assertEqual(stripslashes_deep("tes\'t"), "tes't");
-		$this->assertEqual(stripslashes_deep('tes\\' . chr(0) .'t'), 'tes' . chr(0) .'t');
-		$this->assertEqual(stripslashes_deep('tes\"t'), 'tes"t');
-		$this->assertEqual(stripslashes_deep("tes\'t"), "tes't");
-		$this->assertEqual(stripslashes_deep('te\\st'), 'test');
+		$this->assertEquals(stripslashes_deep("tes\'t"), "tes't");
+		$this->assertEquals(stripslashes_deep('tes\\' . chr(0) . 't'), 'tes' . chr(0) . 't');
+		$this->assertEquals(stripslashes_deep('tes\"t'), 'tes"t');
+		$this->assertEquals(stripslashes_deep("tes\'t"), "tes't");
+		$this->assertEquals(stripslashes_deep('te\\st'), 'test');
 
 		$nested = array(
 			'a' => "tes\'t",
-			'b' => 'tes\\' . chr(0) .'t',
+			'b' => 'tes\\' . chr(0) . 't',
 			'c' => array(
 				'd' => 'tes\"t',
 				'e' => "te\'s\'t",
 				array('f' => "tes\'t")
 				),
 			'g' => 'te\\st'
-			);
+		);
 		$expected = array(
 			'a' => "tes't",
-			'b' => 'tes' . chr(0) .'t',
+			'b' => 'tes' . chr(0) . 't',
 			'c' => array(
 				'd' => 'tes"t',
 				'e' => "te's't",
 				array('f' => "tes't")
 				),
 			'g' => 'test'
-			);
-		$this->assertEqual(stripslashes_deep($nested), $expected);
+		);
+		$this->assertEquals($expected, stripslashes_deep($nested));
 	}
 
 /**
@@ -758,9 +892,11 @@ class BasicsTest extends CakeTestCase {
  * @return void
  */
 	public function testStripslashesDeepSybase() {
-		$this->skipUnless(ini_get('magic_quotes_sybase') === '1', 'magic_quotes_sybase is off');
+		if (!(ini_get('magic_quotes_sybase') === '1')) {
+			$this->markTestSkipped('magic_quotes_sybase is off');
+		}
 
-		$this->assertEqual(stripslashes_deep("tes\'t"), "tes\'t");
+		$this->assertEquals(stripslashes_deep("tes\'t"), "tes\'t");
 
 		$nested = array(
 			'a' => "tes't",
@@ -782,7 +918,7 @@ class BasicsTest extends CakeTestCase {
 				),
 			'g' => "te'''st"
 			);
-		$this->assertEqual(stripslashes_deep($nested), $expected);
+		$this->assertEquals($expected, stripslashes_deep($nested));
 	}
 
 /**
@@ -792,24 +928,24 @@ class BasicsTest extends CakeTestCase {
  */
 	public function testPluginSplit() {
 		$result = pluginSplit('Something.else');
-		$this->assertEqual($result, array('Something', 'else'));
+		$this->assertEquals(array('Something', 'else'), $result);
 
 		$result = pluginSplit('Something.else.more.dots');
-		$this->assertEqual($result, array('Something', 'else.more.dots'));
+		$this->assertEquals(array('Something', 'else.more.dots'), $result);
 
 		$result = pluginSplit('Somethingelse');
-		$this->assertEqual($result, array(null, 'Somethingelse'));
+		$this->assertEquals(array(null, 'Somethingelse'), $result);
 
 		$result = pluginSplit('Something.else', true);
-		$this->assertEqual($result, array('Something.', 'else'));
+		$this->assertEquals(array('Something.', 'else'), $result);
 
 		$result = pluginSplit('Something.else.more.dots', true);
-		$this->assertEqual($result, array('Something.', 'else.more.dots'));
+		$this->assertEquals(array('Something.', 'else.more.dots'), $result);
 
 		$result = pluginSplit('Post', false, 'Blog');
-		$this->assertEqual($result, array('Blog', 'Post'));
+		$this->assertEquals(array('Blog', 'Post'), $result);
 
 		$result = pluginSplit('Blog.Post', false, 'Ultimate');
-		$this->assertEqual($result, array('Blog', 'Post'));
+		$this->assertEquals(array('Blog', 'Post'), $result);
 	}
 }

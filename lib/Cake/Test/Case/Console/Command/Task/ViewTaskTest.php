@@ -7,12 +7,12 @@
  * PHP 5
  *
  * CakePHP : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc.
+ * Copyright 2005-2012, Cake Software Foundation, Inc.
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc.
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc.
  * @link          http://cakephp.org CakePHP Project
  * @package       Cake.Test.Case.Console.Command.Task
  * @since         CakePHP v 1.2.0.7726
@@ -119,6 +119,7 @@ class ViewTaskCommentsController extends Controller {
  */
 	public function add() {
 	}
+
 }
 
 /**
@@ -191,6 +192,7 @@ class ViewTaskArticlesController extends Controller {
  */
 	public function admin_delete() {
 	}
+
 }
 
 /**
@@ -230,6 +232,7 @@ class ViewTaskTest extends CakeTestCase {
 
 		$this->Task->path = TMP;
 		$this->Task->Template->params['theme'] = 'default';
+		$this->Task->Template->templatePaths = array('default' => CAKE . 'Console' . DS . 'Templates' . DS . 'default' . DS);
 	}
 
 /**
@@ -262,14 +265,14 @@ class ViewTaskTest extends CakeTestCase {
 		);
 		$result = $this->Task->getContent('view', $vars);
 
-		$this->assertPattern('/Delete Test View Model/', $result);
-		$this->assertPattern('/Edit Test View Model/', $result);
-		$this->assertPattern('/List Test View Models/', $result);
-		$this->assertPattern('/New Test View Model/', $result);
+		$this->assertRegExp('/Delete Test View Model/', $result);
+		$this->assertRegExp('/Edit Test View Model/', $result);
+		$this->assertRegExp('/List Test View Models/', $result);
+		$this->assertRegExp('/New Test View Model/', $result);
 
-		$this->assertPattern('/testViewModel\[\'TestViewModel\'\]\[\'id\'\]/', $result);
-		$this->assertPattern('/testViewModel\[\'TestViewModel\'\]\[\'name\'\]/', $result);
-		$this->assertPattern('/testViewModel\[\'TestViewModel\'\]\[\'body\'\]/', $result);
+		$this->assertRegExp('/testViewModel\[\'TestViewModel\'\]\[\'id\'\]/', $result);
+		$this->assertRegExp('/testViewModel\[\'TestViewModel\'\]\[\'name\'\]/', $result);
+		$this->assertRegExp('/testViewModel\[\'TestViewModel\'\]\[\'body\'\]/', $result);
 	}
 
 /**
@@ -294,19 +297,19 @@ class ViewTaskTest extends CakeTestCase {
 		);
 		$result = $this->Task->getContent('admin_view', $vars);
 
-		$this->assertPattern('/Delete Test View Model/', $result);
-		$this->assertPattern('/Edit Test View Model/', $result);
-		$this->assertPattern('/List Test View Models/', $result);
-		$this->assertPattern('/New Test View Model/', $result);
+		$this->assertRegExp('/Delete Test View Model/', $result);
+		$this->assertRegExp('/Edit Test View Model/', $result);
+		$this->assertRegExp('/List Test View Models/', $result);
+		$this->assertRegExp('/New Test View Model/', $result);
 
-		$this->assertPattern('/testViewModel\[\'TestViewModel\'\]\[\'id\'\]/', $result);
-		$this->assertPattern('/testViewModel\[\'TestViewModel\'\]\[\'name\'\]/', $result);
-		$this->assertPattern('/testViewModel\[\'TestViewModel\'\]\[\'body\'\]/', $result);
+		$this->assertRegExp('/testViewModel\[\'TestViewModel\'\]\[\'id\'\]/', $result);
+		$this->assertRegExp('/testViewModel\[\'TestViewModel\'\]\[\'name\'\]/', $result);
+		$this->assertRegExp('/testViewModel\[\'TestViewModel\'\]\[\'body\'\]/', $result);
 
 		$result = $this->Task->getContent('admin_add', $vars);
-		$this->assertPattern("/input\('name'\)/", $result);
-		$this->assertPattern("/input\('body'\)/", $result);
-		$this->assertPattern('/List Test View Models/', $result);
+		$this->assertRegExp("/input\('name'\)/", $result);
+		$this->assertRegExp("/input\('body'\)/", $result);
+		$this->assertRegExp('/List Test View Models/', $result);
 
 		Configure::write('Routing', $_back);
 	}
@@ -383,8 +386,8 @@ class ViewTaskTest extends CakeTestCase {
 		$this->Task->name = 'View';
 
 		//fake plugin path
-		CakePlugin::load('TestTest', array('path' =>  APP . 'Plugin' . DS . 'TestTest' . DS));
-		$path =  APP . 'Plugin' . DS . 'TestTest' . DS . 'View' . DS . 'ViewTaskComments' . DS  . 'view.ctp';
+		CakePlugin::load('TestTest', array('path' => APP . 'Plugin' . DS . 'TestTest' . DS));
+		$path = APP . 'Plugin' . DS . 'TestTest' . DS . 'View' . DS . 'ViewTaskComments' . DS . 'view.ctp';
 
 		$result = $this->Task->getContent('index');
 		$this->assertNotContains('List Test Test.view Task Articles', $result);
@@ -431,7 +434,6 @@ class ViewTaskTest extends CakeTestCase {
  */
 	public function testCustomAction() {
 		$this->Task->controllerName = 'ViewTaskComments';
-		$this->Task->params['app'] = APP;
 
 		$this->Task->expects($this->any())->method('in')
 			->will($this->onConsecutiveCalls('', 'my_action', 'y'));
@@ -564,7 +566,7 @@ class ViewTaskTest extends CakeTestCase {
 	}
 
 /**
- * test `cake bake view $controller -admin`
+ * test `cake bake view $controller --admin`
  * Which only bakes admin methods, not non-admin methods.
  *
  * @return void
@@ -607,13 +609,12 @@ class ViewTaskTest extends CakeTestCase {
 		$this->Task->expects($this->any())->method('in')
 			->will($this->onConsecutiveCalls('y', 'y', 'n'));
 
-
 		$this->Task->expects($this->at(3))->method('createFile')
 			->with(
 				TMP . 'ViewTaskComments' . DS . 'index.ctp',
 				$this->stringContains('ViewTaskComment')
 			);
-	
+
 		$this->Task->expects($this->at(4))->method('createFile')
 			->with(
 				TMP . 'ViewTaskComments' . DS . 'view.ctp',
@@ -631,7 +632,7 @@ class ViewTaskTest extends CakeTestCase {
 				TMP . 'ViewTaskComments' . DS . 'edit.ctp',
 				$this->stringContains('Edit View Task Comment')
 			);
-	
+
 		$this->Task->expects($this->exactly(4))->method('createFile');
 		$this->Task->execute();
 	}
@@ -678,7 +679,7 @@ class ViewTaskTest extends CakeTestCase {
 				TMP . 'ViewTaskComments' . DS . 'admin_index.ctp',
 				$this->stringContains('ViewTaskComment')
 			);
-	
+
 		$this->Task->expects($this->at(4))->method('createFile')
 			->with(
 				TMP . 'ViewTaskComments' . DS . 'admin_view.ctp',
@@ -696,13 +697,13 @@ class ViewTaskTest extends CakeTestCase {
 				TMP . 'ViewTaskComments' . DS . 'admin_edit.ctp',
 				$this->stringContains('Edit View Task Comment')
 			);
-	
+
 		$this->Task->expects($this->exactly(4))->method('createFile');
 		$this->Task->execute();
 	}
 
 /**
- * test getting templates, make sure noTemplateActions works
+ * test getting templates, make sure noTemplateActions works and prefixed template is used before generic one.
  *
  * @return void
  */
@@ -711,12 +712,20 @@ class ViewTaskTest extends CakeTestCase {
 		$this->assertFalse($result);
 
 		$result = $this->Task->getTemplate('add');
-		$this->assertEqual($result, 'form');
+		$this->assertEquals('form', $result);
 
 		Configure::write('Routing.prefixes', array('admin'));
 
 		$result = $this->Task->getTemplate('admin_add');
-		$this->assertEqual($result, 'form');
+		$this->assertEquals('form', $result);
+
+		$this->Task->Template->templatePaths = array(
+			'test' => CAKE . 'Test' . DS . 'test_app' . DS . 'Console' . DS . 'Templates' . DS . 'test' . DS
+		);
+		$this->Task->Template->params['theme'] = 'test';
+
+		$result = $this->Task->getTemplate('admin_edit');
+		$this->assertEquals('admin_edit', $result);
 	}
 
 }

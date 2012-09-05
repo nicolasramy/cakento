@@ -4,14 +4,14 @@
  *
  * PHP 5
  *
- * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2011, Cake Software Foundation, Inc.
+ * CakePHP(tm) Tests <http://book.cakephp.org/2.0/en/development/testing.html>
+ * Copyright 2005-2012, Cake Software Foundation, Inc.
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc.
- * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc.
+ * @link          http://book.cakephp.org/2.0/en/development/testing.html CakePHP(tm) Tests
  * @package       Cake.Test.Case.Console
  * @since         CakePHP(tm) v 1.2.0.5432
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -38,6 +38,7 @@ class ConsoleOutputTest extends CakeTestCase {
  * @return void
  */
 	public function tearDown() {
+		parent::tearDown();
 		unset($this->output);
 	}
 
@@ -97,7 +98,7 @@ class ConsoleOutputTest extends CakeTestCase {
 	public function testStylesGet() {
 		$result = $this->output->styles('error');
 		$expected = array('text' => 'red', 'underline' => true);
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$this->assertNull($this->output->styles('made_up_goop'));
 
@@ -224,5 +225,18 @@ class ConsoleOutputTest extends CakeTestCase {
 			->with('Bad Regular');
 
 		$this->output->write('<error>Bad</error> Regular', false);
+	}
+
+/**
+ * test plain output only strips tags used for formatting.
+ *
+ * @return void
+ */
+	public function testOutputAsPlainSelectiveTagRemoval() {
+		$this->output->outputAs(ConsoleOutput::PLAIN);
+		$this->output->expects($this->once())->method('_write')
+			->with('Bad Regular <b>Left</b> <i>behind</i> <name>');
+
+		$this->output->write('<error>Bad</error> Regular <b>Left</b> <i>behind</i> <name>', false);
 	}
 }

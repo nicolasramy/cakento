@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.Test.Case.Model.Datasource.Database
  * @since         CakePHP(tm) v 1.2.0
@@ -48,9 +48,11 @@ class SqlserverTestDb extends Sqlserver {
  * execute method
  *
  * @param mixed $sql
+ * @param mixed $params
+ * @param mixed $prepareOptions
  * @return mixed
  */
-	protected function _execute($sql) {
+	protected function _execute($sql, $params = array(), $prepareOptions = array()) {
 		$this->simulated[] = $sql;
 		return empty($this->executeResultsStack) ? null : array_pop($this->executeResultsStack);
 	}
@@ -61,7 +63,7 @@ class SqlserverTestDb extends Sqlserver {
  * @param mixed $sql
  * @return void
  */
-	protected function _matchRecords($model, $conditions = null) {
+	protected function _matchRecords(Model $model, $conditions = null) {
 		return $this->conditions(array('id' => array(1, 2)));
 	}
 
@@ -92,7 +94,7 @@ class SqlserverTestDb extends Sqlserver {
 	public function clearFieldMappings() {
 		$this->_fieldMappings = array();
 	}
-	
+
 /**
  * describe method
  *
@@ -102,6 +104,7 @@ class SqlserverTestDb extends Sqlserver {
 	public function describe($model) {
 		return empty($this->describe) ? parent::describe($model) : $this->describe;
 	}
+
 }
 
 /**
@@ -109,7 +112,7 @@ class SqlserverTestDb extends Sqlserver {
  *
  * @package       Cake.Test.Case.Model.Datasource.Database
  */
-class SqlserverTestModel extends Model {
+class SqlserverTestModel extends CakeTestModel {
 
 /**
  * name property
@@ -131,24 +134,24 @@ class SqlserverTestModel extends Model {
  * @var array
  */
 	protected $_schema = array(
-		'id'		=> array('type' => 'integer', 'null' => '', 'default' => '', 'length' => '8', 'key' => 'primary'),
-		'client_id'	=> array('type' => 'integer', 'null' => '', 'default' => '0', 'length' => '11'),
-		'name'		=> array('type' => 'string', 'null' => '', 'default' => '', 'length' => '255'),
-		'login'		=> array('type' => 'string', 'null' => '', 'default' => '', 'length' => '255'),
-		'passwd'	=> array('type' => 'string', 'null' => '1', 'default' => '', 'length' => '255'),
-		'addr_1'	=> array('type' => 'string', 'null' => '1', 'default' => '', 'length' => '255'),
-		'addr_2'	=> array('type' => 'string', 'null' => '1', 'default' => '', 'length' => '25'),
-		'zip_code'	=> array('type' => 'string', 'null' => '1', 'default' => '', 'length' => '155'),
-		'city'		=> array('type' => 'string', 'null' => '1', 'default' => '', 'length' => '155'),
-		'country'	=> array('type' => 'string', 'null' => '1', 'default' => '', 'length' => '155'),
-		'phone'		=> array('type' => 'string', 'null' => '1', 'default' => '', 'length' => '155'),
-		'fax'		=> array('type' => 'string', 'null' => '1', 'default' => '', 'length' => '155'),
-		'url'		=> array('type' => 'string', 'null' => '1', 'default' => '', 'length' => '255'),
-		'email'		=> array('type' => 'string', 'null' => '1', 'default' => '', 'length' => '155'),
-		'comments'	=> array('type' => 'text', 'null' => '1', 'default' => '', 'length' => ''),
-		'last_login'=> array('type' => 'datetime', 'null' => '1', 'default' => '', 'length' => ''),
-		'created'	=> array('type' => 'date', 'null' => '1', 'default' => '', 'length' => ''),
-		'updated'	=> array('type' => 'datetime', 'null' => '1', 'default' => '', 'length' => null)
+		'id' => array('type' => 'integer', 'null' => '', 'default' => '', 'length' => '8', 'key' => 'primary'),
+		'client_id' => array('type' => 'integer', 'null' => '', 'default' => '0', 'length' => '11'),
+		'name' => array('type' => 'string', 'null' => '', 'default' => '', 'length' => '255'),
+		'login' => array('type' => 'string', 'null' => '', 'default' => '', 'length' => '255'),
+		'passwd' => array('type' => 'string', 'null' => '1', 'default' => '', 'length' => '255'),
+		'addr_1' => array('type' => 'string', 'null' => '1', 'default' => '', 'length' => '255'),
+		'addr_2' => array('type' => 'string', 'null' => '1', 'default' => '', 'length' => '25'),
+		'zip_code' => array('type' => 'string', 'null' => '1', 'default' => '', 'length' => '155'),
+		'city' => array('type' => 'string', 'null' => '1', 'default' => '', 'length' => '155'),
+		'country' => array('type' => 'string', 'null' => '1', 'default' => '', 'length' => '155'),
+		'phone' => array('type' => 'string', 'null' => '1', 'default' => '', 'length' => '155'),
+		'fax' => array('type' => 'string', 'null' => '1', 'default' => '', 'length' => '155'),
+		'url' => array('type' => 'string', 'null' => '1', 'default' => '', 'length' => '255'),
+		'email' => array('type' => 'string', 'null' => '1', 'default' => '', 'length' => '155'),
+		'comments' => array('type' => 'text', 'null' => '1', 'default' => '', 'length' => ''),
+		'last_login' => array('type' => 'datetime', 'null' => '1', 'default' => '', 'length' => ''),
+		'created' => array('type' => 'date', 'null' => '1', 'default' => '', 'length' => ''),
+		'updated' => array('type' => 'datetime', 'null' => '1', 'default' => '', 'length' => null)
 	);
 
 /**
@@ -161,6 +164,7 @@ class SqlserverTestModel extends Model {
 			'foreignKey' => 'client_id'
 		)
 	);
+
 /**
  * find method
  *
@@ -173,6 +177,7 @@ class SqlserverTestModel extends Model {
 	public function find($conditions = null, $fields = null, $order = null, $recursive = null) {
 		return $conditions;
 	}
+
 }
 
 /**
@@ -180,7 +185,8 @@ class SqlserverTestModel extends Model {
  *
  * @package       Cake.Test.Case.Model.Datasource.Database
  */
-class SqlserverClientTestModel extends Model {
+class SqlserverClientTestModel extends CakeTestModel {
+
 /**
  * name property
  *
@@ -215,12 +221,29 @@ class SqlserverClientTestModel extends Model {
  * @package       Cake.Test.Case.Model.Datasource.Database
  */
 class SqlserverTestResultIterator extends ArrayIterator {
+
 /**
  * closeCursor method
  *
  * @return void
  */
-	public function closeCursor() {}
+	public function closeCursor() {
+	}
+
+/**
+ * fetch method
+ *
+ * @return void
+ */
+	public function fetch() {
+		if (!$this->valid()) {
+			return null;
+		}
+		$current = $this->current();
+		$this->next();
+		return $current;
+	}
+
 }
 
 /**
@@ -280,26 +303,27 @@ class SqlserverTest extends CakeTestCase {
  * @return void
  */
 	public function testQuoting() {
-		$expected = "1.200000";
+		$expected = "1.2";
 		$result = $this->db->value(1.2, 'float');
-		$this->assertIdentical($expected, $result);
+		$this->assertSame($expected, $result);
 
 		$expected = "'1,2'";
 		$result = $this->db->value('1,2', 'float');
-		$this->assertIdentical($expected, $result);
+		$this->assertSame($expected, $result);
 
 		$expected = 'NULL';
 		$result = $this->db->value('', 'integer');
-		$this->assertIdentical($expected, $result);
+		$this->assertSame($expected, $result);
 
 		$expected = 'NULL';
 		$result = $this->db->value('', 'float');
-		$this->assertIdentical($expected, $result);
+		$this->assertSame($expected, $result);
 
 		$expected = "''";
 		$result = $this->db->value('', 'binary');
-		$this->assertIdentical($expected, $result);
+		$this->assertSame($expected, $result);
 	}
+
 /**
  * testFields method
  *
@@ -329,19 +353,19 @@ class SqlserverTest extends CakeTestCase {
 
 		$result = $this->db->fields($this->model);
 		$expected = $fields;
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$this->db->clearFieldMappings();
 		$result = $this->db->fields($this->model, null, 'SqlserverTestModel.*');
 		$expected = $fields;
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$this->db->clearFieldMappings();
 		$result = $this->db->fields($this->model, null, array('*', 'AnotherModel.id', 'AnotherModel.name'));
 		$expected = array_merge($fields, array(
 			'[AnotherModel].[id] AS [AnotherModel__id]',
 			'[AnotherModel].[name] AS [AnotherModel__name]'));
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$this->db->clearFieldMappings();
 		$result = $this->db->fields($this->model, null, array('*', 'SqlserverClientTestModel.*'));
@@ -351,7 +375,7 @@ class SqlserverTest extends CakeTestCase {
 			'[SqlserverClientTestModel].[email] AS [SqlserverClientTestModel__email]',
 			'CONVERT(VARCHAR(20), [SqlserverClientTestModel].[created], 20) AS [SqlserverClientTestModel__created]',
 			'CONVERT(VARCHAR(20), [SqlserverClientTestModel].[updated], 20) AS [SqlserverClientTestModel__updated]'));
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -362,11 +386,11 @@ class SqlserverTest extends CakeTestCase {
 	public function testDistinctFields() {
 		$result = $this->db->fields($this->model, null, array('DISTINCT Car.country_code'));
 		$expected = array('DISTINCT [Car].[country_code] AS [Car__country_code]');
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = $this->db->fields($this->model, null, 'DISTINCT Car.country_code');
 		$expected = array('DISTINCT [Car].[country_code] AS [Car__country_code]');
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -380,7 +404,7 @@ class SqlserverTest extends CakeTestCase {
 			'limit' => 5
 		));
 		$result = $this->db->getLastQuery();
-		$this->assertPattern('/^SELECT DISTINCT TOP 5/', $result);
+		$this->assertRegExp('/^SELECT DISTINCT TOP 5/', $result);
 	}
 
 /**
@@ -390,7 +414,7 @@ class SqlserverTest extends CakeTestCase {
  */
 	public function testDescribe() {
 		$SqlserverTableDescription = new SqlserverTestResultIterator(array(
-			(object) array(
+			(object)array(
 				'Default' => '((0))',
 				'Field' => 'count',
 				'Key' => 0,
@@ -398,7 +422,7 @@ class SqlserverTest extends CakeTestCase {
 				'Null' => 'NO',
 				'Type' => 'integer'
 			),
-			(object) array(
+			(object)array(
 				'Default' => '',
 				'Field' => 'body',
 				'Key' => 0,
@@ -406,7 +430,7 @@ class SqlserverTest extends CakeTestCase {
 				'Null' => 'YES',
 				'Type' => 'nvarchar'
 			),
-			(object) array(
+			(object)array(
 				'Default' => '',
 				'Field' => 'published',
 				'Key' => 0,
@@ -415,7 +439,7 @@ class SqlserverTest extends CakeTestCase {
 				'Null' => 'YES',
 				'Size' => ''
 			),
-			(object) array(
+			(object)array(
 				'Default' => '',
 				'Field' => 'id',
 				'Key' => 1,
@@ -455,8 +479,9 @@ class SqlserverTest extends CakeTestCase {
 				'key' => 'primary'
 			)
 		);
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 	}
+
 /**
  * testBuildColumn
  *
@@ -466,59 +491,70 @@ class SqlserverTest extends CakeTestCase {
 		$column = array('name' => 'id', 'type' => 'integer', 'null' => false, 'default' => '', 'length' => '8', 'key' => 'primary');
 		$result = $this->db->buildColumn($column);
 		$expected = '[id] int IDENTITY (1, 1) NOT NULL';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$column = array('name' => 'client_id', 'type' => 'integer', 'null' => false, 'default' => '0', 'length' => '11');
 		$result = $this->db->buildColumn($column);
 		$expected = '[client_id] int DEFAULT 0 NOT NULL';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$column = array('name' => 'client_id', 'type' => 'integer', 'null' => true);
 		$result = $this->db->buildColumn($column);
 		$expected = '[client_id] int NULL';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		// 'name' => 'type' format for columns
 		$column = array('type' => 'integer', 'name' => 'client_id');
 		$result = $this->db->buildColumn($column);
 		$expected = '[client_id] int NULL';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$column = array('type' => 'string', 'name' => 'name');
 		$result = $this->db->buildColumn($column);
 		$expected = '[name] nvarchar(255) NULL';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$column = array('name' => 'name', 'type' => 'string', 'null' => false, 'default' => '', 'length' => '255');
 		$result = $this->db->buildColumn($column);
 		$expected = '[name] nvarchar(255) DEFAULT \'\' NOT NULL';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$column = array('name' => 'name', 'type' => 'string', 'null' => false, 'length' => '255');
 		$result = $this->db->buildColumn($column);
 		$expected = '[name] nvarchar(255) NOT NULL';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$column = array('name' => 'name', 'type' => 'string', 'null' => false, 'default' => null, 'length' => '255');
 		$result = $this->db->buildColumn($column);
 		$expected = '[name] nvarchar(255) NOT NULL';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$column = array('name' => 'name', 'type' => 'string', 'null' => true, 'default' => null, 'length' => '255');
 		$result = $this->db->buildColumn($column);
 		$expected = '[name] nvarchar(255) NULL';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$column = array('name' => 'name', 'type' => 'string', 'null' => true, 'default' => '', 'length' => '255');
 		$result = $this->db->buildColumn($column);
 		$expected = '[name] nvarchar(255) DEFAULT \'\'';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$column = array('name' => 'body', 'type' => 'text');
 		$result = $this->db->buildColumn($column);
 		$expected = '[body] nvarchar(MAX)';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
+
+		$column = array(
+			'name' => 'checked',
+			'type' => 'boolean',
+			'length' => 10,
+			'default' => '1'
+		);
+		$result = $this->db->buildColumn($column);
+		$expected = "[checked] bit DEFAULT '1'";
+		$this->assertEquals($expected, $result);
 	}
+
 /**
  * testBuildIndex method
  *
@@ -534,17 +570,18 @@ class SqlserverTest extends CakeTestCase {
 			'PRIMARY KEY ([id])',
 			'ALTER TABLE items ADD CONSTRAINT client_id UNIQUE([client_id]);'
 		);
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$indexes = array('client_id' => array('column' => 'client_id'));
 		$result = $this->db->buildIndex($indexes, 'items');
-		$this->assertEqual($result, array());
+		$this->assertEquals(array(), $result);
 
 		$indexes = array('client_id' => array('column' => array('client_id', 'period_id'), 'unique' => 1));
 		$result = $this->db->buildIndex($indexes, 'items');
 		$expected = array('ALTER TABLE items ADD CONSTRAINT client_id UNIQUE([client_id], [period_id]);');
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 	}
+
 /**
  * testUpdateAllSyntax method
  *
@@ -556,9 +593,9 @@ class SqlserverTest extends CakeTestCase {
 		$this->db->update($this->model, $fields, null, $conditions);
 
 		$result = $this->db->getLastQuery();
-		$this->assertNoPattern('/SqlserverTestModel/', $result);
-		$this->assertPattern('/^UPDATE \[sqlserver_test_models\]/', $result);
-		$this->assertPattern('/SET \[client_id\] = \[client_id\] \+ 1/', $result);
+		$this->assertNotRegExp('/SqlserverTestModel/', $result);
+		$this->assertRegExp('/^UPDATE \[sqlserver_test_models\]/', $result);
+		$this->assertRegExp('/SET \[client_id\] = \[client_id\] \+ 1/', $result);
 	}
 
 /**
@@ -568,52 +605,15 @@ class SqlserverTest extends CakeTestCase {
  */
 	public function testGetPrimaryKey() {
 		$schema = $this->model->schema();
-		
+
 		$this->db->describe = $schema;
 		$result = $this->db->getPrimaryKey($this->model);
-		$this->assertEqual($result, 'id');
-		
+		$this->assertEquals('id', $result);
+
 		unset($schema['id']['key']);
 		$this->db->describe = $schema;
 		$result = $this->db->getPrimaryKey($this->model);
 		$this->assertNull($result);
-	}
-
-/**
- * testInsertMulti
- *
- * @return void
- */
-	public function testInsertMulti() {
-		$this->db->describe = $this->model->schema();
-		
-		$fields = array('id', 'name', 'login');
-		$values = array(
-			array(1, 'Larry', 'PhpNut'),
-			array(2, 'Renan', 'renan.saddam'));
-		$this->db->simulated = array();
-		$this->db->insertMulti($this->model, $fields, $values);
-		$result = $this->db->simulated;
-		$expected = array(
-			'SET IDENTITY_INSERT [sqlserver_test_models] ON',
-			"INSERT INTO [sqlserver_test_models] ([id], [name], [login]) VALUES (1, N'Larry', N'PhpNut')",
-			"INSERT INTO [sqlserver_test_models] ([id], [name], [login]) VALUES (2, N'Renan', N'renan.saddam')",
-			'SET IDENTITY_INSERT [sqlserver_test_models] OFF'
-		);
-		$this->assertEqual($expected, $result);
-
-		$fields = array('name', 'login');
-		$values = array(
-			array('Larry', 'PhpNut'),
-			array('Renan', 'renan.saddam'));
-		$this->db->simulated = array();
-		$this->db->insertMulti($this->model, $fields, $values);
-		$result = $this->db->simulated;
-		$expected = array(
-			"INSERT INTO [sqlserver_test_models] ([name], [login]) VALUES (N'Larry', N'PhpNut')",
-			"INSERT INTO [sqlserver_test_models] ([name], [login]) VALUES (N'Renan', N'renan.saddam')",
-		);
-		$this->assertEqual($expected, $result);
 	}
 
 /**
@@ -647,6 +647,33 @@ class SqlserverTest extends CakeTestCase {
 		$this->assertFalse(isset($results[0][0]));
 		$this->assertEquals('mariano', $results[0]['User']['user']);
 		$this->assertEquals('nate', $results[1]['User']['user']);
+	}
+
+/**
+ * Test that the return of stored procedures is honoured
+ *
+ * @return void
+ */
+	public function testStoredProcedureReturn() {
+		$sql = <<<SQL
+CREATE PROCEDURE cake_test_procedure
+AS
+BEGIN
+RETURN 2;
+END
+SQL;
+		$this->Dbo->execute($sql);
+
+		$sql = <<<SQL
+DECLARE @return_value int
+EXEC @return_value = [cake_test_procedure]
+SELECT 'value' = @return_value
+SQL;
+		$query = $this->Dbo->execute($sql);
+		$this->Dbo->execute('DROP PROC cake_test_procedure');
+
+		$result = $query->fetch();
+		$this->assertEquals(2, $result['value']);
 	}
 
 }

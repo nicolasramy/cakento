@@ -4,14 +4,14 @@
  *
  * PHP 5
  *
- * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2011, Cake Software Foundation, Inc.
+ * CakePHP(tm) Tests <http://book.cakephp.org/2.0/en/development/testing.html>
+ * Copyright 2005-2012, Cake Software Foundation, Inc.
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc.
- * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc.
+ * @link          http://book.cakephp.org/2.0/en/development/testing.html CakePHP(tm) Tests
  * @package       Cake.Test.Case.Console
  * @since         CakePHP(tm) v 2.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -38,7 +38,7 @@ class ConsoleOptionParserTest extends CakeTestCase {
 	}
 
 /**
- * test setting the console epliog
+ * test setting the console epilog
  *
  * @return void
  */
@@ -48,7 +48,7 @@ class ConsoleOptionParserTest extends CakeTestCase {
 
 		$this->assertEquals($parser, $result, 'Setting epilog is not chainable');
 		$this->assertEquals('A test', $parser->epilog(), 'getting value is wrong.');
-		
+
 		$result = $parser->epilog(array('A test', 'something'));
 		$this->assertEquals("A test\nsomething", $parser->epilog(), 'getting value is wrong.');
 	}
@@ -116,7 +116,7 @@ class ConsoleOptionParserTest extends CakeTestCase {
 		));
 		$result = $parser->parse(array('--test'));
 		$this->assertEquals(array('test' => 'default value', 'help' => false), $result[0], 'Default value did not parse out');
-		
+
 		$parser = new ConsoleOptionParser('test', false);
 		$parser->addOption('test', array(
 			'default' => 'default value',
@@ -165,7 +165,7 @@ class ConsoleOptionParserTest extends CakeTestCase {
 		$result = $parser->parse(array('--test', 'value'));
 		$expected = array(array('test' => true, 'help' => false), array('value'));
 		$this->assertEquals($expected, $result);
-		
+
 		$result = $parser->parse(array('value'));
 		$expected = array(array('test' => false, 'help' => false), array('value'));
 		$this->assertEquals($expected, $result);
@@ -249,7 +249,7 @@ class ConsoleOptionParserTest extends CakeTestCase {
 
 		$result = $parser->parse(array('--fail', 'other'));
 	}
-	
+
 /**
  * test parsing short options that do not exist.
  *
@@ -271,7 +271,7 @@ class ConsoleOptionParserTest extends CakeTestCase {
 	public function testOptionWithChoices() {
 		$parser = new ConsoleOptionParser('test', false);
 		$parser->addOption('name', array('choices' => array('mark', 'jose')));
-		
+
 		$result = $parser->parse(array('--name', 'mark'));
 		$expected = array('name' => 'mark', 'help' => false);
 		$this->assertEquals($expected, $result[0], 'Got the correct value.');
@@ -302,7 +302,7 @@ class ConsoleOptionParserTest extends CakeTestCase {
 	public function testPositionalArgument() {
 		$parser = new ConsoleOptionParser('test', false);
 		$result = $parser->addArgument('name', array('help' => 'An argument'));
-		$this->assertEquals($parser, $result, 'Should returnn this');
+		$this->assertEquals($parser, $result, 'Should return this');
 	}
 
 /**
@@ -348,6 +348,19 @@ class ConsoleOptionParserTest extends CakeTestCase {
 		$this->assertEquals($expected, $result[1], 'Arguments are not as expected');
 
 		$result = $parser->parse(array('one', 'two', 'three'));
+	}
+
+/**
+ * test parsing arguments with 0 value.
+ *
+ * @return void
+ */
+	public function testParseArgumentZero() {
+		$parser = new ConsoleOptionParser('test', false);
+
+		$expected = array('one', 'two', 0, 'after', 'zero');
+		$result = $parser->parse($expected);
+		$this->assertEquals($expected, $result[1], 'Arguments are not as expected');
 	}
 
 /**
@@ -483,7 +496,7 @@ cake mycommand method [-h] [--connection]
 --connection      Db connection.
 
 TEXT;
-		$this->assertEquals($expected, $result, 'Help is not correct.');
+		$this->assertTextEquals($expected, $result, 'Help is not correct.');
 	}
 
 /**
@@ -519,7 +532,7 @@ TEXT;
 
 		$args = $parser->arguments();
 		$this->assertEquals(2, count($args));
-		
+
 		$commands = $parser->subcommands();
 		$this->assertEquals(1, count($commands));
 	}
@@ -567,7 +580,7 @@ TEXT;
 					)
 				)
 			));
-		
+
 		$result = $parser->parse(array('--secondary', '--fourth', '4', 'c'), 'sub');
 		$expected = array(array(
 			'secondary' => true,

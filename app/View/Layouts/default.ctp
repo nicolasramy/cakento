@@ -1,57 +1,61 @@
-<!doctype html>
-<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<?php
+/**
+ *
+ * PHP 5
+ *
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @package       Cake.View.Layouts
+ * @since         CakePHP(tm) v 0.10.0.1076
+ * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ */
+
+$cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework');
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<?php echo $this->Html->charset(); ?>
+	<title>
+		<?php echo $cakeDescription ?>:
+		<?php echo $title_for_layout; ?>
+	</title>
+	<?php
+		echo $this->Html->meta('icon');
 
-	<title><?php echo $title_for_layout; ?></title>
+		echo $this->Html->css('cake.generic');
 
-	<meta name="description" content="">
-	<meta name="author" content="">
-
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-
-	<?php echo $this->Html->css(array('style', 'default')); ?>
-
-	<?php echo $this->Html->script(array('jquery-1.6.2.min', 'modernizr-2.0.6.min')); ?>
+		echo $this->fetch('meta');
+		echo $this->fetch('css');
+		echo $this->fetch('script');
+	?>
 </head>
 <body>
+	<div id="container">
+		<div id="header">
+			<h1><?php echo $this->Html->link($cakeDescription, 'http://cakephp.org'); ?></h1>
+		</div>
+		<div id="content">
 
+			<?php echo $this->Session->flash(); ?>
 
-<div id="container">
-
-	<div id="main" role="main">
-		<nav>
-			<?php echo $this->element('nav'); ?>
-		</nav>
-		<section>
-			<?php echo $content_for_layout; ?>
-		</section>
+			<?php echo $this->fetch('content'); ?>
+		</div>
+		<div id="footer">
+			<?php echo $this->Html->link(
+					$this->Html->image('cake.power.gif', array('alt' => $cakeDescription, 'border' => '0')),
+					'http://www.cakephp.org/',
+					array('target' => '_blank', 'escape' => false)
+				);
+			?>
+		</div>
 	</div>
-
-</div> <!--! end of #container -->
-
-
-<!-- scripts concatenated and minified via ant build script-->
-<?php
-	$__scripts = array
-	(
-		'jquery.jgrowl_compressed',
-		'jquery.wysiwyg',
-		'plugins',
-		'script'
-	);
-	echo $this->Html->script($__scripts);
-?>
-<!-- end scripts-->
-
-<!--[if lt IE 7 ]>
-	<script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.2/CFInstall.min.js"></script>
-	<script>window.attachEvent("onload",function(){CFInstall.check({mode:"overlay"})})</script>
-<![endif]-->
-
+	<?php echo $this->element('sql_dump'); ?>
 </body>
 </html>

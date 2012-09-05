@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.TestSuite
  * @since         CakePHP(tm) v 2.0
@@ -26,8 +26,6 @@ App::uses('CakeTestCase', 'TestSuite');
 App::uses('ControllerTestCase', 'TestSuite');
 App::uses('CakeTestModel', 'TestSuite/Fixture');
 
-PHP_CodeCoverage_Filter::getInstance()->addFileToBlacklist(__FILE__, 'DEFAULT');
-
 /**
  * Class to customize loading of test suites from CLI
  *
@@ -39,11 +37,12 @@ class CakeTestSuiteCommand extends PHPUnit_TextUI_Command {
  * Construct method
  *
  * @param array $params list of options to be used for this run
+ * @throws MissingTestLoaderException When a loader class could not be found.
  */
 	public function __construct($loader, $params = array()) {
-	    if ($loader && !class_exists($loader)) {
-	        throw new MissingTestLoaderException(array('class' => $loader));
-	    }
+		if ($loader && !class_exists($loader)) {
+			throw new MissingTestLoaderException(array('class' => $loader));
+		}
 		$this->arguments['loader'] = $loader;
 		$this->arguments['test'] = $params['case'];
 		$this->arguments['testFile'] = $params;
@@ -69,16 +68,15 @@ class CakeTestSuiteCommand extends PHPUnit_TextUI_Command {
 			$suite = $this->arguments['test'];
 		} else {
 			$suite = $runner->getTest(
-			  $this->arguments['test'],
-			  $this->arguments['testFile'],
-			  $this->arguments['syntaxCheck']
+				$this->arguments['test'],
+				$this->arguments['testFile']
 			);
 		}
 
 		if (count($suite) == 0) {
 			$skeleton = new PHPUnit_Util_Skeleton_Test(
-			  $suite->getName(),
-			  $this->arguments['testFile']
+				$suite->getName(),
+				$this->arguments['testFile']
 			);
 
 			$result = $skeleton->generate(true);
@@ -86,7 +84,7 @@ class CakeTestSuiteCommand extends PHPUnit_TextUI_Command {
 			if (!$result['incomplete']) {
 				eval(str_replace(array('<?php', '?>'), '', $result['code']));
 				$suite = new PHPUnit_Framework_TestSuite(
-				  $this->arguments['test'] . 'Test'
+					$this->arguments['test'] . 'Test'
 				);
 			}
 		}
@@ -111,22 +109,16 @@ class CakeTestSuiteCommand extends PHPUnit_TextUI_Command {
 
 		try {
 			$result = $runner->doRun($suite, $this->arguments);
-		}
-
-		catch (PHPUnit_Framework_Exception $e) {
+		} catch (PHPUnit_Framework_Exception $e) {
 			print $e->getMessage() . "\n";
 		}
 
 		if ($exit) {
 			if (isset($result) && $result->wasSuccessful()) {
 				exit(PHPUnit_TextUI_TestRunner::SUCCESS_EXIT);
-			}
-
-			else if (!isset($result) || $result->errorCount() > 0) {
+			} elseif (!isset($result) || $result->errorCount() > 0) {
 				exit(PHPUnit_TextUI_TestRunner::EXCEPTION_EXIT);
-			}
-
-			else {
+			} else {
 				exit(PHPUnit_TextUI_TestRunner::FAILURE_EXIT);
 			}
 		}
@@ -175,4 +167,5 @@ class CakeTestSuiteCommand extends PHPUnit_TextUI_Command {
 		}
 		return $this->arguments['printer'] = $object;
 	}
+
 }

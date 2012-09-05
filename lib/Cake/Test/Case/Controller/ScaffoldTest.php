@@ -4,19 +4,18 @@
  *
  * PHP 5
  *
- * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * CakePHP(tm) Tests <http://book.cakephp.org/2.0/en/development/testing.html>
+ * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://book.cakephp.org/2.0/en/development/testing.html CakePHP(tm) Tests
  * @package       Cake.Test.Case.Controller
  * @since         CakePHP(tm) v 1.2.0.5436
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
 App::uses('Router', 'Routing');
 App::uses('Controller', 'Controller');
 App::uses('Scaffold', 'Controller');
@@ -77,6 +76,7 @@ class ScaffoldMockControllerWithFields extends Controller {
 		$this->set('scaffoldFields', array('title'));
 		return true;
 	}
+
 }
 
 /**
@@ -87,25 +87,24 @@ class ScaffoldMockControllerWithFields extends Controller {
 class TestScaffoldMock extends Scaffold {
 
 /**
- * Overload __scaffold
+ * Overload _scaffold
  *
  * @param unknown_type $params
  */
-    function _scaffold($params) {
-        $this->_params = $params;
-    }
+	protected function _scaffold(CakeRequest $request) {
+		$this->_params = $request;
+	}
 
 /**
  * Get Params from the Controller.
  *
  * @return unknown
  */
-    function getParams() {
-        return $this->_params;
-    }
+	public function getParams() {
+		return $this->_params;
+	}
+
 }
-
-
 
 /**
  * Scaffold Test class
@@ -127,6 +126,7 @@ class ScaffoldTest extends CakeTestCase {
  * @var array
  */
 	public $fixtures = array('core.article', 'core.user', 'core.comment', 'core.join_thing', 'core.tag');
+
 /**
  * setUp method
  *
@@ -161,7 +161,7 @@ class ScaffoldTest extends CakeTestCase {
 			'pass' => array(),
 			'form' => array(),
 			'named' => array(),
-			'url' => array('url' =>'admin/scaffold_mock/edit'),
+			'url' => array('url' => 'admin/scaffold_mock/edit'),
 			'controller' => 'scaffold_mock',
 			'action' => 'admin_edit',
 			'admin' => true,
@@ -177,7 +177,7 @@ class ScaffoldTest extends CakeTestCase {
 		$this->Controller->constructClasses();
 		$Scaffold = new TestScaffoldMock($this->Controller, $this->Controller->request);
 		$result = $Scaffold->getParams();
-		$this->assertEqual($result['action'], 'admin_edit');
+		$this->assertEquals('admin_edit', $result['action']);
 	}
 
 /**
@@ -191,7 +191,7 @@ class ScaffoldTest extends CakeTestCase {
 			'pass' => array(),
 			'form' => array(),
 			'named' => array(),
-			'url' => array('url' =>'admin/scaffold_mock/edit'),
+			'url' => array('url' => 'admin/scaffold_mock/edit'),
 			'controller' => 'scaffold_mock',
 			'action' => 'admin_edit',
 			'admin' => true,
@@ -208,15 +208,15 @@ class ScaffoldTest extends CakeTestCase {
 		$Scaffold = new TestScaffoldMock($this->Controller, $this->Controller->request);
 		$result = $Scaffold->controller->viewVars;
 
-		$this->assertEqual($result['title_for_layout'], 'Scaffold :: Admin Edit :: Scaffold Mock');
-		$this->assertEqual($result['singularHumanName'], 'Scaffold Mock');
-		$this->assertEqual($result['pluralHumanName'], 'Scaffold Mock');
-		$this->assertEqual($result['modelClass'], 'ScaffoldMock');
-		$this->assertEqual($result['primaryKey'], 'id');
-		$this->assertEqual($result['displayField'], 'title');
-		$this->assertEqual($result['singularVar'], 'scaffoldMock');
-		$this->assertEqual($result['pluralVar'], 'scaffoldMock');
-		$this->assertEqual($result['scaffoldFields'], array('id', 'user_id', 'title', 'body', 'published', 'created', 'updated'));
+		$this->assertEquals('Scaffold :: Admin Edit :: Scaffold Mock', $result['title_for_layout']);
+		$this->assertEquals('Scaffold Mock', $result['singularHumanName']);
+		$this->assertEquals('Scaffold Mock', $result['pluralHumanName']);
+		$this->assertEquals('ScaffoldMock', $result['modelClass']);
+		$this->assertEquals('id', $result['primaryKey']);
+		$this->assertEquals('title', $result['displayField']);
+		$this->assertEquals('scaffoldMock', $result['singularVar']);
+		$this->assertEquals('scaffoldMock', $result['pluralVar']);
+		$this->assertEquals(array('id', 'user_id', 'title', 'body', 'published', 'created', 'updated'), $result['scaffoldFields']);
 	}
 
 /**
@@ -231,7 +231,7 @@ class ScaffoldTest extends CakeTestCase {
 		$this->Controller->constructClasses();
 		$Scaffold = new TestScaffoldMock($this->Controller, $this->Controller->request);
 
-		$this->assertEqual($this->Controller->viewClass, 'Scaffold');
+		$this->assertEquals('Scaffold', $this->Controller->viewClass);
 	}
 
 /**
@@ -245,7 +245,7 @@ class ScaffoldTest extends CakeTestCase {
 			'pass' => array(1),
 			'form' => array(),
 			'named' => array(),
-			'url' => array('url' =>'scaffold_mock'),
+			'url' => array('url' => 'scaffold_mock'),
 			'controller' => 'scaffold_mock',
 			'action' => 'edit',
 		);
@@ -271,21 +271,22 @@ class ScaffoldTest extends CakeTestCase {
 		new Scaffold($this->Controller, $this->Controller->request);
 		$this->Controller->response->send();
 		$result = ob_get_clean();
-		$this->assertPattern('/Scaffold Mock has been updated/', $result);
+		$this->assertRegExp('/Scaffold Mock has been updated/', $result);
 	}
+
 /**
  * test that habtm relationship keys get added to scaffoldFields.
  *
  * @return void
  */
-	function testHabtmFieldAdditionWithScaffoldForm() {
+	public function testHabtmFieldAdditionWithScaffoldForm() {
 		CakePlugin::unload();
 		$params = array(
 			'plugin' => null,
 			'pass' => array(1),
 			'form' => array(),
 			'named' => array(),
-			'url' => array('url' =>'scaffold_mock'),
+			'url' => array('url' => 'scaffold_mock'),
 			'controller' => 'scaffold_mock',
 			'action' => 'edit',
 		);
@@ -303,11 +304,12 @@ class ScaffoldTest extends CakeTestCase {
 		$Scaffold = new Scaffold($this->Controller, $this->Controller->request);
 		$this->Controller->response->send();
 		$result = ob_get_clean();
-		$this->assertPattern('/name="data\[ScaffoldTag\]\[ScaffoldTag\]"/', $result);
+		$this->assertRegExp('/name="data\[ScaffoldTag\]\[ScaffoldTag\]"/', $result);
 
 		$result = $Scaffold->controller->viewVars;
-		$this->assertEqual($result['scaffoldFields'], array('id', 'user_id', 'title', 'body', 'published', 'created', 'updated', 'ScaffoldTag'));
+		$this->assertEquals(array('id', 'user_id', 'title', 'body', 'published', 'created', 'updated', 'ScaffoldTag'), $result['scaffoldFields']);
 	}
+
 /**
  * test that the proper names and variable values are set by Scaffold
  *
@@ -323,7 +325,7 @@ class ScaffoldTest extends CakeTestCase {
 			'pass' => array(1),
 			'form' => array(),
 			'named' => array(),
-			'url' => array('url' =>'scaffold_mock/edit'),
+			'url' => array('url' => 'scaffold_mock/edit'),
 			'controller' => 'scaffold_mock',
 			'action' => 'edit',
 		);
@@ -342,6 +344,7 @@ class ScaffoldTest extends CakeTestCase {
 		$this->Controller->response->send();
 		$result = ob_get_clean();
 
-		$this->assertNoPattern('/textarea name="data\[ScaffoldMock\]\[body\]" cols="30" rows="6" id="ScaffoldMockBody"/', $result);
+		$this->assertNotRegExp('/textarea name="data\[ScaffoldMock\]\[body\]" cols="30" rows="6" id="ScaffoldMockBody"/', $result);
 	}
+
 }

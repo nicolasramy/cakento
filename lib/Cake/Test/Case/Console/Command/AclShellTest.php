@@ -5,18 +5,20 @@
  * PHP 5
  *
  * CakePHP :  Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc.
+ * Copyright 2005-2012, Cake Software Foundation, Inc.
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc.
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc.
  * @link          http://cakephp.org CakePHP Project
  * @package       Cake.Test.Case.Console.Command
  * @since         CakePHP v 1.2.0.7726
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
+App::uses('ConsoleOutput', 'Console');
+App::uses('ConsoleInput', 'Console');
 App::uses('ShellDispatcher', 'Console');
 App::uses('Shell', 'Console');
 App::uses('AclShell', 'Console/Command');
@@ -37,11 +39,12 @@ class AclShellTest extends CakeTestCase {
 	public $fixtures = array('core.aco', 'core.aro', 'core.aros_aco');
 
 /**
- * setup method
+ * setUp method
  *
  * @return void
  */
 	public function setUp() {
+		parent::setUp();
 		Configure::write('Acl.database', 'test');
 		Configure::write('Acl.classname', 'DbAcl');
 
@@ -81,7 +84,7 @@ class AclShellTest extends CakeTestCase {
 
 		$this->Task->expects($this->at(4))->method('out')
 			->with($this->stringContains('[3] Gandalf'));
-	
+
 		$this->Task->expects($this->at(6))->method('out')
 			->with($this->stringContains('[5] MyModel.2'));
 
@@ -114,10 +117,10 @@ class AclShellTest extends CakeTestCase {
 		$expected = array('model' => 'Model', 'foreign_key' => 'foreignKey');
 
 		$result = $this->Task->parseIdentifier('mySuperUser');
-		$this->assertEqual($result, 'mySuperUser');
+		$this->assertEquals('mySuperUser', $result);
 
 		$result = $this->Task->parseIdentifier('111234');
-		$this->assertEqual($result, '111234');
+		$this->assertEquals('111234', $result);
 	}
 
 /**
@@ -136,9 +139,9 @@ class AclShellTest extends CakeTestCase {
 		$Aro = ClassRegistry::init('Aro');
 		$Aro->cacheQueries = false;
 		$result = $Aro->read();
-		$this->assertEqual($result['Aro']['model'], 'User');
-		$this->assertEqual($result['Aro']['foreign_key'], 1);
-		$this->assertEqual($result['Aro']['parent_id'], null);
+		$this->assertEquals('User', $result['Aro']['model']);
+		$this->assertEquals(1, $result['Aro']['foreign_key']);
+		$this->assertEquals(null, $result['Aro']['parent_id']);
 		$id = $result['Aro']['id'];
 
 		$this->Task->args = array('aro', 'User.1', 'User.3');
@@ -146,19 +149,19 @@ class AclShellTest extends CakeTestCase {
 
 		$Aro = ClassRegistry::init('Aro');
 		$result = $Aro->read();
-		$this->assertEqual($result['Aro']['model'], 'User');
-		$this->assertEqual($result['Aro']['foreign_key'], 3);
-		$this->assertEqual($result['Aro']['parent_id'], $id);
+		$this->assertEquals('User', $result['Aro']['model']);
+		$this->assertEquals(3, $result['Aro']['foreign_key']);
+		$this->assertEquals($id, $result['Aro']['parent_id']);
 
 		$this->Task->args = array('aro', 'root', 'somealias');
 		$this->Task->create();
 
 		$Aro = ClassRegistry::init('Aro');
 		$result = $Aro->read();
-		$this->assertEqual($result['Aro']['alias'], 'somealias');
-		$this->assertEqual($result['Aro']['model'], null);
-		$this->assertEqual($result['Aro']['foreign_key'], null);
-		$this->assertEqual($result['Aro']['parent_id'], null);
+		$this->assertEquals('somealias', $result['Aro']['alias']);
+		$this->assertEquals(null, $result['Aro']['model']);
+		$this->assertEquals(null, $result['Aro']['foreign_key']);
+		$this->assertEquals(null, $result['Aro']['parent_id']);
 	}
 
 /**
@@ -188,7 +191,7 @@ class AclShellTest extends CakeTestCase {
 
 		$Aro = ClassRegistry::init('Aro');
 		$result = $Aro->read(null, 4);
-		$this->assertEqual($result['Aro']['parent_id'], null);
+		$this->assertEquals(null, $result['Aro']['parent_id']);
 	}
 
 /**
@@ -205,7 +208,7 @@ class AclShellTest extends CakeTestCase {
 		$node = $this->Task->Acl->Aro->read(null, $node[0]['Aro']['id']);
 
 		$this->assertFalse(empty($node['Aco'][0]));
-		$this->assertEqual($node['Aco'][0]['Permission']['_create'], 1);
+		$this->assertEquals(1, $node['Aco'][0]['Permission']['_create']);
 	}
 
 /**
@@ -217,13 +220,13 @@ class AclShellTest extends CakeTestCase {
 		$this->Task->args = array('AuthUser.2', 'ROOT/Controller1', 'create');
 		$this->Task->expects($this->at(0))->method('out')
 			->with($this->stringContains('Permission denied'), true);
-	
+
 		$this->Task->deny();
 
 		$node = $this->Task->Acl->Aro->node(array('model' => 'AuthUser', 'foreign_key' => 2));
 		$node = $this->Task->Acl->Aro->read(null, $node[0]['Aro']['id']);
 		$this->assertFalse(empty($node['Aco'][0]));
-		$this->assertEqual($node['Aco'][0]['Permission']['_create'], -1);
+		$this->assertEquals(-1, $node['Aco'][0]['Permission']['_create']);
 	}
 
 /**
@@ -264,7 +267,7 @@ class AclShellTest extends CakeTestCase {
 			->with($this->matchesRegularExpression('/Permission .*granted/'), true);
 		$this->Task->expects($this->at(1))->method('out')
 			->with($this->matchesRegularExpression('/Permission .*inherited/'), true);
-		
+
 		$this->Task->args = array('AuthUser.2', 'ROOT/Controller1', 'create');
 		$this->Task->grant();
 
@@ -274,7 +277,7 @@ class AclShellTest extends CakeTestCase {
 		$node = $this->Task->Acl->Aro->node(array('model' => 'AuthUser', 'foreign_key' => 2));
 		$node = $this->Task->Acl->Aro->read(null, $node[0]['Aro']['id']);
 		$this->assertFalse(empty($node['Aco'][0]));
-		$this->assertEqual($node['Aco'][0]['Permission']['_create'], 0);
+		$this->assertEquals(0, $node['Aco'][0]['Permission']['_create']);
 	}
 
 /**
@@ -288,9 +291,9 @@ class AclShellTest extends CakeTestCase {
 		$first = $node[0]['Aro']['id'];
 		$second = $node[1]['Aro']['id'];
 		$last = $node[2]['Aro']['id'];
-		$this->Task->expects($this->at(2))->method('out')->with('['.$last.'] ROOT');
-		$this->Task->expects($this->at(3))->method('out')->with('  ['.$second.'] admins');
-		$this->Task->expects($this->at(4))->method('out')->with('    ['.$first.'] Elrond');
+		$this->Task->expects($this->at(2))->method('out')->with('[' . $last . '] ROOT');
+		$this->Task->expects($this->at(3))->method('out')->with('  [' . $second . '] admins');
+		$this->Task->expects($this->at(4))->method('out')->with('    [' . $first . '] Elrond');
 		$this->Task->getPath();
 	}
 
@@ -302,7 +305,7 @@ class AclShellTest extends CakeTestCase {
 	public function testInitDb() {
 		$this->Task->expects($this->once())->method('dispatchShell')
 			->with('schema create DbAcl');
-	
+
 		$this->Task->initdb();
 	}
 }

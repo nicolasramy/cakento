@@ -4,14 +4,14 @@
  *
  * PHP 5
  *
- * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * CakePHP(tm) Tests <http://book.cakephp.org/2.0/en/development/testing.html>
+ * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://book.cakephp.org/2.0/en/development/testing.html CakePHP(tm) Tests
  * @package       Cake.Test.Case.Model
  * @since         CakePHP(tm) v 1.2.0.4206
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -27,17 +27,19 @@ App::uses('DboSource', 'Model/Datasource');
 class DboMock extends DboSource {
 
 /**
-* Returns the $field without modifications
-*/
+ * Returns the $field without modifications
+ */
 	public function name($field) {
 		return $field;
 	}
+
 /**
-* Returns true to fake a database connection
-*/
+ * Returns true to fake a database connection
+ */
 	public function connect() {
 		return true;
 	}
+
 }
 
 /**
@@ -79,8 +81,8 @@ class ModelIntegrationTest extends BaseModelTest {
 
 		$this->assertFalse(property_exists($Article, 'ArticleFeaturedsTag'));
 		$this->assertInstanceOf('AppModel', $Article->ArticleFeaturedsTag);
-		$this->assertEquals($Article->hasAndBelongsToMany['Tag']['joinTable'], 'article_featureds_tags');
-		$this->assertEquals($Article->hasAndBelongsToMany['Tag']['associationForeignKey'], 'tag_id');
+		$this->assertEquals('article_featureds_tags', $Article->hasAndBelongsToMany['Tag']['joinTable']);
+		$this->assertEquals('tag_id', $Article->hasAndBelongsToMany['Tag']['associationForeignKey']);
 	}
 
 /**
@@ -148,8 +150,8 @@ class ModelIntegrationTest extends BaseModelTest {
  */
 	public function testPkInHabtmLinkModelArticleB() {
 		$this->loadFixtures('Article', 'Tag', 'ArticlesTag');
-		$TestModel2 = new ArticleB();
-		$this->assertEqual($TestModel2->ArticlesTag->primaryKey, 'article_id');
+		$TestModel = new ArticleB();
+		$this->assertEquals('article_id', $TestModel->ArticlesTag->primaryKey);
 	}
 
 /**
@@ -175,28 +177,27 @@ class ModelIntegrationTest extends BaseModelTest {
 /**
  * testPkInHabtmLinkModel method
  *
-	 * @return void
+ * @return void
  */
 	public function testPkInHabtmLinkModel() {
 		//Test Nonconformant Models
 		$this->loadFixtures('Content', 'ContentAccount', 'Account', 'JoinC', 'JoinAC', 'ItemsPortfolio');
 		$TestModel = new Content();
-		$this->assertEqual($TestModel->ContentAccount->primaryKey, 'iContentAccountsId');
+		$this->assertEquals('iContentAccountsId', $TestModel->ContentAccount->primaryKey);
 
 		//test conformant models with no PK in the join table
 		$this->loadFixtures('Article', 'Tag');
-		$TestModel2 = new Article();
-		$this->assertEqual($TestModel2->ArticlesTag->primaryKey, 'article_id');
+		$TestModel = new Article();
+		$this->assertEquals('article_id', $TestModel->ArticlesTag->primaryKey);
 
 		//test conformant models with PK in join table
-		$TestModel3 = new Portfolio();
-		$this->assertEqual($TestModel3->ItemsPortfolio->primaryKey, 'id');
+		$TestModel = new Portfolio();
+		$this->assertEquals('id', $TestModel->ItemsPortfolio->primaryKey);
 
 		//test conformant models with PK in join table - join table contains extra field
 		$this->loadFixtures('JoinA', 'JoinB', 'JoinAB');
-		$TestModel4 = new JoinA();
-		$this->assertEqual($TestModel4->JoinAsJoinB->primaryKey, 'id');
-
+		$TestModel = new JoinA();
+		$this->assertEquals('id', $TestModel->JoinAsJoinB->primaryKey);
 	}
 
 /**
@@ -207,11 +208,11 @@ class ModelIntegrationTest extends BaseModelTest {
 	public function testDynamicBehaviorAttachment() {
 		$this->loadFixtures('Apple', 'Sample', 'Author');
 		$TestModel = new Apple();
-		$this->assertEqual($TestModel->Behaviors->attached(), array());
+		$this->assertEquals(array(), $TestModel->Behaviors->attached());
 
 		$TestModel->Behaviors->attach('Tree', array('left' => 'left_field', 'right' => 'right_field'));
 		$this->assertTrue(is_object($TestModel->Behaviors->Tree));
-		$this->assertEqual($TestModel->Behaviors->attached(), array('Tree'));
+		$this->assertEquals(array('Tree'), $TestModel->Behaviors->attached());
 
 		$expected = array(
 			'parent' => 'parent_id',
@@ -222,16 +223,14 @@ class ModelIntegrationTest extends BaseModelTest {
 			'__parentChange' => false,
 			'recursive' => -1
 		);
+		$this->assertEquals($expected, $TestModel->Behaviors->Tree->settings['Apple']);
 
-		$this->assertEqual($TestModel->Behaviors->Tree->settings['Apple'], $expected);
-
-		$expected['enabled'] = false;
 		$TestModel->Behaviors->attach('Tree', array('enabled' => false));
-		$this->assertEqual($TestModel->Behaviors->Tree->settings['Apple'], $expected);
-		$this->assertEqual($TestModel->Behaviors->attached(), array('Tree'));
+		$this->assertEquals($expected, $TestModel->Behaviors->Tree->settings['Apple']);
+		$this->assertEquals(array('Tree'), $TestModel->Behaviors->attached());
 
 		$TestModel->Behaviors->detach('Tree');
-		$this->assertEqual($TestModel->Behaviors->attached(), array());
+		$this->assertEquals(array(), $TestModel->Behaviors->attached());
 		$this->assertFalse(isset($TestModel->Behaviors->Tree));
 	}
 
@@ -241,20 +240,20 @@ class ModelIntegrationTest extends BaseModelTest {
  * @access public
  * @return void
  */
-	function testFindWithJoinsOption() {
+	public function testFindWithJoinsOption() {
 		$this->loadFixtures('Article', 'User');
-		$TestUser =& new User();
+		$TestUser = new User();
 
-		$options = array (
+		$options = array(
 			'fields' => array(
 				'user',
 				'Article.published',
 			),
-			'joins' => array (
-				array (
+			'joins' => array(
+				array(
 					'table' => 'articles',
 					'alias' => 'Article',
-					'type'  => 'LEFT',
+					'type' => 'LEFT',
 					'conditions' => array(
 						'User.id = Article.user_id',
 					),
@@ -271,7 +270,7 @@ class ModelIntegrationTest extends BaseModelTest {
 			array('User' => array('user' => 'mariano'), 'Article' => array('published' => 'Y')),
 			array('User' => array('user' => 'nate'), 'Article' => array('published' => ''))
 		);
-		$this->assertEqual($result, $expected);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -280,9 +279,9 @@ class ModelIntegrationTest extends BaseModelTest {
  * or one connection will step on the other.
  */
 	public function testCrossDatabaseJoins() {
-		$config = new DATABASE_CONFIG();
+		$config = ConnectionManager::enumConnectionObjects();
 
-		$skip = (!isset($config->test) || !isset($config->test2));
+		$skip = (!isset($config['test']) || !isset($config['test2']));
 		if ($skip) {
 			$this->markTestSkipped('Primary and secondary test databases not configured, skipping cross-database
 				join tests.  To run theses tests defined $test and $test2 in your database configuration.'
@@ -429,12 +428,12 @@ class ModelIntegrationTest extends BaseModelTest {
 				'Comment' => array(),
 				'Tag' => array()
 		));
-		$this->assertEqual($TestModel->find('all'), $expected);
+		$this->assertEquals($expected, $TestModel->find('all'));
 
 		$db2 = ConnectionManager::getDataSource('test2');
 		$this->fixtureManager->loadSingle('User', $db2);
 		$this->fixtureManager->loadSingle('Comment', $db2);
-		$this->assertEqual($TestModel->find('count'), 3);
+		$this->assertEquals(3, $TestModel->find('count'));
 
 		$TestModel->User->setDataSource('test2');
 		$TestModel->Comment->setDataSource('test2');
@@ -446,7 +445,7 @@ class ModelIntegrationTest extends BaseModelTest {
 
 		$TestModel->recursive = 0;
 		$result = $TestModel->find('all');
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		foreach ($expected as $key => $value) {
 			unset($value['Comment'], $value['Tag']);
@@ -455,11 +454,11 @@ class ModelIntegrationTest extends BaseModelTest {
 
 		$TestModel->recursive = 0;
 		$result = $TestModel->find('all');
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
-		$result = Set::extract($TestModel->User->find('all'), '{n}.User.id');
-		$this->assertEqual($result, array('1', '2', '3', '4'));
-		$this->assertEqual($TestModel->find('all'), $expected);
+		$result = Hash::extract($TestModel->User->find('all'), '{n}.User.id');
+		$this->assertEquals(array('1', '2', '3', '4'), $result);
+		$this->assertEquals($expected, $TestModel->find('all'));
 
 		$TestModel->Comment->unbindModel(array('hasOne' => array('Attachment')));
 		$expected = array(
@@ -619,7 +618,254 @@ class ModelIntegrationTest extends BaseModelTest {
 					'created' => '2007-03-18 10:41:23',
 					'updated' => '2007-03-18 10:43:31'
 		)));
-		$this->assertEqual($TestModel->Comment->find('all'), $expected);
+		$this->assertEquals($expected, $TestModel->Comment->find('all'));
+	}
+
+/**
+ * test HABM operations without clobbering existing records #275
+ *
+ * @return void
+ */
+	public function testHABTMKeepExisting() {
+		$this->loadFixtures('Site', 'Domain', 'DomainsSite');
+
+		$Site = new Site();
+		$results = $Site->find('count');
+		$expected = 3;
+		$this->assertEquals($expected, $results);
+
+		$data = $Site->findById(1);
+
+		// include api.cakephp.org
+		$data['Domain'] = array('Domain' => array(1, 2, 3));
+		$Site->save($data);
+
+		$Site->id = 1;
+		$results = $Site->read();
+		$expected = 3; // 3 domains belonging to cakephp
+		$this->assertEquals($expected, count($results['Domain']));
+
+		$Site->id = 2;
+		$results = $Site->read();
+		$expected = 2; // 2 domains belonging to markstory
+		$this->assertEquals($expected, count($results['Domain']));
+
+		$Site->id = 3;
+		$results = $Site->read();
+		$expected = 2;
+		$this->assertEquals($expected, count($results['Domain']));
+		$results['Domain'] = array('Domain' => array(7));
+		$Site->save($results); // remove association from domain 6
+		$results = $Site->read();
+		$expected = 1; // only 1 domain left belonging to rchavik
+		$this->assertEquals($expected, count($results['Domain']));
+
+		// add deleted domain back
+		$results['Domain'] = array('Domain' => array(6, 7));
+		$Site->save($results);
+		$results = $Site->read();
+		$expected = 2; // 2 domains belonging to rchavik
+		$this->assertEquals($expected, count($results['Domain']));
+
+		$Site->DomainsSite->id = $results['Domain'][0]['DomainsSite']['id'];
+		$Site->DomainsSite->saveField('active', true);
+
+		$results = $Site->Domain->DomainsSite->find('count', array(
+			'conditions' => array(
+				'DomainsSite.active' => true,
+			),
+		));
+		$expected = 5;
+		$this->assertEquals($expected, $results);
+
+		// activate api.cakephp.org
+		$activated = $Site->DomainsSite->findByDomainId(3);
+		$activated['DomainsSite']['active'] = true;
+		$Site->DomainsSite->save($activated);
+
+		$results = $Site->DomainsSite->find('count', array(
+			'conditions' => array(
+				'DomainsSite.active' => true,
+			),
+		));
+		$expected = 6;
+		$this->assertEquals($expected, $results);
+
+		// remove 2 previously active domains, and leave $activated alone
+		$data = array(
+			'Site' => array('id' => 1, 'name' => 'cakephp (modified)'),
+			'Domain' => array(
+				'Domain' => array(3),
+			)
+		);
+		$Site->create($data);
+		$Site->save($data);
+
+		// tests that record is still identical prior to removal
+		$Site->id = 1;
+		$results = $Site->read();
+		unset($results['Domain'][0]['DomainsSite']['updated']);
+		unset($activated['DomainsSite']['updated']);
+		$this->assertEquals($activated['DomainsSite'], $results['Domain'][0]['DomainsSite']);
+	}
+
+/**
+ * testHABTMKeepExistingAlternateDataFormat
+ *
+ * @return void
+ */
+	public function testHABTMKeepExistingAlternateDataFormat() {
+		$this->loadFixtures('Site', 'Domain', 'DomainsSite');
+
+		$Site = new Site();
+
+		$expected = array(
+			array(
+				'DomainsSite' => array(
+					'id' => 1,
+					'site_id' => 1,
+					'domain_id' => 1,
+					'active' => true,
+					'created' => '2007-03-17 01:16:23'
+				)
+			),
+			array(
+				'DomainsSite' => array(
+					'id' => 2,
+					'site_id' => 1,
+					'domain_id' => 2,
+					'active' => true,
+					'created' => '2007-03-17 01:16:23'
+				)
+			)
+		);
+		$result = $Site->DomainsSite->find('all', array(
+			'conditions' => array('DomainsSite.site_id' => 1),
+			'fields' => array(
+				'DomainsSite.id',
+				'DomainsSite.site_id',
+				'DomainsSite.domain_id',
+				'DomainsSite.active',
+				'DomainsSite.created'
+			),
+			'order' => 'DomainsSite.id'
+		));
+		$this->assertEquals($expected, $result);
+
+		$time = date('Y-m-d H:i:s');
+		$data = array(
+			'Site' => array(
+				'id' => 1
+			),
+			'Domain' => array(
+				array(
+					'site_id' => 1,
+					'domain_id'	=> 3,
+					'created' => $time,
+				),
+				array(
+					'id' => 2,
+					'site_id' => 1,
+					'domain_id'	=> 2
+				),
+			)
+		);
+		$Site->save($data);
+		$expected = array(
+			array(
+				'DomainsSite' => array(
+					'id' => 2,
+					'site_id' => 1,
+					'domain_id' => 2,
+					'active' => true,
+					'created' => '2007-03-17 01:16:23'
+				)
+			),
+			array(
+				'DomainsSite' => array(
+					'id' => 7,
+					'site_id' => 1,
+					'domain_id' => 3,
+					'active' => false,
+					'created' => $time
+				)
+			)
+		);
+		$result = $Site->DomainsSite->find('all', array(
+			'conditions' => array('DomainsSite.site_id' => 1),
+			'fields' => array(
+				'DomainsSite.id',
+				'DomainsSite.site_id',
+				'DomainsSite.domain_id',
+				'DomainsSite.active',
+				'DomainsSite.created'
+			),
+			'order' => 'DomainsSite.id'
+		));
+		$this->assertEquals($expected, $result);
+	}
+
+/**
+ * test HABM operations without clobbering existing records #275
+ *
+ * @return void
+ */
+	public function testHABTMKeepExistingWithThreeDbs() {
+		$config = ConnectionManager::enumConnectionObjects();
+		$this->skipIf($this->db instanceof Sqlite, 'This test is not compatible with Sqlite.');
+		$this->skipIf(
+			!isset($config['test']) || !isset($config['test2']) || !isset($config['test_database_three']),
+			'Primary, secondary, and tertiary test databases not configured, skipping test.  To run this test define $test, $test2, and $test_database_three in your database configuration.'
+		);
+
+		$this->loadFixtures('Player', 'Guild', 'GuildsPlayer', 'Armor', 'ArmorsPlayer');
+		$Player = ClassRegistry::init('Player');
+		$Player->bindModel(array(
+			'hasAndBelongsToMany' => array(
+				'Armor' => array(
+					'with' => 'ArmorsPlayer',
+					'unique' => 'keepExisting',
+				),
+			),
+		), false);
+		$this->assertEquals('test', $Player->useDbConfig);
+		$this->assertEquals('test', $Player->Guild->useDbConfig);
+		$this->assertEquals('test2', $Player->Guild->GuildsPlayer->useDbConfig);
+		$this->assertEquals('test2', $Player->Armor->useDbConfig);
+		$this->assertEquals('test_database_three', $Player->ArmorsPlayer->useDbConfig);
+
+		$players = $Player->find('all');
+		$this->assertEquals(4 , count($players));
+		$playersGuilds = Hash::extract($players, '{n}.Guild.{n}.GuildsPlayer');
+		$this->assertEquals(3 , count($playersGuilds));
+		$playersArmors = Hash::extract($players, '{n}.Armor.{n}.ArmorsPlayer');
+		$this->assertEquals(3 , count($playersArmors));
+		unset($players);
+
+		$larry = $Player->findByName('larry');
+		$larrysArmor = Hash::extract($larry, 'Armor.{n}.ArmorsPlayer');
+		$this->assertEquals(1 , count($larrysArmor));
+
+		$larry['Guild']['Guild'] = array(1, 3); // larry joins another guild
+		$larry['Armor']['Armor'] = array(2, 3); // purchases chainmail
+		$Player->save($larry);
+		unset($larry);
+
+		$larry = $Player->findByName('larry');
+		$larrysGuild = Hash::extract($larry, 'Guild.{n}.GuildsPlayer');
+		$this->assertEquals(2 , count($larrysGuild));
+		$larrysArmor = Hash::extract($larry, 'Armor.{n}.ArmorsPlayer');
+		$this->assertEquals(2 , count($larrysArmor));
+
+		$larrysArmorsPlayersIds = Hash::extract($larry, 'Armor.{n}.ArmorsPlayer.id');
+
+		$Player->ArmorsPlayer->id = 3;
+		$Player->ArmorsPlayer->saveField('broken', true); // larry's cloak broke
+
+		$larry = $Player->findByName('larry');
+		$larrysCloak = Hash::extract($larry, 'Armor.{n}.ArmorsPlayer[armor_id=3]', $larry);
+		$this->assertNotEmpty($larrysCloak);
+		$this->assertTrue($larrysCloak[0]['broken']); // still broken
 	}
 
 /**
@@ -633,9 +879,9 @@ class ModelIntegrationTest extends BaseModelTest {
 		$Comment = new Comment();
 		$Person = new Person();
 
-		$this->assertEqual($Post->displayField, 'title');
-		$this->assertEqual($Person->displayField, 'name');
-		$this->assertEqual($Comment->displayField, 'id');
+		$this->assertEquals('title', $Post->displayField);
+		$this->assertEquals('name', $Person->displayField);
+		$this->assertEquals('id', $Comment->displayField);
 	}
 
 /**
@@ -648,104 +894,98 @@ class ModelIntegrationTest extends BaseModelTest {
 
 		$result = $Post->schema();
 		$columns = array('id', 'author_id', 'title', 'body', 'published', 'created', 'updated');
-		$this->assertEqual(array_keys($result), $columns);
+		$this->assertEquals($columns, array_keys($result));
 
 		$types = array('integer', 'integer', 'string', 'text', 'string', 'datetime', 'datetime');
-		$this->assertEqual(Set::extract(array_values($result), '{n}.type'), $types);
+		$this->assertEquals(Hash::extract(array_values($result), '{n}.type'), $types);
 
 		$result = $Post->schema('body');
-		$this->assertEqual($result['type'], 'text');
+		$this->assertEquals('text', $result['type']);
 		$this->assertNull($Post->schema('foo'));
 
-		$this->assertEqual($Post->getColumnTypes(), array_combine($columns, $types));
+		$this->assertEquals($Post->getColumnTypes(), array_combine($columns, $types));
 	}
 
 /**
- * test deconstruct() with time fields.
+ * data provider for time tests.
  *
+ * @return array
+ */
+	public static function timeProvider() {
+		$db = ConnectionManager::getDataSource('test');
+		$now = $db->expression('NOW()');
+		return array(
+			// blank
+			array(
+				array('hour' => '', 'min' => '', 'meridian' => ''),
+				''
+			),
+			// missing hour
+			array(
+				array('hour' => '', 'min' => '00', 'meridian' => 'pm'),
+				''
+			),
+			// all blank
+			array(
+				array('hour' => '', 'min' => '', 'sec' => ''),
+				''
+			),
+			// set and empty merdian
+			array(
+				array('hour' => '1', 'min' => '00', 'meridian' => ''),
+				''
+			),
+			// midnight
+			array(
+				array('hour' => '12', 'min' => '0', 'meridian' => 'am'),
+				'00:00:00'
+			),
+			array(
+				array('hour' => '00', 'min' => '00'),
+				'00:00:00'
+			),
+			// 3am
+			array(
+				array('hour' => '03', 'min' => '04', 'sec' => '04'),
+				'03:04:04'
+			),
+			array(
+				array('hour' => '3', 'min' => '4', 'sec' => '4'),
+				'03:04:04'
+			),
+			array(
+				array('hour' => '03', 'min' => '4', 'sec' => '4'),
+				'03:04:04'
+			),
+			array(
+				$now,
+				$now
+			)
+		);
+	}
+
+/**
+ * test deconstruct with time fields.
+ *
+ * @dataProvider timeProvider
  * @return void
  */
-	public function testDeconstructFieldsTime() {
+	public function testDeconstructFieldsTime($input, $result) {
 		$this->skipIf($this->db instanceof Sqlserver, 'This test is not compatible with SQL Server.');
 
 		$this->loadFixtures('Apple');
 		$TestModel = new Apple();
 
-		$data = array();
-		$data['Apple']['mytime']['hour'] = '';
-		$data['Apple']['mytime']['min'] = '';
-		$data['Apple']['mytime']['sec'] = '';
+		$data = array(
+			'Apple' => array(
+				'mytime' => $input
+			)
+		);
 
 		$TestModel->data = null;
 		$TestModel->set($data);
-		$expected = array('Apple'=> array('mytime'=> ''));
-		$this->assertEqual($TestModel->data, $expected);
-
-		$data = array();
-		$data['Apple']['mytime']['hour'] = '';
-		$data['Apple']['mytime']['min'] = '';
-		$data['Apple']['mytime']['meridan'] = '';
-
-		$TestModel->data = null;
-		$TestModel->set($data);
-		$expected = array('Apple'=> array('mytime'=> ''));
-		$this->assertEqual($TestModel->data, $expected, 'Empty values are not returning properly. %s');
-
-		$data = array();
-		$data['Apple']['mytime']['hour'] = '12';
-		$data['Apple']['mytime']['min'] = '0';
-		$data['Apple']['mytime']['meridian'] = 'am';
-
-		$TestModel->data = null;
-		$TestModel->set($data);
-		$expected = array('Apple'=> array('mytime'=> '00:00:00'));
-		$this->assertEqual($TestModel->data, $expected, 'Midnight is not returning proper values. %s');
-
-		$data = array();
-		$data['Apple']['mytime']['hour'] = '00';
-		$data['Apple']['mytime']['min'] = '00';
-
-		$TestModel->data = null;
-		$TestModel->set($data);
-		$expected = array('Apple'=> array('mytime'=> '00:00:00'));
-		$this->assertEqual($TestModel->data, $expected, 'Midnight is not returning proper values. %s');
-
-		$data = array();
-		$data['Apple']['mytime']['hour'] = '03';
-		$data['Apple']['mytime']['min'] = '04';
-		$data['Apple']['mytime']['sec'] = '04';
-
-		$TestModel->data = null;
-		$TestModel->set($data);
-		$expected = array('Apple'=> array('mytime'=> '03:04:04'));
-		$this->assertEqual($TestModel->data, $expected);
-
-		$data = array();
-		$data['Apple']['mytime']['hour'] = '3';
-		$data['Apple']['mytime']['min'] = '4';
-		$data['Apple']['mytime']['sec'] = '4';
-
-		$TestModel->data = null;
-		$TestModel->set($data);
-		$expected = array('Apple' => array('mytime'=> '03:04:04'));
-		$this->assertEqual($TestModel->data, $expected);
-
-		$data = array();
-		$data['Apple']['mytime']['hour'] = '03';
-		$data['Apple']['mytime']['min'] = '4';
-		$data['Apple']['mytime']['sec'] = '4';
-
-		$TestModel->data = null;
-		$TestModel->set($data);
-		$expected = array('Apple'=> array('mytime'=> '03:04:04'));
-		$this->assertEqual($TestModel->data, $expected);
-
-		$db = ConnectionManager::getDataSource('test');
-		$data = array();
-		$data['Apple']['mytime'] = $db->expression('NOW()');
-		$TestModel->data = null;
-		$TestModel->set($data);
-		$this->assertEqual($TestModel->data, $data);
+		$expected = array('Apple' => array('mytime' => $result));
+		$this->assertEquals($expected, $TestModel->data);
 	}
 
 /**
@@ -769,8 +1009,8 @@ class ModelIntegrationTest extends BaseModelTest {
 
 		$TestModel->data = null;
 		$TestModel->set($data);
-		$expected = array('Apple'=> array('created'=> ''));
-		$this->assertEqual($TestModel->data, $expected);
+		$expected = array('Apple' => array('created' => ''));
+		$this->assertEquals($expected, $TestModel->data);
 
 		$data = array();
 		$data['Apple']['date']['year'] = '';
@@ -779,8 +1019,8 @@ class ModelIntegrationTest extends BaseModelTest {
 
 		$TestModel->data = null;
 		$TestModel->set($data);
-		$expected = array('Apple'=> array('date'=> ''));
-		$this->assertEqual($TestModel->data, $expected);
+		$expected = array('Apple' => array('date' => ''));
+		$this->assertEquals($expected, $TestModel->data);
 
 		$data = array();
 		$data['Apple']['created']['year'] = '2007';
@@ -792,8 +1032,8 @@ class ModelIntegrationTest extends BaseModelTest {
 
 		$TestModel->data = null;
 		$TestModel->set($data);
-		$expected = array('Apple'=> array('created'=> '2007-08-20 00:00:00'));
-		$this->assertEqual($TestModel->data, $expected);
+		$expected = array('Apple' => array('created' => '2007-08-20 00:00:00'));
+		$this->assertEquals($expected, $TestModel->data);
 
 		$data = array();
 		$data['Apple']['created']['year'] = '2007';
@@ -805,8 +1045,8 @@ class ModelIntegrationTest extends BaseModelTest {
 
 		$TestModel->data = null;
 		$TestModel->set($data);
-		$expected = array('Apple'=> array('created'=> '2007-08-20 10:12:00'));
-		$this->assertEqual($TestModel->data, $expected);
+		$expected = array('Apple' => array('created' => '2007-08-20 10:12:00'));
+		$this->assertEquals($expected, $TestModel->data);
 
 		$data = array();
 		$data['Apple']['created']['year'] = '2007';
@@ -818,8 +1058,8 @@ class ModelIntegrationTest extends BaseModelTest {
 
 		$TestModel->data = null;
 		$TestModel->set($data);
-		$expected = array('Apple'=> array('created'=> ''));
-		$this->assertEqual($TestModel->data, $expected);
+		$expected = array('Apple' => array('created' => ''));
+		$this->assertEquals($expected, $TestModel->data);
 
 		$data = array();
 		$data['Apple']['created']['hour'] = '20';
@@ -827,8 +1067,8 @@ class ModelIntegrationTest extends BaseModelTest {
 
 		$TestModel->data = null;
 		$TestModel->set($data);
-		$expected = array('Apple'=> array('created'=> ''));
-		$this->assertEqual($TestModel->data, $expected);
+		$expected = array('Apple' => array('created' => ''));
+		$this->assertEquals($expected, $TestModel->data);
 
 		$data = array();
 		$data['Apple']['created']['hour'] = '20';
@@ -837,8 +1077,8 @@ class ModelIntegrationTest extends BaseModelTest {
 
 		$TestModel->data = null;
 		$TestModel->set($data);
-		$expected = array('Apple'=> array('created'=> ''));
-		$this->assertEqual($TestModel->data, $expected);
+		$expected = array('Apple' => array('created' => ''));
+		$this->assertEquals($expected, $TestModel->data);
 
 		$data = array();
 		$data['Apple']['created']['hour'] = '13';
@@ -850,11 +1090,11 @@ class ModelIntegrationTest extends BaseModelTest {
 		$TestModel->data = null;
 		$TestModel->set($data);
 		$expected = array(
-			'Apple'=> array(
-			'created'=> '',
-			'date'=> '2006-12-25'
+			'Apple' => array(
+			'created' => '',
+			'date' => '2006-12-25'
 		));
-		$this->assertEqual($TestModel->data, $expected);
+		$this->assertEquals($expected, $TestModel->data);
 
 		$data = array();
 		$data['Apple']['created']['year'] = '2007';
@@ -870,11 +1110,11 @@ class ModelIntegrationTest extends BaseModelTest {
 		$TestModel->data = null;
 		$TestModel->set($data);
 		$expected = array(
-			'Apple'=> array(
-				'created'=> '2007-08-20 10:12:09',
-				'date'=> '2006-12-25'
+			'Apple' => array(
+				'created' => '2007-08-20 10:12:09',
+				'date' => '2006-12-25'
 		));
-		$this->assertEqual($TestModel->data, $expected);
+		$this->assertEquals($expected, $TestModel->data);
 
 		$data = array();
 		$data['Apple']['created']['year'] = '--';
@@ -889,8 +1129,8 @@ class ModelIntegrationTest extends BaseModelTest {
 
 		$TestModel->data = null;
 		$TestModel->set($data);
-		$expected = array('Apple'=> array('created'=> '', 'date'=> ''));
-		$this->assertEqual($TestModel->data, $expected);
+		$expected = array('Apple' => array('created' => '', 'date' => ''));
+		$this->assertEquals($expected, $TestModel->data);
 
 		$data = array();
 		$data['Apple']['created']['year'] = '2007';
@@ -905,8 +1145,8 @@ class ModelIntegrationTest extends BaseModelTest {
 
 		$TestModel->data = null;
 		$TestModel->set($data);
-		$expected = array('Apple'=> array('created'=> '', 'date'=> '2006-12-25'));
-		$this->assertEqual($TestModel->data, $expected);
+		$expected = array('Apple' => array('created' => '', 'date' => '2006-12-25'));
+		$this->assertEquals($expected, $TestModel->data);
 
 		$data = array();
 		$data['Apple']['date']['year'] = '2006';
@@ -915,15 +1155,15 @@ class ModelIntegrationTest extends BaseModelTest {
 
 		$TestModel->data = null;
 		$TestModel->set($data);
-		$expected = array('Apple'=> array('date'=> '2006-12-25'));
-		$this->assertEqual($TestModel->data, $expected);
+		$expected = array('Apple' => array('date' => '2006-12-25'));
+		$this->assertEquals($expected, $TestModel->data);
 
 		$db = ConnectionManager::getDataSource('test');
 		$data = array();
 		$data['Apple']['modified'] = $db->expression('NOW()');
 		$TestModel->data = null;
 		$TestModel->set($data);
-		$this->assertEqual($TestModel->data, $data);
+		$this->assertEquals($TestModel->data, $data);
 	}
 
 /**
@@ -944,39 +1184,39 @@ class ModelIntegrationTest extends BaseModelTest {
 
 		$TestModel = new Apple();
 		$TestModel->setDataSource('database1');
-		$this->assertEqual($this->db->fullTableName($TestModel, false), 'aaa_apples');
-		$this->assertEqual($db1->fullTableName($TestModel, false), 'aaa_apples');
-		$this->assertEqual($db2->fullTableName($TestModel, false), 'aaa_apples');
+		$this->assertContains('aaa_apples', $this->db->fullTableName($TestModel));
+		$this->assertContains('aaa_apples', $db1->fullTableName($TestModel));
+		$this->assertContains('aaa_apples', $db2->fullTableName($TestModel));
 
 		$TestModel->setDataSource('database2');
-		$this->assertEqual($this->db->fullTableName($TestModel, false), 'bbb_apples');
-		$this->assertEqual($db1->fullTableName($TestModel, false), 'bbb_apples');
-		$this->assertEqual($db2->fullTableName($TestModel, false), 'bbb_apples');
+		$this->assertContains('bbb_apples', $this->db->fullTableName($TestModel));
+		$this->assertContains('bbb_apples', $db1->fullTableName($TestModel));
+		$this->assertContains('bbb_apples', $db2->fullTableName($TestModel));
 
 		$TestModel = new Apple();
 		$TestModel->tablePrefix = 'custom_';
-		$this->assertEqual($this->db->fullTableName($TestModel, false), 'custom_apples');
+		$this->assertContains('custom_apples', $this->db->fullTableName($TestModel));
 		$TestModel->setDataSource('database1');
-		$this->assertEqual($this->db->fullTableName($TestModel, false), 'custom_apples');
-		$this->assertEqual($db1->fullTableName($TestModel, false), 'custom_apples');
+		$this->assertContains('custom_apples', $this->db->fullTableName($TestModel));
+		$this->assertContains('custom_apples', $db1->fullTableName($TestModel));
 
 		$TestModel = new Apple();
 		$TestModel->setDataSource('database1');
-		$this->assertEqual($this->db->fullTableName($TestModel, false), 'aaa_apples');
+		$this->assertContains('aaa_apples', $this->db->fullTableName($TestModel));
 		$TestModel->tablePrefix = '';
 		$TestModel->setDataSource('database2');
-		$this->assertEqual($db2->fullTableName($TestModel, false), 'apples');
-		$this->assertEqual($db1->fullTableName($TestModel, false), 'apples');
+		$this->assertContains('apples', $db2->fullTableName($TestModel));
+		$this->assertContains('apples', $db1->fullTableName($TestModel));
 
 		$TestModel->tablePrefix = null;
 		$TestModel->setDataSource('database1');
-		$this->assertEqual($db2->fullTableName($TestModel, false), 'aaa_apples');
-		$this->assertEqual($db1->fullTableName($TestModel, false), 'aaa_apples');
+		$this->assertContains('aaa_apples', $db2->fullTableName($TestModel));
+		$this->assertContains('aaa_apples', $db1->fullTableName($TestModel));
 
 		$TestModel->tablePrefix = false;
 		$TestModel->setDataSource('database2');
-		$this->assertEqual($db2->fullTableName($TestModel, false), 'apples');
-		$this->assertEqual($db1->fullTableName($TestModel, false), 'apples');
+		$this->assertContains('apples', $db2->fullTableName($TestModel));
+		$this->assertContains('apples', $db1->fullTableName($TestModel));
 	}
 
 /**
@@ -997,13 +1237,13 @@ class ModelIntegrationTest extends BaseModelTest {
 	public function testLoadModelSecondIteration() {
 		$this->loadFixtures('Apple', 'Message', 'Thread', 'Bid');
 		$model = new ModelA();
-		$this->assertIsA($model,'ModelA');
+		$this->assertInstanceOf('ModelA', $model);
 
-		$this->assertIsA($model->ModelB, 'ModelB');
-		$this->assertIsA($model->ModelB->ModelD, 'ModelD');
+		$this->assertInstanceOf('ModelB', $model->ModelB);
+		$this->assertInstanceOf('ModelD', $model->ModelB->ModelD);
 
-		$this->assertIsA($model->ModelC, 'ModelC');
-		$this->assertIsA($model->ModelC->ModelD, 'ModelD');
+		$this->assertInstanceOf('ModelC', $model->ModelC);
+		$this->assertInstanceOf('ModelD', $model->ModelC->ModelD);
 	}
 
 /**
@@ -1025,7 +1265,7 @@ class ModelIntegrationTest extends BaseModelTest {
 		$Article->id = 2;
 		$Article->saveField('title', 'Staying alive');
 		$result = $Article->read(null, 2);
-		$this->assertEqual($result['Article']['title'], 'Staying alive');
+		$this->assertEquals('Staying alive', $result['Article']['title']);
 	}
 
 /**
@@ -1173,7 +1413,7 @@ class ModelIntegrationTest extends BaseModelTest {
 				'TestPluginComment' => array()
 		));
 
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -1187,19 +1427,19 @@ class ModelIntegrationTest extends BaseModelTest {
 
 		$assocTypes = array('hasMany', 'hasOne', 'belongsTo', 'hasAndBelongsToMany');
 		foreach ($assocTypes as $type) {
-			 $this->assertEqual($Article->getAssociated($type), array_keys($Article->{$type}));
+			 $this->assertEquals($Article->getAssociated($type), array_keys($Article->{$type}));
 		}
 
 		$Article->bindModel(array('hasMany' => array('Category')));
-		$this->assertEqual($Article->getAssociated('hasMany'), array('Comment', 'Category'));
+		$this->assertEquals(array('Comment', 'Category'), $Article->getAssociated('hasMany'));
 
 		$results = $Article->getAssociated();
 		$results = array_keys($results);
 		sort($results);
-		$this->assertEqual($results, array('Category', 'Comment', 'Tag', 'User'));
+		$this->assertEquals(array('Category', 'Comment', 'Tag', 'User'), $results);
 
 		$Article->unbindModel(array('hasAndBelongsToMany' => array('Tag')));
-		$this->assertEqual($Article->getAssociated('hasAndBelongsToMany'), array());
+		$this->assertEquals(array(), $Article->getAssociated('hasAndBelongsToMany'));
 
 		$result = $Article->getAssociated('Category');
 		$expected = array(
@@ -1216,7 +1456,7 @@ class ModelIntegrationTest extends BaseModelTest {
 			'counterQuery' => '',
 			'association' => 'hasMany',
 		);
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -1240,7 +1480,7 @@ class ModelIntegrationTest extends BaseModelTest {
 				'conditions' => '', 'fields' => '', 'order' => '', 'limit' => '', 'offset' => '',
 				'finderQuery' => '', 'deleteQuery' => '', 'insertQuery' => ''
 		));
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$TestModel = new ArticleFeatured();
 		$TestFakeModel = new ArticleFeatured(array('table' => false));
@@ -1255,13 +1495,13 @@ class ModelIntegrationTest extends BaseModelTest {
 				'conditions' => '', 'fields' => '', 'order' => '', 'counterCache' => ''
 			)
 		);
-		$this->assertIdentical($TestModel->belongsTo, $expected);
-		$this->assertIdentical($TestFakeModel->belongsTo, $expected);
+		$this->assertSame($TestModel->belongsTo, $expected);
+		$this->assertSame($TestFakeModel->belongsTo, $expected);
 
-		$this->assertEqual($TestModel->User->name, 'User');
-		$this->assertEqual($TestFakeModel->User->name, 'User');
-		$this->assertEqual($TestModel->Category->name, 'Category');
-		$this->assertEqual($TestFakeModel->Category->name, 'Category');
+		$this->assertEquals('User', $TestModel->User->name);
+		$this->assertEquals('User', $TestFakeModel->User->name);
+		$this->assertEquals('Category', $TestModel->Category->name);
+		$this->assertEquals('Category', $TestFakeModel->Category->name);
 
 		$expected = array(
 			'Featured' => array(
@@ -1273,11 +1513,11 @@ class ModelIntegrationTest extends BaseModelTest {
 				'dependent' => ''
 		));
 
-		$this->assertIdentical($TestModel->hasOne, $expected);
-		$this->assertIdentical($TestFakeModel->hasOne, $expected);
+		$this->assertSame($TestModel->hasOne, $expected);
+		$this->assertSame($TestFakeModel->hasOne, $expected);
 
-		$this->assertEqual($TestModel->Featured->name, 'Featured');
-		$this->assertEqual($TestFakeModel->Featured->name, 'Featured');
+		$this->assertEquals('Featured', $TestModel->Featured->name);
+		$this->assertEquals('Featured', $TestFakeModel->Featured->name);
 
 		$expected = array(
 			'Comment' => array(
@@ -1294,11 +1534,11 @@ class ModelIntegrationTest extends BaseModelTest {
 				'counterQuery' => ''
 		));
 
-		$this->assertIdentical($TestModel->hasMany, $expected);
-		$this->assertIdentical($TestFakeModel->hasMany, $expected);
+		$this->assertSame($TestModel->hasMany, $expected);
+		$this->assertSame($TestFakeModel->hasMany, $expected);
 
-		$this->assertEqual($TestModel->Comment->name, 'Comment');
-		$this->assertEqual($TestFakeModel->Comment->name, 'Comment');
+		$this->assertEquals('Comment', $TestModel->Comment->name);
+		$this->assertEquals('Comment', $TestFakeModel->Comment->name);
 
 		$expected = array(
 			'Tag' => array(
@@ -1319,11 +1559,11 @@ class ModelIntegrationTest extends BaseModelTest {
 				'insertQuery' => ''
 		));
 
-		$this->assertIdentical($TestModel->hasAndBelongsToMany, $expected);
-		$this->assertIdentical($TestFakeModel->hasAndBelongsToMany, $expected);
+		$this->assertSame($TestModel->hasAndBelongsToMany, $expected);
+		$this->assertSame($TestFakeModel->hasAndBelongsToMany, $expected);
 
-		$this->assertEqual($TestModel->Tag->name, 'Tag');
-		$this->assertEqual($TestFakeModel->Tag->name, 'Tag');
+		$this->assertEquals('Tag', $TestModel->Tag->name);
+		$this->assertEquals('Tag', $TestFakeModel->Tag->name);
 	}
 
 /**
@@ -1351,13 +1591,13 @@ class ModelIntegrationTest extends BaseModelTest {
 		$this->loadFixtures('Post');
 
 		$TestModel = ClassRegistry::init('MergeVarPluginPost');
-		$this->assertEqual($TestModel->actsAs, array('Containable' => null, 'Tree' => null));
+		$this->assertEquals(array('Containable' => null, 'Tree' => null), $TestModel->actsAs);
 		$this->assertTrue(isset($TestModel->Behaviors->Containable));
 		$this->assertTrue(isset($TestModel->Behaviors->Tree));
 
 		$TestModel = ClassRegistry::init('MergeVarPluginComment');
 		$expected = array('Containable' => array('some_settings'));
-		$this->assertEqual($TestModel->actsAs, $expected);
+		$this->assertEquals($expected, $TestModel->actsAs);
 		$this->assertTrue(isset($TestModel->Behaviors->Containable));
 	}
 
@@ -1372,11 +1612,11 @@ class ModelIntegrationTest extends BaseModelTest {
 		$TestModel = ClassRegistry::init(array(
 			'class' => 'DoesntMatter', 'ds' => 'test', 'table' => false
 		));
-		$this->assertEqual('test', $TestModel->useDbConfig);
+		$this->assertEquals('test', $TestModel->useDbConfig);
 
 		//deprecated but test it anyway
 		$NewVoid = new TheVoid(null, false, 'other');
-		$this->assertEqual('other', $NewVoid->useDbConfig);
+		$this->assertEquals('other', $NewVoid->useDbConfig);
 	}
 
 /**
@@ -1386,15 +1626,15 @@ class ModelIntegrationTest extends BaseModelTest {
  */
 	public function testColumnTypeFetching() {
 		$model = new Test();
-		$this->assertEqual($model->getColumnType('id'), 'integer');
-		$this->assertEqual($model->getColumnType('notes'), 'text');
-		$this->assertEqual($model->getColumnType('updated'), 'datetime');
-		$this->assertEqual($model->getColumnType('unknown'), null);
+		$this->assertEquals('integer', $model->getColumnType('id'));
+		$this->assertEquals('text', $model->getColumnType('notes'));
+		$this->assertEquals('datetime', $model->getColumnType('updated'));
+		$this->assertEquals(null, $model->getColumnType('unknown'));
 
 		$model = new Article();
-		$this->assertEqual($model->getColumnType('User.created'), 'datetime');
-		$this->assertEqual($model->getColumnType('Tag.id'), 'integer');
-		$this->assertEqual($model->getColumnType('Article.id'), 'integer');
+		$this->assertEquals('datetime', $model->getColumnType('User.created'));
+		$this->assertEquals('integer', $model->getColumnType('Tag.id'));
+		$this->assertEquals('integer', $model->getColumnType('Article.id'));
 	}
 
 /**
@@ -1416,17 +1656,17 @@ class ModelIntegrationTest extends BaseModelTest {
 		$TestModel = new Test();
 		$result = $TestModel->alias;
 		$expected = 'Test';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$TestModel = new TestAlias();
 		$result = $TestModel->alias;
 		$expected = 'TestAlias';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$TestModel = new Test(array('alias' => 'AnotherTest'));
 		$result = $TestModel->alias;
 		$expected = 'AnotherTest';
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -1515,7 +1755,7 @@ class ModelIntegrationTest extends BaseModelTest {
 							'created' => '2007-03-18 10:41:23',
 							'updated' => '2007-03-18 10:43:31'
 		)))));
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = $TestModel->find('all');
 		$expected = array(
@@ -1585,7 +1825,7 @@ class ModelIntegrationTest extends BaseModelTest {
 							'something_id' => '3',
 							'something_else_id' => '1'
 		)))));
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = $TestModel->findById(1);
 		$expected = array(
@@ -1610,13 +1850,13 @@ class ModelIntegrationTest extends BaseModelTest {
 						'something_id' => '1',
 						'something_else_id' => '2'
 		))));
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$expected = $TestModel->findById(1);
 		$TestModel->set($expected);
 		$TestModel->save();
 		$result = $TestModel->findById(1);
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$TestModel->hasAndBelongsToMany['SomethingElse']['unique'] = false;
 		$TestModel->create(array(
@@ -1626,7 +1866,6 @@ class ModelIntegrationTest extends BaseModelTest {
 				'doomed' => true
 		))));
 
-		$ts = date('Y-m-d H:i:s');
 		$TestModel->save();
 
 		$TestModel->hasAndBelongsToMany['SomethingElse']['order'] = 'SomethingElse.id ASC';
@@ -1680,9 +1919,9 @@ class ModelIntegrationTest extends BaseModelTest {
 					)
 				)
 			);
-		$this->assertTrue($result['Something']['updated'] >= $ts);
+		$this->assertEquals(self::date(), $result['Something']['updated']);
 		unset($result['Something']['updated']);
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -1738,7 +1977,7 @@ class ModelIntegrationTest extends BaseModelTest {
 					'father_id' => 0
 		)));
 
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$TestModel->recursive = 3;
 		$result = $TestModel->read(null, 1);
@@ -1791,7 +2030,7 @@ class ModelIntegrationTest extends BaseModelTest {
 					'Father' => array()
 		)));
 
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -1898,7 +2137,7 @@ class ModelIntegrationTest extends BaseModelTest {
 						'updated' => '2007-03-18 10:57:31'
 		))));
 
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 	}
 
 /**
@@ -1911,7 +2150,7 @@ class ModelIntegrationTest extends BaseModelTest {
 		$TestModel = new Test();
 		$result = $TestModel->create();
 		$expected = array('Test' => array('notes' => 'write some notes here'));
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 		$TestModel = new User();
 		$result = $TestModel->schema();
 
@@ -1938,13 +2177,13 @@ class ModelIntegrationTest extends BaseModelTest {
 			),
 			'user' => array(
 				'type' => 'string',
-				'null' => false,
+				'null' => true,
 				'default' => '',
 				'length' => 255
 			),
 			'password' => array(
 				'type' => 'string',
-				'null' => false,
+				'null' => true,
 				'default' => '',
 				'length' => 255
 			),
@@ -1954,19 +2193,19 @@ class ModelIntegrationTest extends BaseModelTest {
 				'default' => null,
 				'length' => null
 			),
-			'updated'=> array(
+			'updated' => array(
 				'type' => 'datetime',
 				'null' => true,
 				'default' => null,
 				'length' => null
 		));
 
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$TestModel = new Article();
 		$result = $TestModel->create();
 		$expected = array('Article' => array('published' => 'N'));
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$FeaturedModel = new Featured();
 		$data = array(
@@ -1991,7 +2230,7 @@ class ModelIntegrationTest extends BaseModelTest {
 				'end_date' => '2008-06-20 00:00:00'
 		));
 
-		$this->assertEqual($FeaturedModel->create($data), $expected);
+		$this->assertEquals($expected, $FeaturedModel->create($data));
 
 		$data = array(
 			'published_date' => array(
@@ -2016,12 +2255,11 @@ class ModelIntegrationTest extends BaseModelTest {
 				'category_id' => 1
 		));
 
-		$this->assertEqual($FeaturedModel->create($data), $expected);
+		$this->assertEquals($expected, $FeaturedModel->create($data));
 	}
 
 /**
  * testEscapeField to prove it escapes the field well even when it has part of the alias on it
- * @see ttp://cakephp.lighthouseapp.com/projects/42648-cakephp-1x/tickets/473-escapefield-doesnt-consistently-prepend-modelname
  *
  * @return void
  */
@@ -2031,15 +2269,15 @@ class ModelIntegrationTest extends BaseModelTest {
 
 		$result = $TestModel->escapeField('test_field');
 		$expected = $db->name('Test.test_field');
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = $TestModel->escapeField('TestField');
 		$expected = $db->name('Test.TestField');
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		$result = $TestModel->escapeField('DomainHandle', 'Domain');
 		$expected = $db->name('Domain.DomainHandle');
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
 
 		ConnectionManager::create('mock', array('datasource' => 'DboMock'));
 		$TestModel->setDataSource('mock');
@@ -2047,7 +2285,32 @@ class ModelIntegrationTest extends BaseModelTest {
 
 		$result = $TestModel->escapeField('DomainHandle', 'Domain');
 		$expected = $db->name('Domain.DomainHandle');
-		$this->assertEqual($expected, $result);
+		$this->assertEquals($expected, $result);
+		ConnectionManager::drop('mock');
+	}
+
+/**
+ * testGetID
+ *
+ * @return void
+ */
+	public function testGetID() {
+		$TestModel = new Test();
+
+		$result = $TestModel->getID();
+		$this->assertFalse($result);
+
+		$TestModel->id = 9;
+		$result = $TestModel->getID();
+		$this->assertEquals(9, $result);
+
+		$TestModel->id = array(10, 9, 8, 7);
+		$result = $TestModel->getID(2);
+		$this->assertEquals(8, $result);
+
+		$TestModel->id = array(array(), 1, 2, 3);
+		$result = $TestModel->getID();
+		$this->assertFalse($result);
 	}
 
 /**
@@ -2071,5 +2334,93 @@ class ModelIntegrationTest extends BaseModelTest {
 
 		$this->assertTrue($Article->hasMethod('pass'));
 		$this->assertFalse($Article->hasMethod('fail'));
+	}
+
+/**
+ * testMultischemaFixture
+ *
+ * @return void
+ */
+	public function testMultischemaFixture() {
+		$config = ConnectionManager::enumConnectionObjects();
+		$this->skipIf($this->db instanceof Sqlite, 'This test is not compatible with Sqlite.');
+		$this->skipIf(!isset($config['test']) || !isset($config['test2']),
+			'Primary and secondary test databases not configured, skipping cross-database join tests.  To run these tests define $test and $test2 in your database configuration.'
+			);
+
+		$this->loadFixtures('Player', 'Guild', 'GuildsPlayer');
+
+		$Player = ClassRegistry::init('Player');
+		$this->assertEquals('test', $Player->useDbConfig);
+		$this->assertEquals('test', $Player->Guild->useDbConfig);
+		$this->assertEquals('test2', $Player->Guild->GuildsPlayer->useDbConfig);
+		$this->assertEquals('test2', $Player->GuildsPlayer->useDbConfig);
+
+		$players = $Player->find('all', array('recursive' => -1));
+		$guilds = $Player->Guild->find('all', array('recursive' => -1));
+		$guildsPlayers = $Player->GuildsPlayer->find('all', array('recursive' => -1));
+
+		$this->assertEquals(true, count($players) > 1);
+		$this->assertEquals(true, count($guilds) > 1);
+		$this->assertEquals(true, count($guildsPlayers) > 1);
+	}
+
+/**
+ * testMultischemaFixtureWithThreeDatabases, three databases
+ *
+ * @return void
+ */
+	public function testMultischemaFixtureWithThreeDatabases() {
+		$config = ConnectionManager::enumConnectionObjects();
+		$this->skipIf($this->db instanceof Sqlite, 'This test is not compatible with Sqlite.');
+		$this->skipIf(
+			!isset($config['test']) || !isset($config['test2']) || !isset($config['test_database_three']),
+			'Primary, secondary, and tertiary test databases not configured, skipping test.  To run this test define $test, $test2, and $test_database_three in your database configuration.'
+			);
+
+		$this->loadFixtures('Player', 'Guild', 'GuildsPlayer', 'Armor', 'ArmorsPlayer');
+
+		$Player = ClassRegistry::init('Player');
+		$Player->bindModel(array(
+			'hasAndBelongsToMany' => array(
+				'Armor' => array(
+					'with' => 'ArmorsPlayer',
+					),
+				),
+			), false);
+		$this->assertEquals('test', $Player->useDbConfig);
+		$this->assertEquals('test', $Player->Guild->useDbConfig);
+		$this->assertEquals('test2', $Player->Guild->GuildsPlayer->useDbConfig);
+		$this->assertEquals('test2', $Player->GuildsPlayer->useDbConfig);
+		$this->assertEquals('test2', $Player->Armor->useDbConfig);
+		$this->assertEquals('test_database_three', $Player->Armor->ArmorsPlayer->useDbConfig);
+		$this->assertEquals('test', $Player->getDataSource()->configKeyName);
+		$this->assertEquals('test', $Player->Guild->getDataSource()->configKeyName);
+		$this->assertEquals('test2', $Player->GuildsPlayer->getDataSource()->configKeyName);
+		$this->assertEquals('test2', $Player->Armor->getDataSource()->configKeyName);
+		$this->assertEquals('test_database_three', $Player->Armor->ArmorsPlayer->getDataSource()->configKeyName);
+
+		$players = $Player->find('all', array('recursive' => -1));
+		$guilds = $Player->Guild->find('all', array('recursive' => -1));
+		$guildsPlayers = $Player->GuildsPlayer->find('all', array('recursive' => -1));
+		$armorsPlayers = $Player->ArmorsPlayer->find('all', array('recursive' => -1));
+
+		$this->assertEquals(true, count($players) > 1);
+		$this->assertEquals(true, count($guilds) > 1);
+		$this->assertEquals(true, count($guildsPlayers) > 1);
+		$this->assertEquals(true, count($armorsPlayers) > 1);
+	}
+
+/**
+ * Tests that calling schema() on a model that is not supposed to use a table
+ * does not trigger any calls on any datasource
+ *
+ * @return void
+ **/
+	public function testSchemaNoDB() {
+		$model = $this->getMock('Article', array('getDataSource'));
+		$model->useTable = false;
+		$model->expects($this->never())->method('getDataSource');
+		$this->assertEmpty($model->schema());
 	}
 }
