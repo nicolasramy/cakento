@@ -29,7 +29,8 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 	<?php
 		echo $this->Html->meta('icon');
 
-		echo $this->Html->css('cake.generic');
+		echo $this->Html->css('bootstrap.min');
+		echo $this->Html->css('bootstrap-responsive.min');
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
@@ -48,14 +49,8 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 			<?php echo $this->fetch('content'); ?>
 		</div>
 		<div id="footer">
-			<?php echo $this->Html->link(
-					$this->Html->image('cake.power.gif', array('alt' => $cakeDescription, 'border' => '0')),
-					'http://www.cakephp.org/',
-					array('target' => '_blank', 'escape' => false)
-				);
-			?>
+			<?php echo $this->element('sql_dump'); ?>
 		</div>
 	</div>
-	<?php echo $this->element('sql_dump'); ?>
 </body>
 </html>
