@@ -1,5 +1,13 @@
 <div class="users view">
-<h2><?php  echo __('User'); ?></h2>
+
+
+	<h2><?php echo __('Users'); ?></h2>
+
+	<ul class="breadcrumb">
+	  <li><?php echo $this->Html->link(__('Users'), array('controller' => 'users', 'action' => 'index')); ?> <span class="divider">/</span></li>
+	  <li class="active"><?php echo h('Index'); ?></li>
+	</ul>
+
 	<dl>
 		<dt><?php echo __('Id'); ?></dt>
 		<dd>
@@ -38,12 +46,4 @@
 		</dd>
 	</dl>
 </div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('Edit User'), array('action' => 'edit', $user['User']['id'])); ?> </li>
-		<li><?php echo $this->Form->postLink(__('Delete User'), array('action' => 'delete', $user['User']['id']), null, __('Are you sure you want to delete # %s?', $user['User']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(__('List Users'), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New User'), array('action' => 'add')); ?> </li>
-	</ul>
-</div>
+

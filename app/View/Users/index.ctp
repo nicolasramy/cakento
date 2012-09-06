@@ -1,6 +1,20 @@
 <div class="users">
 
-	<h2><?php echo __('Users'); ?></h2>
+	<header>
+
+		<h2><?php echo __('Users'); ?></h2>
+
+	<div class="btn-group">
+		<a class="btn" href="#">
+			Add
+		</a>
+	</div>
+	</header>
+
+	<ul class="breadcrumb">
+	  <li><?php echo $this->Html->link(__('Users'), array('controller' => 'users', 'action' => 'index')); ?> <span class="divider">/</span></li>
+	  <li class="active"><?php echo h('Index'); ?></li>
+	</ul>
 
 	<table class="table">
 		<thead>
@@ -49,9 +63,4 @@
 	?>
 	</div>
 </div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('New User'), array('action' => 'add')); ?></li>
-	</ul>
-</div>
+
