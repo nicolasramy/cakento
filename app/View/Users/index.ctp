@@ -2,13 +2,15 @@
 
 	<header>
 
-		<h2><?php echo __('Users'); ?></h2>
 
-	<div class="btn-group">
-		<a class="btn" href="#">
-			Add
-		</a>
+
+	<div class="btn-group pull-right">
+		<?php echo $this->Html->link(__('Add'), array('action' => 'add'), array('class' => 'btn')); ?>
+
 	</div>
+
+	<h2><?php echo __('Users'); ?></h2>
+
 	</header>
 
 	<ul class="breadcrumb">
