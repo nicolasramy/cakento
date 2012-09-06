@@ -18,8 +18,8 @@
 
 $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework');
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
 	<?php echo $this->Html->charset(); ?>
 	<title>
@@ -34,23 +34,48 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
-		echo $this->fetch('script');
+
 	?>
 </head>
 <body>
-	<div id="container">
-		<div id="header">
-			<h1><?php echo $this->Html->link($cakeDescription, 'http://cakephp.org'); ?></h1>
+	<div class="navbar navbar-inverse navbar-static-top">
+		<div class="navbar-inner">
+			<a class="brand" href="http://darkelda.portfolio"><?php Configure::read('App.name'); ?></a>
+			<ul class="nav">
+				<li><a href="http://darkelda.portfolio">Accueil</a></li>
+			</ul>
 		</div>
-		<div id="content">
+	</div>
+	<div class="container">
 
-			<?php echo $this->Session->flash(); ?>
+	<!-- Header container -->
+	<div class="row-fluid">
+		<div class="span12">
 
+
+			<div class="logo">
+				<a href="http://darkelda.portfolio"><img src="http://darkelda.portfolio/wp-content/themes/darkelda_portfolio/images/logo.png" alt="darkelda portfolio"></a>
+			</div>
+			<h1><a href="http://darkelda.portfolio">darkelda portfolio</a></h1>
+			<h2>A French Web Engineer Portfolio</h2>
+		</div>
+	</div>
+
+	<!-- Main container -->
+	<div class="container">
+		<div class="row-fluid">
 			<?php echo $this->fetch('content'); ?>
+
 		</div>
-		<div id="footer">
-			<?php echo $this->element('sql_dump'); ?>
-		</div>
+
+  <footer>
+                    <!-- <h4>Hey! You!</h4>
+          <p>You should like, so test out this dynamic footer sidebar. Check it out in Appearance > Widgets!</p> -->
+            </footer>
+</div>
+
+	<div id="scripts">
+		<?php echo $this->fetch('script'); ?>
 	</div>
 </body>
 </html>
