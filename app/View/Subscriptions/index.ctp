@@ -26,7 +26,7 @@
 				<th><?php echo $this->Paginator->sort('state'); ?></th>
 				<th><?php echo $this->Paginator->sort('created_at'); ?></th>
 				<th><?php echo $this->Paginator->sort('updated_at'); ?></th>
-				<!--<th class="actions"><?php echo __('Actions'); ?></th>-->
+				<th class="actions"><?php echo __('Actions'); ?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -41,11 +41,11 @@
 					<td><?php echo h($subscription['Subscription']['state']); ?>&nbsp;</td>
 					<td><?php echo h($subscription['Subscription']['created_at']); ?>&nbsp;</td>
 					<td><?php echo h($subscription['Subscription']['updated_at']); ?>&nbsp;</td>
-					<!--<td class="actions">
-						<?php echo $this->Html->link(__('View'), array('action' => 'view', $user['User']['id'])); ?>
-						<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $user['User']['id'])); ?>
-						<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $user['User']['id']), null, __('Are you sure you want to delete # %s?', $user['User']['id'])); ?>
-					</td>-->
+					<td class="actions">
+						<?php echo $this->Html->link(__('View'), array('action' => 'view', $subscription['Subscription']['subscription_id'])); ?>
+						<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $subscription['Subscription']['subscription_id'])); ?>
+						<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $subscription['Subscription']['subscription_id']), null, __('Are you sure you want to delete # %s?', $subscription['Subscription']['subscription_id'])); ?>
+					</td>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>
