@@ -1,16 +1,7 @@
 <?php
 App::uses('AppModel', 'Model');
-/**
- * User Model
- *
- */
+
 class Subscription extends AppModel {
-
-/**
- * Display field
- *
- * @var string
- */
-	public $displayField = 'name';
-
+	public $useTable = 'jolie_sales_subscription';
+	public $primaryKey = 'subscription_id';
 }
