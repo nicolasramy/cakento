@@ -10,4 +10,14 @@ class CustomerVarchar extends AppModel {
 			'foreignKey' => 'attribute_id'
 		)
 	);
+
+	public function fill($customer_id){
+		$result = array();
+		$conditions = array('CustomerVarchar.entity_id' => $customer_id);
+		$attributes = $this->find('all', compact('conditions'));
+		foreach ($attributes as $attribute) {
+			$result[$attribute['Attribute']['attribute_code']] = $attribute['CustomerVarchar']['value'];
+		}
+		return $result;
+	}
 }

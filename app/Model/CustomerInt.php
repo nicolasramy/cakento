@@ -10,4 +10,14 @@ class CustomerInt extends AppModel {
 			'foreignKey' => 'attribute_id'
 		)
 	);
+
+	public function fill($customer_id){
+		$result = array();
+		$conditions = array('CustomerInt.entity_id' => $customer_id);
+		$attributes = $this->find('all', compact('conditions'));
+		foreach ($attributes as $attribute) {
+			$result[$attribute['Attribute']['attribute_code']] = $attribute['CustomerInt']['value'];
+		}
+		return $result;
+	}
 }
