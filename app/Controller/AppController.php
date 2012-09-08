@@ -32,4 +32,21 @@ App::uses('Controller', 'Controller');
  * @link http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+
+    public $uses = array(
+      'Store',
+      'StoreConfig'
+    );
+    /**
+     * beforeFilter
+     * @param
+     * @return void
+     */
+    public function beforeFilter() {
+        $base_url = $this->StoreConfig->getFromPath('web/unsecure/base_url');
+        $skin_url = $this->StoreConfig->getFromPath('web/unsecure/base_skin_url');
+        $media_url = $this->StoreConfig->getFromPath('web/unsecure/base_media_url');
+
+        $this->set(compact('base_url', 'skin_url', 'media_url'));
+    }
 }
