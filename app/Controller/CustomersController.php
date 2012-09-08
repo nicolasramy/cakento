@@ -8,7 +8,8 @@ App::uses('AppController', 'Controller');
 class CustomersController extends AppController {
 
 	public $uses = array(
-		'Customer'
+		'Customer',
+		'Address'
 	);
 
 	/**
@@ -34,6 +35,9 @@ class CustomersController extends AppController {
 			throw new NotFoundException(__('Invalid customer'));
 		}
 		$customer = $this->Customer->read(null, $id);
-		$this->set(compact('customer'));
+
+		$conditions = array('Address.parent_id' => $id);
+		$addresses = $this->Address->find('all', compact('conditions'));
+		$this->set(compact('customer', 'addresses'));
 	}
 }
