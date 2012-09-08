@@ -42,30 +42,28 @@ class ProductEntity extends AppModel {
 			return false;
 		}
 
-		$info = array();
-
 		$product = $this->Product->read(null, $id);
-		$info['Info']['sku'] = $product['Product']['sku'];
+		$product['Info']['sku'] = $product['Product']['sku'];
 
 		$conditions = array('ProductVarchar.entity_id' => $id);
 		$varchars = $this->ProductVarchar->find('all', compact('conditions'));
 		foreach ($varchars as $varchar) {
-			$info['Info'][$varchar['Attribute']['attribute_code']] = $varchar['ProductVarchar']['value'];
+			$product['Info'][$varchar['Attribute']['attribute_code']] = $varchar['ProductVarchar']['value'];
 		}
 
 		$conditions = array('ProductInt.entity_id' => $id);
 		$ints = $this->ProductInt->find('all', compact('conditions'));
 		foreach ($ints as $int) {
-			$info['Info'][$int['Attribute']['attribute_code']] = $int['ProductInt']['value'];
+			$product['Info'][$int['Attribute']['attribute_code']] = $int['ProductInt']['value'];
 		}
 
 		$conditions = array('ProductDatetime.entity_id' => $id);
 		$datetimes = $this->ProductDatetime->find('all', compact('conditions'));
 		foreach ($datetimes as $datetime) {
-			$info['Info'][$datetime['Attribute']['attribute_code']] = $datetime['ProductDatetime']['value'];
+			$product['Info'][$datetime['Attribute']['attribute_code']] = $datetime['ProductDatetime']['value'];
 		}
 
-		return $info;
+		return $product;
 	}
 
 }

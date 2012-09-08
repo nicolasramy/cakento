@@ -3,7 +3,7 @@ App::uses('AppModel', 'Model');
 class CustomerEntity extends AppModel {
 	public $useTable = 'customer_entity';
 	public $primaryKey = 'entity_id';
-	
+
 	/**
 	 * hasAndBelongsToMany associations
 	 *
@@ -42,30 +42,30 @@ class CustomerEntity extends AppModel {
 			return false;
 		}
 
-		$info = array();
+		$customer = array();
 
 		$customer = $this->Customer->read(null, $id);
-		$info['Info']['email'] = $customer['Customer']['email'];
+		$customer['Info']['email'] = $customer['Customer']['email'];
 
 		$conditions = array('CustomerVarchar.entity_id' => $id);
 		$varchars = $this->CustomerVarchar->find('all', compact('conditions'));
 		foreach ($varchars as $varchar) {
-			$info['Info'][$varchar['Attribute']['attribute_code']] = $varchar['CustomerVarchar']['value'];
+			$customer['Info'][$varchar['Attribute']['attribute_code']] = $varchar['CustomerVarchar']['value'];
 		}
 
 		$conditions = array('CustomerInt.entity_id' => $id);
 		$ints = $this->CustomerInt->find('all', compact('conditions'));
 		foreach ($ints as $int) {
-			$info['Info'][$int['Attribute']['attribute_code']] = $int['CustomerInt']['value'];
+			$customer['Info'][$int['Attribute']['attribute_code']] = $int['CustomerInt']['value'];
 		}
 
 		$conditions = array('CustomerDatetime.entity_id' => $id);
 		$datetimes = $this->CustomerDatetime->find('all', compact('conditions'));
 		foreach ($datetimes as $datetime) {
-			$info['Info'][$datetime['Attribute']['attribute_code']] = $datetime['CustomerDatetime']['value'];
+			$customer['Info'][$datetime['Attribute']['attribute_code']] = $datetime['CustomerDatetime']['value'];
 		}
 
-		return $info;
+		return $customer;
 	}
 
 }
