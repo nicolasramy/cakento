@@ -16,16 +16,6 @@ class ProductsController extends AppController {
 	 *
 	 * @return void
 	 */
-	public function info() {
-		$this->Product->recursive = 0;
-		$this->set('products', $this->paginate());
-	}
-
-	/**
-	 * index method
-	 *
-	 * @return void
-	 */
 	public function index() {
 		$this->Product->recursive = 0;
 		$this->set('products', $this->paginate());
