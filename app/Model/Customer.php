@@ -4,12 +4,11 @@ class Customer extends AppModel {
 	public $useTable = 'customer_entity';
 	public $primaryKey = 'entity_id';
 
-
-/**
- * hasAndBelongsToMany associations
- *
- * @var array
- */
+	/**
+	 * hasAndBelongsToMany associations
+	 *
+	 * @var array
+	 */
 	public $hasOne = array(
 		'CustomerEntity' => array(
 			'className' => 'CustomerEntity',

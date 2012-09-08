@@ -33,9 +33,8 @@
 					<td><?php echo h($customer['Customer']['created_at']); ?>&nbsp;</td>
 					<td><?php echo h($customer['Customer']['updated_at']); ?>&nbsp;</td>
 					<td class="actions">
+						<i class="icon-file"></i>
 						<?php echo $this->Html->link(__('View'), array('action' => 'view', $customer['Customer']['entity_id'])); ?>
-						<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $customer['Customer']['entity_id'])); ?>
-						<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $customer['Customer']['entity_id']), null, __('Are you sure you want to delete # %s?', $customer['Customer']['entity_id'])); ?>
 					</td>
 				</tr>
 			<?php endforeach; ?>

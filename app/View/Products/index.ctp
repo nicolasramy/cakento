@@ -31,9 +31,8 @@
 					<td><?php echo h($product['Product']['created_at']); ?>&nbsp;</td>
 					<td><?php echo h($product['Product']['updated_at']); ?>&nbsp;</td>
 					<td class="actions">
+						<i class="icon-file"></i>
 						<?php echo $this->Html->link(__('View'), array('action' => 'view', $product['Product']['entity_id'])); ?>
-						<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $product['Product']['entity_id'])); ?>
-						<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $product['Product']['entity_id']), null, __('Are you sure you want to delete # %s?', $product['Product']['entity_id'])); ?>
 					</td>
 				</tr>
 			<?php endforeach; ?>

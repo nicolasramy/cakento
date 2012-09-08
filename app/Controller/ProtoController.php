@@ -1,12 +1,12 @@
 <?php
 class ProtoController extends AppController {
     public $uses = array(
-        'Box'
+        'Product'
     );
 
     public function index() {
-        $boxes = $this->Box->info(1);
-        var_dump($boxes);
+        $products = $this->Product->info(1);
+        var_dump($products);
         exit;
     }
 }

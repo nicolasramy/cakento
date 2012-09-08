@@ -3,11 +3,12 @@ App::uses('AppModel', 'Model');
 class CustomerEntity extends AppModel {
 	public $useTable = 'customer_entity';
 	public $primaryKey = 'entity_id';
-/**
- * hasAndBelongsToMany associations
- *
- * @var array
- */
+	
+	/**
+	 * hasAndBelongsToMany associations
+	 *
+	 * @var array
+	 */
 	public $hasAndBelongsToMany = array(
 		'CustomerVarchar' => array(
 			'className' => 'CustomerVarchar',
