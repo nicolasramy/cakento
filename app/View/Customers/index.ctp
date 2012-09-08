@@ -14,6 +14,8 @@
 		<thead>
 			<tr>
 				<th><?php echo $this->Paginator->sort('entity_id'); ?></th>
+				<th><?php echo $this->Paginator->sort('firstname'); ?></th>
+				<th><?php echo $this->Paginator->sort('lastname'); ?></th>
 				<th><?php echo $this->Paginator->sort('email'); ?></th>
 				<th><?php echo $this->Paginator->sort('created_at'); ?></th>
 				<th><?php echo $this->Paginator->sort('updated_at'); ?></th>
@@ -24,6 +26,8 @@
 			<?php foreach ($customers as $customer): ?>
 				<tr>
 					<td><?php echo h($customer['Customer']['entity_id']); ?>&nbsp;</td>
+					<td><?php echo h($customer['Attribute']['firstname']); ?>&nbsp;</td>
+					<td><?php echo h($customer['Attribute']['lastname']); ?>&nbsp;</td>
 					<td><?php echo h($customer['Customer']['email']); ?>&nbsp;</td>
 					<td><?php echo h($customer['Customer']['created_at']); ?>&nbsp;</td>
 					<td><?php echo h($customer['Customer']['updated_at']); ?>&nbsp;</td>

@@ -43,7 +43,7 @@ class CustomersController extends AppController {
 		if (!$this->Customer->exists()) {
 			throw new NotFoundException(__('Invalid customer'));
 		}
-		$customer = $this->Customer->info($id);
+		$customer = $this->Customer->read(null, $id);
 		$this->set(compact('customer'));
 	}
 }

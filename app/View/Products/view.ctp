@@ -12,20 +12,20 @@
 
 	<div class="row-fluid">
 		<div class="span12">
-			<h2><?php echo $product['Info']['name']; ?></h2>
-			<h3><?php echo $product['Info']['sku']; ?></h3>
+			<h2><?php echo $product['Attribute']['name']; ?></h2>
+			<h3><?php echo $product['Product']['sku']; ?></h3>
 		</div>
 	</div>
 
 	<div class="row-fluid">
 		<div class="span6">
-			<?php if (isset($product['Info']['image'])): ?>
-				<img src="<?php echo $media_url . 'catalog/product' . $product['Info']['image']; ?>" alt="<?php echo $product['Info']['name']; ?>" />
+			<?php if (isset($product['Attribute']['image'])): ?>
+				<img src="<?php echo $media_url . 'catalog/product' . $product['Attribute']['image']; ?>" alt="<?php echo $product['Attribute']['name']; ?>" />
 			<?php endif; ?>
 		</div>
 		<div class="span6">
 			<dl>
-				<?php foreach ($product['Info'] as $label => $value) : ?>
+				<?php foreach ($product['Attribute'] as $label => $value) : ?>
 				<dt><?php echo h($label); ?></dt>
 				<dd>
 					<?php echo h($value); ?>

@@ -14,6 +14,7 @@
 		<thead>
 			<tr>
 				<th><?php echo $this->Paginator->sort('entity_id'); ?></th>
+				<th><?php echo $this->Paginator->sort('name'); ?></th>
 				<th><?php echo $this->Paginator->sort('created_at'); ?></th>
 				<th><?php echo $this->Paginator->sort('updated_at'); ?></th>
 				<th class="actions"><?php echo __('Actions'); ?></th>
@@ -23,6 +24,7 @@
 			<?php foreach ($products as $product): ?>
 				<tr>
 					<td><?php echo h($product['Product']['entity_id']); ?>&nbsp;</td>
+					<td><?php echo h($product['Attribute']['name']); ?>&nbsp;</td>
 					<td><?php echo h($product['Product']['created_at']); ?>&nbsp;</td>
 					<td><?php echo h($product['Product']['updated_at']); ?>&nbsp;</td>
 					<td class="actions">

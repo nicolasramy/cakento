@@ -11,12 +11,12 @@
 	</ul>
 
 	<div class="row-fluid">
-		<h2><?php echo ucwords($customer['Info']['firstname']) . ' ' . ucwords($customer['Info']['lastname']); ?></h2>
-		<h3><?php echo $customer['Info']['email']; ?></h3>
+		<h2><?php echo ucwords($customer['Attribute']['firstname']) . ' ' . ucwords($customer['Attribute']['lastname']); ?></h2>
+		<h3><?php echo $customer['Customer']['email']; ?></h3>
 
 		<div class="span12">
 			<dl>
-				<?php foreach ($customer['Info'] as $label => $value) : ?>
+				<?php foreach ($customer['Attribute'] as $label => $value) : ?>
 				<dt><?php echo h($label); ?></dt>
 				<dd>
 					<?php echo h($value); ?>

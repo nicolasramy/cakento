@@ -33,7 +33,7 @@ class ProductsController extends AppController {
 		if (!$this->Product->exists()) {
 			throw new NotFoundException(__('Invalid product'));
 		}
-		$product = $this->Product->info($id);
+		$product = $this->Product->read(null, $id);
 		$this->set(compact('product'));
 	}
 }
