@@ -2,4 +2,6 @@ tmp/*
 config/database.php
 app/tmp/*
 app/config/database.php
-!empty
+!empty/app/Config/database.php
+/app/Config/core.php
+/app/Config/database.php
