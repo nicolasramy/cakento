@@ -1,11 +1,6 @@
 <div class="subscriptions">
 
 	<header>
-
-		<div class="btn-group pull-right">
-			<?php echo $this->Html->link(__('Add'), array('action' => 'add'), array('class' => 'btn')); ?>
-		</div>
-
 		<h1><?php echo __('Products'); ?></h1>
 	</header>
 
