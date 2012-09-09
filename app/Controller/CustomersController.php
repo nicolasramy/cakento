@@ -38,8 +38,14 @@ class CustomersController extends AppController {
 		}
 		$customer = $this->Customer->read(null, $id);
 
+		// Addresses
 		$conditions = array('Address.parent_id' => $id);
 		$addresses = $this->Address->find('all', compact('conditions'));
-		$this->set(compact('customer', 'addresses'));
+
+		// Orders
+		$conditions = array('Order.customer_id' => $id);
+		$orders = $this->Order->find('all', compact('conditions'));
+
+		$this->set(compact('customer', 'addresses', 'orders'));
 	}
 }
