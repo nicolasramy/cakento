@@ -5,6 +5,8 @@
             <li><?php echo $this->Html->link(__('Customers'), array('controller' => 'customers', 'action' => 'index')); ?> </li>
             <!--<li><?php echo $this->Html->link(__('Addresses'), array('controller' => 'addresses', 'action' => 'index')); ?> </li>-->
             <li><?php echo $this->Html->link(__('Products'), array('controller' => 'products', 'action' => 'index')); ?> </li>
+            <li><?php echo $this->Html->link(__('Orders'), array('controller' => 'orders', 'action' => 'index')); ?> </li>
+            <li><?php echo $this->Html->link(__('Invoices'), array('controller' => 'invoices', 'action' => 'index')); ?> </li>
         </ul>
     </div>
 </div>
