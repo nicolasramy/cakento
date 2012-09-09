@@ -19,7 +19,7 @@
 
 	<div class="row-fluid">
 		<div class="span6">
-			<?php if (isset($product['Attribute']['image'])): ?>
+			<?php if (isset($product['Attribute']['image']) && $product['Attribute']['image'] != 'no_selection'): ?>
 				<img src="<?php echo $media_url . 'catalog/product' . $product['Attribute']['image']; ?>" alt="<?php echo $product['Attribute']['name']; ?>" />
 			<?php endif; ?>
 		</div>

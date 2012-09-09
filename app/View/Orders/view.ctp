@@ -1,50 +1,27 @@
-<div class="sales view">
+<div class="orders view">
 
 	<header>
-		<h1><?php echo __('Sales'); ?></h1>
+		<h1><?php echo __('Orders'); ?></h1>
 	</header>
 
 	<ul class="breadcrumb">
 	  <li><?php echo $this->Html->link(__('Dashboard'), array('controller' => 'dashboard', 'action' => 'index')); ?> <span class="divider">/</span></li>
-	  <li><?php echo $this->Html->link(__('Sales'), array('controller' => 'sales', 'action' => 'index')); ?> <span class="divider">/</span></li>
-	  <li class="active"><?php echo h('View') . ' #' . $sale['Sale']['entity_id']; ?></li>
+	  <li><?php echo $this->Html->link(__('Orders'), array('controller' => 'orders', 'action' => 'index')); ?> <span class="divider">/</span></li>
+	  <li class="active"><?php echo h('View') . ' #' . $order['Order']['entity_id']; ?></li>
 	</ul>
 
 	<div class="row-fluid">
 		<div class="span12">
-			<h2><?php echo ucwords($sale['Attribute']['firstname']) . ' ' . ucwords($sale['Attribute']['lastname']); ?></h2>
-			<h3><?php echo $sale['Sale']['email']; ?></h3>
+			<h2><?php echo ucwords($order['Order']['billing_name']) ; ?></h2>
+			<h3><?php echo $order['Order']['customer_email']; ?></h3>
 		</div>
 	</div>
 
 	<div class="row-fluid">
-		<div class="span6">
+		<div class="span12">
 			<h4><?php echo __('Informations'); ?></h4>
-			<dl>
-				<?php foreach ($sale['Attribute'] as $label => $value) : ?>
-				<dt><?php echo h($label); ?></dt>
-				<dd>
-					<?php echo h($value); ?>
-				</dd>
-				<?php endforeach; ?>
-			</dl>
-		</div>
+			<?php var_dump($order); ?>
 
-		<div class="span6">
-			<h4><?php echo __('Addresses'); ?></h4>
-			<?php
-				if (count($addresses)) {
-					echo '<dl>';
-					foreach ($addresses as $address) {
-						echo '<h5>' . $address['Address']['entity_id'] . '</h5>';
-						foreach ($address['Attribute'] as $key => $value) {
-							echo '<dt>' . $key . '</dt>';
-							echo '<dd>' . $value . '</dd>';
-						}
-					}
-					echo '</dl>';
-				}
-			?>
 		</div>
 
 	</div>

@@ -9,6 +9,8 @@ class CustomersController extends AppController {
 
 	public $uses = array(
 		'Customer',
+		'Order',
+		'Invoice',
 		'Address'
 	);
 

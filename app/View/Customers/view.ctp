@@ -48,4 +48,14 @@
 		</div>
 
 	</div>
+
+
+
+	<div class="row-fluid">
+		<div class="span12">
+			<?php var_dump($customer); ?>
+		</div>
+	</div>
+
+
 </div>
