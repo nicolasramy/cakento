@@ -43,4 +43,84 @@ class EntityBehavior extends ModelBehavior {
         }
         return $results;
     }
+
+    public function whereAttribute(Model $Model, $name = null) {
+        if (!$name) {
+            return null;
+        }
+        $entities = array();
+
+        foreach($this->_attributes as $attribute) {
+            $table = $Model->table . '_' . $attribute;
+            $alias = 'Entity' . ucwords($attribute);
+
+            $query = 'SELECT * FROM ' . $table . ' AS ' . $alias
+                . ' INNER JOIN eav_attribute AS EAV'
+                . ' ON ' . $alias . '.attribute_id = EAV.attribute_id'
+                . ' WHERE attribute_code = "' . $name . '"';
+
+            $eavs = $Model->query($query);
+            foreach ($eavs as $eav) {
+                $entities[] = $eav[$alias]['entity_id'];
+            }
+        }
+
+
+        $conditions = array($Model->alias . '.entity_id' => $entities);
+        $limit = 30;
+
+        return $Model->find('all', compact('conditions', 'limit'));
+    }
+
+    public function whereAttributeLike(Model $Model, $name = null) {
+        if (!$name) {
+            return null;
+        }
+        $entities = array();
+
+        foreach($this->_attributes as $attribute) {
+            $table = $Model->table . '_' . $attribute;
+            $alias = 'Entity' . ucwords($attribute);
+
+            $query = 'SELECT * FROM ' . $table . ' AS ' . $alias
+                . ' INNER JOIN eav_attribute AS EAV'
+                . ' ON ' . $alias . '.attribute_id = EAV.attribute_id'
+                . ' WHERE attribute_code LIKE "' . $name . '"';
+
+            $eavs = $Model->query($query);
+            foreach ($eavs as $eav) {
+                $entities[] = $eav[$alias]['entity_id'];
+            }
+        }
+        $conditions = array($Model->alias . '.entity_id' => $entities);
+        $limit = 30;
+
+        return $Model->find('all', compact('conditions', 'limit'));
+    }
+
+
+    public function fromValue(Model $Model, $value = null) {
+        if (!$value) {
+            return null;
+        }
+
+        foreach($this->_attributes as $attribute) {
+            $table = $this->_instance->table . '_' . $attribute;
+            $alias = 'Entity' . ucwords($attribute);
+
+            $query = 'SELECT * FROM ' . $table . ' AS ' . $alias
+                . ' INNER JOIN eav_attribute AS EAV'
+                . ' ON ' . $alias . '.attribute_id = EAV.attribute_id'
+                . ' WHERE value ' . $value;
+
+            $eavs = $this->query($query);
+            foreach ($eavs as $eav) {
+                $entities[] = $eav[$alias]['entity_id'];
+            }
+        }
+        $conditions = array($Model->alias . '.entity_id' => $entities);
+        $limit = 30;
+
+        return $Model->find('all', compact('conditions', 'limit'));
+    }
 }

@@ -1,7 +1,8 @@
 <?php
 class ProtoController extends AppController {
     public $uses = array(
-        'Address'
+        'Address',
+        'Customer'
     );
 
     public function beforeFilter() {
@@ -25,5 +26,9 @@ class ProtoController extends AppController {
         $address = $this->Address->read(null, $id);
         var_dump($address);
 
+    }
+
+    public function test() {
+        var_dump($this->Customer->whereAttribute('lastname'));
     }
 }
