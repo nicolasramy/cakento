@@ -38,6 +38,7 @@ class EntityBehavior extends ModelBehavior {
                     $entityAttributes[$eav['EAV']['attribute_code']] = $eav[$alias]['value'];
                 }
             }
+            ksort($entityAttributes);
             $results[$index]['Attribute'] = $entityAttributes;
         }
         return $results;
