@@ -1,12 +1,29 @@
 <?php
 class ProtoController extends AppController {
     public $uses = array(
-        'Product'
+        'Address'
     );
 
-    public function index() {
-        $products = $this->Product->info(1);
-        var_dump($products);
+    public function beforeFilter() {
+        $this->autoRender = false;
+    }
+
+    public function afterFilter() {
         exit;
+    }
+
+    public function index() {
+        $limit = 50;
+        $addresses = $this->Address->find('list', compact('limit'));
+        var_dump($addresses);
+    }
+
+    public function view($id = null) {
+        if (!$id) {
+            return $this->index();
+        }
+        $address = $this->Address->read(null, $id);
+        var_dump($address);
+
     }
 }
