@@ -27,7 +27,15 @@
 					<td><?php echo h($invoice['Invoice']['entity_id']); ?>&nbsp;</td>
 					<td><?php echo h($invoice['Invoice']['order_id']); ?>&nbsp;</td>
 					<td><?php echo h($invoice['Invoice']['state']); ?>&nbsp;</td>
-					<td><?php echo h($invoice['Invoice']['billing_name']); ?>&nbsp;</td>
+					<td>
+						<?php echo $this->Html->link(ucwords($invoice['Order']['customer_firstname'] . ' ' . $invoice['Order']['customer_lastname']),
+							array(
+								'controller' => 'customers',
+								'action' => 'view',
+								$invoice['Order']['customer_id']
+							)
+						); ?>
+					</td>
 					<td><?php echo h($invoice['Invoice']['created_at']); ?>&nbsp;</td>
 					<td class="actions">
 						<i class="icon-file"></i>

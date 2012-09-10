@@ -12,8 +12,16 @@
 
 	<div class="row-fluid">
 		<div class="span12">
-			<h2><?php echo ucwords($invoice['Invoice']['billing_name']); ?></h2>
-			<h3><?php echo $invoice['Invoice']['state']; ?></h3>
+			<h2>
+				<?php echo $this->Html->link(ucwords($invoice['Order']['customer_firstname'] . ' ' . $invoice['Order']['customer_lastname']),
+					array(
+						'controller' => 'customers',
+						'action' => 'view',
+						$invoice['Order']['customer_id']
+					)
+				); ?>
+			</h2>
+			<h3><?php echo $invoice['Order']['customer_email']; ?></h3>
 		</div>
 	</div>
 
