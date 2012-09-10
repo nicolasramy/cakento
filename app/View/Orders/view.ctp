@@ -12,7 +12,15 @@
 
 	<div class="row-fluid">
 		<div class="span12">
-			<h2><?php echo ucwords($order['Order']['billing_name']) ; ?></h2>
+			<h2>
+				<?php echo $this->Html->link(ucwords($order['Order']['customer_firstname'] . ' ' . $order['Order']['customer_lastname']),
+					array(
+						'controller' => 'customers',
+						'action' => 'view',
+						$order['Order']['customer_id']
+					)
+				); ?>
+			</h2>
 			<h3><?php echo $order['Order']['customer_email']; ?></h3>
 		</div>
 	</div>

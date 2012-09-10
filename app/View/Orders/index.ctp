@@ -14,10 +14,10 @@
 		<thead>
 			<tr>
 				<th><?php echo $this->Paginator->sort('entity_id'); ?></th>
+				<th><?php echo $this->Paginator->sort('state'); ?></th>
 				<th><?php echo $this->Paginator->sort('status'); ?></th>
-				<th><?php echo $this->Paginator->sort('billing_name'); ?></th>
-				<th><?php echo $this->Paginator->sort('shipping_name'); ?></th>
-				<th><?php echo $this->Paginator->sort('customer_email'); ?></th>
+				<th><?php echo $this->Paginator->sort('customer_name'); ?></th>
+				<th><?php echo $this->Paginator->sort('shipping_description'); ?></th>
 				<th><?php echo $this->Paginator->sort('created_at'); ?></th>
 				<th class="actions"><?php echo __('Actions'); ?></th>
 			</tr>
@@ -26,12 +26,23 @@
 			<?php foreach ($orders as $order): ?>
 				<tr>
 					<td><?php echo h($order['Order']['entity_id']); ?>&nbsp;</td>
+					<td><?php echo h($order['Order']['state']); ?>&nbsp;</td>
 					<td><?php echo h($order['Order']['status']); ?>&nbsp;</td>
-					<td><?php echo $this->Html->link($order['Order']['billing_name'], array('controller' => 'customers', 'action' => 'view', $order['Order']['customer_id'])); ?>&nbsp;</td>
-					<td><?php echo h($order['Order']['shipping_name']); ?>&nbsp;</td>
-					<td><?php echo h($order['Order']['customer_email']); ?>&nbsp;</td>
+					<td>
+						<?php echo $this->Html->link(ucwords($order['Order']['customer_firstname'] . ' ' . $order['Order']['customer_lastname']),
+							array(
+								'controller' => 'customers',
+								'action' => 'view',
+								$order['Order']['customer_id']
+							)
+						); ?>
+					</td>
+					<td><?php echo h($order['Order']['shipping_description']); ?>&nbsp;</td>
 					<td><?php echo h($order['Order']['created_at']); ?>&nbsp;</td>
 					<td class="actions">
+						<i class="icon-shopping-cart"></i>
+						<?php echo $this->Html->link(__('Cart'), array('action' => 'view', $order['Order']['entity_id'])); ?>
+						&nbsp;
 						<i class="icon-file"></i>
 						<?php echo $this->Html->link(__('View'), array('action' => 'view', $order['Order']['entity_id'])); ?>
 					</td>

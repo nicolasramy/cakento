@@ -44,7 +44,8 @@ class CustomersController extends AppController {
 
 		// Orders
 		$conditions = array('Order.customer_id' => $id);
-		$orders = $this->Order->find('all', compact('conditions'));
+		$order = array('Order.created_at DESC');
+		$orders = $this->Order->find('all', compact('conditions', 'order'));
 
 		$this->set(compact('customer', 'addresses', 'orders'));
 	}
