@@ -29,9 +29,13 @@
 
 		echo $this->Html->css('bootstrap.min');
 		echo $this->Html->css('bootstrap-responsive.min');
+		echo $this->Html->css('main');
 
 		echo $this->fetch('meta');
-		echo $this->fetch('css');
+
+		echo $this->Html->script('jquery-latest');
+		echo $this->Html->script('bootstrap.min');
+
 
 	?>
 </head>
@@ -46,7 +50,7 @@
 	</div>
 
 	<div id="scripts">
-		<?php echo $this->fetch('script'); ?>
+		<?php echo $this->Html->script('jquery.ui.totop'); ?>
 	</div>
 </body>
 </html>

@@ -1,0 +1,19 @@
+
+#UItoTop {
+	display:none;
+	text-decoration:none;
+	position:fixed;
+	bottom:10px;
+	right:10px;
+	overflow:hidden;
+	width:51px;
+	height:51px;
+	border:none;
+	text-indent:-999px;
+	background:url(../img/jquery-ui/ui-to-top.png) no-repeat left top;
+}
+
+#UItoTop:active, #UItoTop:focus
+{
+	outline:none;
+}
