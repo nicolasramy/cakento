@@ -34,15 +34,7 @@
 			<h4><?php echo __('Addresses'); ?></h4>
 			<?php
 				if (count($addresses)) {
-					echo '<dl>';
-					foreach ($addresses as $address) {
-						echo '<h5>' . $address['Address']['entity_id'] . '</h5>';
-						foreach ($address['Attribute'] as $key => $value) {
-							echo '<dt>' . $key . '</dt>';
-							echo '<dd>' . $value . '</dd>';
-						}
-					}
-					echo '</dl>';
+					echo $this->element('addresses/customer');
 				}
 			?>
 		</div>
