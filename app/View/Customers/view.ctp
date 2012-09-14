@@ -18,7 +18,7 @@
 	</div>
 
 	<div class="row-fluid">
-		<div class="span6">
+		<div class="span12">
 			<h4><?php echo __('Informations'); ?></h4>
 			<dl>
 				<?php foreach ($customer['Attribute'] as $label => $value) : ?>
@@ -29,12 +29,22 @@
 				<?php endforeach; ?>
 			</dl>
 		</div>
-
-		<div class="span6">
+	</div>
+	<div class="row-fluid">
+		<div class="span12">
 			<h4><?php echo __('Addresses'); ?></h4>
+			<?php echo $this->element('addresses/customer'); ?>
 			<?php
 				if (count($addresses)) {
-					echo $this->element('addresses/customer');
+					echo '<dl>';
+					foreach ($addresses as $address) {
+						echo '<h5>' . $address['Address']['entity_id'] . '</h5>';
+						foreach ($address['Attribute'] as $key => $value) {
+							echo '<dt>' . $key . '</dt>';
+							echo '<dd>' . $value . '</dd>';
+						}
+					}
+					echo '</dl>';
 				}
 			?>
 		</div>
