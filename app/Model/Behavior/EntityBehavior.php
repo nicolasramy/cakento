@@ -35,7 +35,13 @@ class EntityBehavior extends ModelBehavior {
 
                 $eavs = $Model->query($query);
                 foreach ($eavs as $eav) {
-                    $entityAttributes[$eav['EAV']['attribute_code']] = $eav[$alias]['value'];
+                    if (strstr($eav['EAV']['backend_type'], 'date')) {
+                        $entityAttributes[$eav['EAV']['attribute_code']] = date_create($eav[$alias]['value']);
+                    } elseif (strstr($eav['EAV']['backend_type'], 'int')) {
+                        $entityAttributes[$eav['EAV']['attribute_code']] = (int) $eav[$alias]['value'];
+                    } else {
+                        $entityAttributes[$eav['EAV']['attribute_code']] = $eav[$alias]['value'];
+                    }
                 }
             }
             ksort($entityAttributes);
