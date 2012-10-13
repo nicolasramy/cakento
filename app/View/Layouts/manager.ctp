@@ -40,7 +40,7 @@
 </head>
 <body>
 
-	<?php echo $this->element('Default/navbar'); ?>
+	<?php echo $this->element('Manager/navbar'); ?>
 
 	<div class="container">
 		<div class="row-fluid">

@@ -1,0 +1,8 @@
+<div class="navbar navbar-static-top">
+    <div class="navbar-inner">
+        <?php echo $this->Html->link('Cakento', array('controller' => 'dashboard', 'action' => 'index'), array('class' => 'brand')); ?>
+        <ul class="nav">
+            <li><?php echo $this->Html->link(__('Products'), array('controller' => 'products', 'action' => 'index')); ?> </li>
+        </ul>
+    </div>
+</div>
