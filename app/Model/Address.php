@@ -1,7 +1,7 @@
 <?php
 App::uses('AppModel', 'Model');
-class Product extends AppModel {
-	public $useTable = 'catalog_product_entity';
+class Address extends AppModel {
+	public $useTable = 'customer_address_entity';
 	public $primaryKey = 'entity_id';
 
 	public $actsAs = array(

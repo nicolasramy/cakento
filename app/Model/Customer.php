@@ -4,21 +4,13 @@ class Customer extends AppModel {
 	public $useTable = 'customer_entity';
 	public $primaryKey = 'entity_id';
 
-
-/**
- * hasAndBelongsToMany associations
- *
- * @var array
- */
-	public $hasOne = array(
-		'CustomerEntity' => array(
-			'className' => 'CustomerEntity',
-			'joinTable' => 'customer_entity',
-			'foreignKey' => 'entity_id',
+	public $actsAs = array(
+		'Entity' => array(
+			'datetime',
+			'decimal',
+			'int',
+			'text',
+			'varchar'
 		)
 	);
-
-	public function info($id = null) {
-		return $this->CustomerEntity->info($id);
-	}
 }

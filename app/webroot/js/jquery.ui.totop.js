@@ -1,0 +1,77 @@
+/**
+ * @file	jquery.ui.totop.js
+ * @author	Matt VARONE
+ * 			Nicolas RAMY-SEPOU
+ * @url		http://www.mattvarone.com/web-design/uitotop-jquery-plugin/
+ * @brief	UItoTop jQuery Plugin
+ */
+
+(function($)
+{
+	$.fn.UItoTop = function(options)
+	{
+
+ 		var defaults =
+ 		{
+			text: 'Scroll To Top',
+			min: 200,
+			inDelay:600,
+			outDelay:400,
+  			containerID: 'UItoTop',
+			containerHoverID: 'UItoToppHover',
+			scrollSpeed: 500,
+			easingType: 'linear'
+ 		};
+
+ 		var settings = $.extend(defaults, options);
+		var containerIDhash = '#' + settings.containerID;
+		var containerHoverIDHash = '#'+settings.containerHoverID;
+
+		$('body').append('<a href="#" id="'+settings.containerID+'">'+settings.text+'</a>');
+		$(containerIDhash).hide().click(function(){
+			$('html, body').animate({scrollTop:0}, settings.scrollSpeed, settings.easingType);
+			$('#'+settings.containerHoverID, this).stop().animate({'opacity': 0 }, settings.inDelay, settings.easingType);
+			return false;
+		})
+		.prepend('<span id="'+settings.containerHoverID+'"></span>')
+		.hover(function()
+		{
+				$(containerHoverIDHash, this).stop().animate({'opacity': 1}, 600, 'linear');
+		}, function() {
+				$(containerHoverIDHash, this).stop().animate({'opacity': 0}, 700, 'linear');
+		});
+
+		$(window).scroll(function()
+		{
+			var sd = $(window).scrollTop();
+			if(typeof document.body.style.maxHeight === "undefined")
+			{
+				$(containerIDhash).css(
+				{
+					'position': 'absolute',
+					'top': $(window).scrollTop() + $(window).height() - 50
+				});
+			}
+
+			if (sd > settings.min)
+			{
+				$(containerIDhash).fadeIn(settings.inDelay);
+			}
+			else
+			{
+				$(containerIDhash).fadeOut(settings.Outdelay);
+			}
+		});
+
+	};
+})(jQuery);
+
+
+$(document).ready(function()
+{
+	$('#UItoTop').UItoTop({min: 50,fadeSpeed: 250});
+	$('#UItoTop').click(function(e)
+	{
+		e.preventDefault();
+	});
+});

@@ -15,15 +15,12 @@
  * @since         CakePHP(tm) v 0.10.0.1076
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
-$cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework');
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<?php echo $this->Html->charset(); ?>
 	<title>
-		<?php echo $cakeDescription ?>:
 		<?php echo $title_for_layout; ?>
 	</title>
 	<?php
@@ -31,9 +28,13 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 
 		echo $this->Html->css('bootstrap.min');
 		echo $this->Html->css('bootstrap-responsive.min');
+		echo $this->Html->css('main');
 
 		echo $this->fetch('meta');
-		echo $this->fetch('css');
+
+		echo $this->Html->script('jquery-latest');
+		echo $this->Html->script('bootstrap.min');
+
 
 	?>
 </head>
@@ -48,7 +49,11 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 	</div>
 
 	<div id="scripts">
+<<<<<<< HEAD
 		<?php echo $this->fetch('script'); ?>
+=======
+		<?php echo $this->Html->script('jquery.ui.totop'); ?>
+>>>>>>> ae862d1583aeff851beae7a9cafe621b06a64d87
 	</div>
 </body>
 </html>
