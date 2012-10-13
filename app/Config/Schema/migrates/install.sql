@@ -1,0 +1,1 @@
+CREATE DATABASE `cakento` COLLATE 'utf8_general_ci';

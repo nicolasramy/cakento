@@ -43,10 +43,9 @@ class AppController extends Controller {
      * @return void
      */
     public function beforeFilter() {
-        $base_url = $this->StoreConfig->getFromPath('web/unsecure/base_url');
-        $skin_url = $this->StoreConfig->getFromPath('web/unsecure/base_skin_url');
-        $media_url = $this->StoreConfig->getFromPath('web/unsecure/base_media_url');
 
-        $this->set(compact('base_url', 'skin_url', 'media_url'));
+        if (isset($this->request->params['manager'])) {
+            $this->layout = 'manager';
+        }
     }
 }

@@ -1,12 +1,16 @@
-<div class="addresses">
+<div class="subscriptions">
 
 	<header>
-		<h1><?php echo __('Customers'); ?></h1>
+		<div class="btn-group pull-right">
+			<?php echo $this->Html->link(__('Add'), array('action' => 'add'), array('class' => 'btn')); ?>
+		</div>
+
+		<h1><?php echo __('Products'); ?></h1>
 	</header>
 
 	<ul class="breadcrumb">
 	  <li><?php echo $this->Html->link(__('Dashboard'), array('controller' => 'dashboard', 'action' => 'index')); ?> <span class="divider">/</span></li>
-	  <li><?php echo $this->Html->link(__('Customers'), array('controller' => 'addresses', 'action' => 'index')); ?> <span class="divider">/</span></li>
+	  <li><?php echo $this->Html->link(__('Products'), array('controller' => 'products', 'action' => 'index')); ?> <span class="divider">/</span></li>
 	  <li class="active"><?php echo h('Index'); ?></li>
 	</ul>
 
@@ -14,26 +18,22 @@
 		<thead>
 			<tr>
 				<th><?php echo $this->Paginator->sort('entity_id'); ?></th>
-				<th><?php echo $this->Paginator->sort('firstname'); ?></th>
-				<th><?php echo $this->Paginator->sort('lastname'); ?></th>
-				<th><?php echo $this->Paginator->sort('city'); ?></th>
-				<th><?php echo $this->Paginator->sort('created_at'); ?></th>
+				<th><?php echo $this->Paginator->sort('name'); ?></th>
+				<th><?php echo $this->Paginator->sort('sku'); ?></th>
 				<th><?php echo $this->Paginator->sort('updated_at'); ?></th>
 				<th class="actions"><?php echo __('Actions'); ?></th>
 			</tr>
 		</thead>
 		<tbody>
-			<?php foreach ($addresses as $address): ?>
+			<?php foreach ($products as $product): ?>
 				<tr>
-					<td><?php echo h($address['Address']['entity_id']); ?>&nbsp;</td>
-					<td><?php echo h($address['Attribute']['firstname']); ?>&nbsp;</td>
-					<td><?php echo h($address['Attribute']['lastname']); ?>&nbsp;</td>
-					<td><?php echo h($address['Attribute']['city']); ?>&nbsp;</td>
-					<td><?php echo h($address['Address']['created_at']); ?>&nbsp;</td>
-					<td><?php echo h($address['Address']['updated_at']); ?>&nbsp;</td>
+					<td><?php echo h($product['Product']['entity_id']); ?>&nbsp;</td>
+					<td><?php echo h($product['Attribute']['name']); ?>&nbsp;</td>
+					<td><?php echo h($product['Product']['sku']); ?>&nbsp;</td>
+					<td><?php echo h($product['Product']['updated_at']); ?>&nbsp;</td>
 					<td class="actions">
 						<i class="icon-file"></i>
-						<?php echo $this->Html->link(__('View'), array('action' => 'view', $address['Address']['entity_id'])); ?>
+						<?php echo $this->Html->link(__('View'), array('action' => 'view', $product['Product']['entity_id'])); ?>
 					</td>
 				</tr>
 			<?php endforeach; ?>

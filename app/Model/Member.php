@@ -1,8 +1,8 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * User Model
+ * Member Model
  *
  */
-class User extends AppModel {
+class Member extends AppModel {
 }

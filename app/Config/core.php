@@ -110,7 +110,7 @@
  *	`manager_index()` and `/manager/controller/index`
  *
  */
-Configure::write('Routing.prefixes', array('d3admin'));
+Configure::write('Routing.prefixes', array('manager'));
 
 /**
  * Turn off all caching application-wide.

@@ -36,4 +36,15 @@ class ProductsController extends AppController {
 		$product = $this->Product->read(null, $id);
 		$this->set(compact('product'));
 	}
+
+
+	/**
+	 * index method
+	 *
+	 * @return void
+	 */
+	public function manager_index() {
+		$this->Product->recursive = 0;
+		$this->set('products', $this->paginate());
+	}
 }

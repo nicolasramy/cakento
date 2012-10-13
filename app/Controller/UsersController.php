@@ -7,24 +7,24 @@ App::uses('AppController', 'Controller');
  */
 class UsersController extends AppController {
 
-/**
- * index method
- *
- * @return void
- */
-	public function index() {
+	/**
+	 * index method
+	 *
+	 * @return void
+	 */
+	public function manager_index() {
 		$this->User->recursive = 0;
 		$this->set('users', $this->paginate());
 	}
 
-/**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function view($id = null) {
+	/**
+	 * view method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
+	public function manager_view($id = null) {
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
 			throw new NotFoundException(__('Invalid user'));
@@ -32,12 +32,12 @@ class UsersController extends AppController {
 		$this->set('user', $this->User->read(null, $id));
 	}
 
-/**
- * add method
- *
- * @return void
- */
-	public function add() {
+	/**
+	 * add method
+	 *
+	 * @return void
+	 */
+	public function manager_add() {
 		if ($this->request->is('post')) {
 			$this->User->create();
 			if ($this->User->save($this->request->data)) {
@@ -49,14 +49,14 @@ class UsersController extends AppController {
 		}
 	}
 
-/**
- * edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function edit($id = null) {
+	/**
+	 * edit method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
+	public function manager_edit($id = null) {
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
 			throw new NotFoundException(__('Invalid user'));
@@ -73,13 +73,13 @@ class UsersController extends AppController {
 		}
 	}
 
-/**
- * login method
- *
- * @throws MethodNotAllowedException
- * @throws NotFoundException
- * @return void
- */
+	/**
+	 * login method
+	 *
+	 * @throws MethodNotAllowedException
+	 * @throws NotFoundException
+	 * @return void
+	 */
 	public function login() {
 		if (!$this->request->is('post')) {
 			throw new MethodNotAllowedException();
@@ -96,15 +96,15 @@ class UsersController extends AppController {
 		//$this->redirect(array('action' => 'index'));
 	}
 
-/**
- * delete method
- *
- * @throws MethodNotAllowedException
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function delete($id = null) {
+	/**
+	 * delete method
+	 *
+	 * @throws MethodNotAllowedException
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
+	public function manager_delete($id = null) {
 		if (!$this->request->is('post')) {
 			throw new MethodNotAllowedException();
 		}
