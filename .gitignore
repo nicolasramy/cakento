@@ -8,3 +8,6 @@
 .DS_Store
 /tags
 build.xml
+build.properties
+.travis.yml
+manager.komodoproject
