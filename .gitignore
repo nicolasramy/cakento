@@ -1,5 +1,5 @@
-/app/Config/database.php.default
-/app/Config/email.php.default
+/app/Config/database.php
+/app/Config/email.php
 /app/tmp
 /lib/Cake/Console/Templates/skel/tmp/
 /plugins
