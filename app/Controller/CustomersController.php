@@ -7,6 +7,20 @@ App::uses('AppController', 'Controller');
  */
 class CustomersController extends AppController {
 
+	public $uses = array(
+		'Customer'
+	);
+
+/**
+ * index method
+ *
+ * @return void
+ */
+	public function info() {
+		$this->Customer->recursive = 0;
+		$this->set('customers', $this->paginate());
+	}
+
 /**
  * index method
  *
@@ -29,7 +43,8 @@ class CustomersController extends AppController {
 		if (!$this->Customer->exists()) {
 			throw new NotFoundException(__('Invalid customer'));
 		}
-		$this->set('customer', $this->Customer->read(null, $id));
+		$customer = $this->Customer->info($id);
+		$this->set(compact('customer'));
 	}
 
 /**

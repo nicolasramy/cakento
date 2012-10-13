@@ -6,12 +6,12 @@
 			<?php echo $this->Html->link(__('Add'), array('action' => 'add'), array('class' => 'btn')); ?>
 		</div>
 
-		<h1><?php echo __('Customers'); ?></h1>
+		<h1><?php echo __('Products'); ?></h1>
 	</header>
 
 	<ul class="breadcrumb">
 	  <li><?php echo $this->Html->link(__('Dashboard'), array('controller' => 'dashboard', 'action' => 'index')); ?> <span class="divider">/</span></li>
-	  <li><?php echo $this->Html->link(__('Customers'), array('controller' => 'customers', 'action' => 'index')); ?> <span class="divider">/</span></li>
+	  <li><?php echo $this->Html->link(__('Products'), array('controller' => 'products', 'action' => 'index')); ?> <span class="divider">/</span></li>
 	  <li class="active"><?php echo h('Index'); ?></li>
 	</ul>
 
@@ -26,16 +26,16 @@
 			</tr>
 		</thead>
 		<tbody>
-			<?php foreach ($customers as $customer): ?>
+			<?php foreach ($products as $product): ?>
 				<tr>
-					<td><?php echo h($customer['Customer']['entity_id']); ?>&nbsp;</td>
-					<td><?php echo h($customer['Customer']['email']); ?>&nbsp;</td>
-					<td><?php echo h($customer['Customer']['created_at']); ?>&nbsp;</td>
-					<td><?php echo h($customer['Customer']['updated_at']); ?>&nbsp;</td>
+					<td><?php echo h($product['Product']['entity_id']); ?>&nbsp;</td>
+					<td><?php echo h($product['Product']['email']); ?>&nbsp;</td>
+					<td><?php echo h($product['Product']['created_at']); ?>&nbsp;</td>
+					<td><?php echo h($product['Product']['updated_at']); ?>&nbsp;</td>
 					<td class="actions">
-						<?php echo $this->Html->link(__('View'), array('action' => 'view', $customer['Customer']['entity_id'])); ?>
-						<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $customer['Customer']['entity_id'])); ?>
-						<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $customer['Customer']['entity_id']), null, __('Are you sure you want to delete # %s?', $customer['Customer']['entity_id'])); ?>
+						<?php echo $this->Html->link(__('View'), array('action' => 'view', $product['Product']['entity_id'])); ?>
+						<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $product['Product']['entity_id'])); ?>
+						<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $product['Product']['entity_id']), null, __('Are you sure you want to delete # %s?', $product['Product']['entity_id'])); ?>
 					</td>
 				</tr>
 			<?php endforeach; ?>
