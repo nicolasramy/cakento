@@ -49,11 +49,8 @@
 	</div>
 
 	<div id="scripts">
-<<<<<<< HEAD
 		<?php echo $this->fetch('script'); ?>
-=======
 		<?php echo $this->Html->script('jquery.ui.totop'); ?>
->>>>>>> ae862d1583aeff851beae7a9cafe621b06a64d87
 	</div>
 </body>
 </html>
