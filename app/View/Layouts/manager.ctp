@@ -34,8 +34,6 @@
 
 		echo $this->Html->script('jquery-latest');
 		echo $this->Html->script('bootstrap.min');
-
-
 	?>
 </head>
 <body>
@@ -44,6 +42,7 @@
 
 	<div class="container">
 		<div class="row-fluid">
+			<?php echo $this->Session->flash(); ?>
 			<?php echo $this->fetch('content'); ?>
 		</div>
 	</div>

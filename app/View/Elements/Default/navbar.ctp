@@ -4,5 +4,11 @@
         <ul class="nav">
             <li><?php echo $this->Html->link(__('Products'), array('controller' => 'products', 'action' => 'index')); ?> </li>
         </ul>
+
+        <ul class="nav pull-right">
+            <li>
+                <?php echo $this->Html->link(__('Login'), array('controller' => 'users', 'action' => 'login')); ?>
+            </li>
+        </ul>
     </div>
 </div>
