@@ -7,6 +7,34 @@ App::uses('AppController', 'Controller');
  */
 class UsersController extends AppController {
 
+	public function logMe() {
+		$this->Auth->user('id');
+	}
+
+	/**
+	 * login method
+	 *
+	 * @return void
+	 */
+	public function login() {
+		if ($this->request->is('post')) {
+			if ($this->Auth->login($this->request->data)) {
+				$this->Session->setFlash(__('You are now logged in'), 'Flash/success');
+				$this->redirect($this->Auth->redirect());
+			} else {
+				$this->Session->setFlash(__('Username or Password is incorrect'), 'Flash/error');
+			}
+		}
+	}
+
+	/**
+	 * logout
+	 * @return void
+	 */
+	public function logout() {
+		$this->redirect($this->Auth->logout());
+	}
+
 	/**
 	 * index method
 	 *
@@ -73,28 +101,6 @@ class UsersController extends AppController {
 		}
 	}
 
-	/**
-	 * login method
-	 *
-	 * @throws MethodNotAllowedException
-	 * @throws NotFoundException
-	 * @return void
-	 */
-	public function login() {
-		if (!$this->request->is('post')) {
-			throw new MethodNotAllowedException();
-		}
-		$this->User->id = $id;
-		if (!$this->User->exists()) {
-			throw new NotFoundException(__('Invalid user'));
-		}
-		if ($this->User->login()) {
-			$this->Session->setFlash(__('User deleted'));
-			//$this->redirect(array('action' => 'index'));
-		}
-		$this->Session->setFlash(__('User was not deleted'));
-		//$this->redirect(array('action' => 'index'));
-	}
 
 	/**
 	 * delete method

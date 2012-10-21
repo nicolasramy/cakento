@@ -33,19 +33,44 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 
-    public $uses = array(
-      'Store',
-      'StoreConfig'
+    public $components = array(
+        'Auth' => array(
+            'authenticate' => array(
+                'Form' => array(
+                    'fields' => array('username' => 'email'),
+                    'scope' => array('User.archived' => 0)
+                )
+            ),
+            'authorize' => 'Controller',
+            'loginAction' => array('controller' => 'users', 'action' => 'login'),
+            'loginRedirect' => array('controller' => 'dashboard', 'action' => 'index', 'manager' => true),
+            'logoutRedirect' => array('controller' => 'users', 'action' => 'logout')
+        ),
+        'Session'
     );
+
     /**
      * beforeFilter
      * @param
      * @return void
      */
     public function beforeFilter() {
-
         if (isset($this->request->params['manager'])) {
             $this->layout = 'manager';
         }
+    }
+
+    public function isAuthorized($user = null) {
+        // Any registered user can access public functions
+        if (empty($this->request->params['manager'])) {
+            return true;
+        }
+
+        // Only admins can access admin functions
+        if (isset($this->request->params['manager'])) {
+            $this->layout = 'manager';
+            return (bool)($user['role'] === 'manager');
+        }
+        return false;
     }
 }
