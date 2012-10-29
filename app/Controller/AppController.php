@@ -42,9 +42,9 @@ class AppController extends Controller {
                 )
             ),
             'authorize' => 'Controller',
-            'loginAction' => array('controller' => 'users', 'action' => 'login'),
+            'loginAction' => array('controller' => 'users', 'action' => 'login', 'manager' => false),
             'loginRedirect' => array('controller' => 'dashboard', 'action' => 'index', 'manager' => true),
-            'logoutRedirect' => array('controller' => 'users', 'action' => 'logout')
+            'logoutRedirect' => array('controller' => 'users', 'action' => 'logout', 'manager' => false)
         ),
         'Session'
     );
@@ -55,22 +55,20 @@ class AppController extends Controller {
      * @return void
      */
     public function beforeFilter() {
-        if (isset($this->request->params['manager'])) {
-            $this->layout = 'manager';
-        }
     }
 
+    /**
+     * Check user authorization
+     * @param object $user
+     * @return boolean
+     */
     public function isAuthorized($user = null) {
         // Any registered user can access public functions
-        if (empty($this->request->params['manager'])) {
+        if ($this->Auth->loggedIn()) {
+            $this->layout = 'manager';
             return true;
         }
 
-        // Only admins can access admin functions
-        if (isset($this->request->params['manager'])) {
-            $this->layout = 'manager';
-            return (bool)($user['role'] === 'manager');
-        }
         return false;
     }
 }
