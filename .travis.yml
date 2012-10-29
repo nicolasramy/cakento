@@ -36,40 +36,15 @@ before_script:
       'prefix' => '',
       'encoding' => 'utf8'
     );
-    public \$test1 = array(
+    public \$test = array(
       'persistent' => false,
       'host' => '',
       'login' => '',
       'password' => '',
-      'database' => 'cakento_test_1',
+      'database' => 'cakento_test',
       'prefix' => '',
       'encoding' => 'utf8'
     );
-    public \$test2 = array(
-      'persistent' => false,
-      'host' => '',
-      'login' => '',
-      'password' => '',
-      'database' => 'cakento_test_2',
-      'prefix' => '',
-      'encoding' => 'utf8'
-    );
-    public function __construct() {
-      \$db = 'mysql';
-      if (!empty(\$_SERVER['DB'])) {
-        \$db = \$_SERVER['DB'];
-      }
-      foreach (array('default', 'test1', 'test2') as \$source) {
-        \$config = array_merge(\$this->{\$source}, \$this->identities[\$db]);
-        if (is_array(\$config['database'])) {
-          \$config['database'] = \$config['database'][\$source];
-        }
-        if (!empty(\$config['schema']) && is_array(\$config['schema'])) {
-          \$config['schema'] = \$config['schema'][\$source];
-        }
-        \$this->{\$source} = \$config;
-      }
-    }
     }" > app/Config/database.php
 
 script:
