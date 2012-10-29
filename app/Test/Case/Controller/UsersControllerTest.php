@@ -16,84 +16,74 @@ class UsersControllerTest extends ControllerTestCase {
 		'app.user'
 	);
 
-/**
- * testIndex method
- *
- * @return void
- */
+    /**
+     * testIndex method
+     * @return void
+     */
 	public function testIndex() {
 	}
 
-/**
- * testView method
- *
- * @return void
- */
+    /**
+     * testView method
+     * @return void
+     */
 	public function testView() {
 	}
 
-/**
- * testAdd method
- *
- * @return void
- */
+    /**
+     * testAdd method
+     * @return void
+     */
 	public function testAdd() {
 	}
 
-/**
- * testEdit method
- *
- * @return void
- */
+    /**
+     * testEdit method
+     * @return void
+     */
 	public function testEdit() {
 	}
 
-/**
- * testDelete method
- *
- * @return void
- */
+    /**
+     * testDelete method
+     * @return void
+     */
 	public function testDelete() {
 	}
 
-/**
- * testD3adminIndex method
- *
- * @return void
- */
-	public function testD3adminIndex() {
+    /**
+     * testManagerIndex method
+     * @return void
+     */
+	public function testManagerIndex() {
 	}
 
-/**
- * testD3adminView method
- *
- * @return void
- */
-	public function testD3adminView() {
+    /**
+     * testManagerView method
+     * @return void
+     */
+	public function testManagerView() {
 	}
 
-/**
- * testD3adminAdd method
- *
- * @return void
- */
-	public function testD3adminAdd() {
+    /**
+     * testManagerAdd method
+     * @return void
+     */
+	public function testManagerAdd() {
 	}
 
-/**
- * testD3adminEdit method
- *
- * @return void
- */
-	public function testD3adminEdit() {
+    /**
+     * testManagerEdit method
+     * @return void
+     */
+	public function testManagerEdit() {
 	}
 
-/**
- * testD3adminDelete method
- *
- * @return void
- */
-	public function testD3adminDelete() {
+    /**
+     * testManagerDelete method
+     * @return void
+     */
+	public function testManagerDelete() {
 	}
 
 }

@@ -5,11 +5,10 @@
  */
 class UserFixture extends CakeTestFixture {
 
-/**
- * Fields
- *
- * @var array
- */
+    /**
+     * Fields
+     * @var array
+     */
 	public $fields = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
 		'user_group_id' => array('type' => 'integer', 'null' => false, 'default' => null),
@@ -27,11 +26,10 @@ class UserFixture extends CakeTestFixture {
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'MyISAM')
 	);
 
-/**
- * Records
- *
- * @var array
- */
+    /**
+     * Records
+     * @var array
+     */
 	public $records = array(
 		array(
 			'id' => 1,
