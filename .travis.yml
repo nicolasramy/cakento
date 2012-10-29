@@ -1,22 +1,14 @@
 language: php
 
 php:
-  - 5.2
   - 5.3
-  - 5.4
 
 env:
   - DB=mysql
-  - DB=pgsql
-  - DB=sqlite
 
 before_script:
-  - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE cakephp_test;'; fi"
-  - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE cakephp_test2;'; fi"
-  - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE cakephp_test3;'; fi"
-  - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE DATABASE cakephp_test;' -U postgres; fi"
-  - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE SCHEMA test2;' -U postgres -d cakephp_test; fi"
-  - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE SCHEMA test3;' -U postgres -d cakephp_test; fi"
+  - mysql -e 'CREATE DATABASE cakephp_test;'
+  - mkdir -p ./app/tmp
   - chmod -R 777 ./app/tmp
   - echo "var net = require('net');
     var server = net.createServer();
@@ -31,27 +23,6 @@ before_script:
         'datasource' => 'Database/Mysql',
         'host' => '0.0.0.0',
         'login' => 'travis'
-      ),
-      'pgsql' => array(
-        'datasource' => 'Database/Postgres',
-        'host' => '127.0.0.1',
-        'login' => 'postgres',
-        'database' => 'cakephp_test',
-        'schema' => array(
-          'default' => 'public',
-          'test' => 'public',
-          'test2' => 'test2',
-          'test_database_three' => 'test3'
-        )
-      ),
-      'sqlite' => array(
-        'datasource' => 'Database/Sqlite',
-        'database' => array(
-          'default' => ':memory:',
-          'test' => ':memory:',
-          'test2' => '/tmp/cakephp_test2.db',
-          'test_database_three' => '/tmp/cakephp_test3.db'
-        ),
       )
     );
     public \$default = array(
@@ -67,7 +38,7 @@ before_script:
       'host' => '',
       'login' => '',
       'password' => '',
-      'database' => 'cakephp_test',
+      'database' => 'cakento_test',
       'prefix' => ''
     );
     public \$test2 = array(
@@ -75,15 +46,15 @@ before_script:
       'host' => '',
       'login' => '',
       'password' => '',
-      'database' => 'cakephp_test2',
+      'database' => 'cakento_test2',
       'prefix' => ''
     );
-    public \$test_database_three = array(
+    public \$test3 = array(
       'persistent' => false,
       'host' => '',
       'login' => '',
       'password' => '',
-      'database' => 'cakephp_test3',
+      'database' => 'cakento_test3',
       'prefix' => ''
     );
     public function __construct() {
@@ -91,7 +62,7 @@ before_script:
       if (!empty(\$_SERVER['DB'])) {
         \$db = \$_SERVER['DB'];
       }
-      foreach (array('default', 'test', 'test2', 'test_database_three') as \$source) {
+      foreach (array('default', 'test', 'test2', 'test3') as \$source) {
         \$config = array_merge(\$this->{\$source}, \$this->identities[\$db]);
         if (is_array(\$config['database'])) {
           \$config['database'] = \$config['database'][\$source];
