@@ -5,14 +5,14 @@
             <li<?php if ($this->request->params['controller'] == 'dashboard') {echo ' class="active"';} ?>>
                 <?php echo $this->Html->link(__('Dashboard'), array('controller' => 'dashboard', 'action' => 'index', 'manager' => true)); ?>
             </li>
-            <li<?php if ($this->request->params['controller'] == 'providers') {echo ' class="active"';} ?>>
-                <?php echo $this->Html->link(__('Providers'), array('controller' => 'providers', 'action' => 'index', 'manager' => true)); ?>
+            <li<?php if ($this->request->params['controller'] == 'catalog') {echo ' class="active"';} ?>>
+                <?php echo $this->Html->link(__('Catalog'), array('controller' => 'catalog', 'action' => 'index', 'manager' => true)); ?>
             </li>
-            <li<?php if ($this->request->params['controller'] == 'countries') {echo ' class="active"';} ?>>
-                <?php echo $this->Html->link(__('Countries'), array('controller' => 'countries', 'action' => 'index', 'manager' => true)); ?>
+            <li<?php if ($this->request->params['controller'] == 'orders') {echo ' class="active"';} ?>>
+                <?php echo $this->Html->link(__('Orders'), array('controller' => 'orders', 'action' => 'index', 'manager' => true)); ?>
             </li>
-            <li<?php if ($this->request->params['controller'] == 'brands') {echo ' class="active"';} ?>>
-                <?php echo $this->Html->link(__('Brands'), array('controller' => 'brands', 'action' => 'index', 'manager' => true)); ?>
+            <li<?php if ($this->request->params['controller'] == 'cms') {echo ' class="active"';} ?>>
+                <?php echo $this->Html->link(__('CMS'), array('controller' => 'cms', 'action' => 'index', 'manager' => true)); ?>
             </li>
         </ul>
 
