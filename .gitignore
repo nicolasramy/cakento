@@ -2,6 +2,7 @@
 /app/Config/email.php
 /app/tmp
 /lib/Cake/Console/Templates/skel/tmp/
+/app/Test
 /plugins
 /vendors
 /build
