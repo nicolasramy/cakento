@@ -77,4 +77,5 @@ script:
   - ./lib/Cake/Console/cake test core AllTests --stderr
 
 notifications:
-  email: false
+  email:
+    - nicolas.ramy@darkelda.com
