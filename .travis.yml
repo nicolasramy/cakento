@@ -9,8 +9,8 @@ env:
 before_script:
   - mysql -e 'CREATE DATABASE cakephp_test;'
   - mkdir -p ./app/tmp
-  - mkdir -p ./app/tmp/cache/{models, persistent, views}
-  - mkdir -p ./app/tmp/{logs, sessions, tests}
+  - mkdir -p ./app/tmp/cache/{models,persistent,views}
+  - mkdir -p ./app/tmp/{logs,sessions,tests}
   - chmod -R 777 ./app/tmp/
   - echo "var net = require('net');
     var server = net.createServer();
