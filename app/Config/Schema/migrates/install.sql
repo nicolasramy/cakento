@@ -313,8 +313,8 @@ CREATE TABLE `transactions` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `credit_names`;
-CREATE TABLE `credit_names` (
+DROP TABLE IF EXISTS `credit_memos`;
+CREATE TABLE `credit_memos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `transaction_id` int(11) NOT NULL,
   `invoice_id` int(11) NOT NULL,
@@ -324,8 +324,8 @@ CREATE TABLE `credit_names` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `credit_name_details`;
-CREATE TABLE `credit_name_details` (
+DROP TABLE IF EXISTS `credit_memo_details`;
+CREATE TABLE `credit_memo_details` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `credit_name_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -341,7 +341,7 @@ CREATE TABLE `subscriptions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `activated` tinyint(2) NOT NULL,
+  `status` tinyint(2) NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
@@ -390,7 +390,7 @@ DROP TABLE IF EXISTS `carts`;
 CREATE TABLE `carts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `total_shipping` float(11,2) NOT NULL,
+  `total_shipping` DECIMAL(10,4) NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
@@ -401,7 +401,7 @@ CREATE TABLE `cart_details` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cart_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  'quantity' int(11) NOT NULL,
+  `quantity` DECIMAL(10,4) NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
@@ -420,8 +420,8 @@ CREATE TABLE `warehouse_details` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `warehouse_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `stock` int(11) NOT NULL,
-  `tampon` int(11) NOT NULL,
+  `stock` DECIMAL(10,4) NOT NULL,
+  `buffer` DECIMAL(10,4) NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
@@ -431,9 +431,9 @@ DROP TABLE IF EXISTS `warehouse_trackings`;
 CREATE TABLE `warehouse_trackings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `warehouse_id` int(11) NOT NULL,
-  `number` VARCHAR(50) NOT NULL,
-  `status` VARCHAR(50) NOT NULL,
-  `description` VARCHAR(255),
+  `number` VARCHAR(64) NOT NULL,
+  `status` VARCHAR(64) NOT NULL,
+  `description` TEXT,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
