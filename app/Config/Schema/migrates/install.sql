@@ -443,3 +443,23 @@ CREATE TABLE `warehouse_trackings` (
   `modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- Gift
+
+DROP TABLE IF EXISTS `gifts`;
+CREATE TABLE `gifts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_detail_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `user_mail` VARCHAR(255) NOT NULL,
+  `user_name` VARCHAR(50) NOT NULL,
+  `to_mail` VARCHAR(255) NOT NULL,
+  `to_name` VARCHAR(50) NOT NULL,
+  `message` TEXT NOT NULL,
+  `code` VARCHAR(255) NOT NULL,
+  `status` tinyint(2) NOT NULL,
+  `amount` float(11,2) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
