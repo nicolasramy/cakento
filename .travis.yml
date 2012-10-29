@@ -7,7 +7,9 @@ env:
   - DB=mysql
 
 before_script:
-  - mysql -e 'CREATE DATABASE cakephp_test;'
+  - mysql -e 'CREATE DATABASE cakento;'
+  - mysql -e 'CREATE DATABASE cakento_test;'
+  - mysql -e 'CREATE DATABASE cakento_test2;'
   - mkdir -p ./app/tmp
   - mkdir -p ./app/tmp/cache/{models,persistent,views}
   - mkdir -p ./app/tmp/{logs,sessions,tests}
@@ -50,7 +52,7 @@ before_script:
       'host' => '',
       'login' => '',
       'password' => '',
-      'database' => 'cakephp_test2',
+      'database' => 'cakento_test2',
       'prefix' => ''
     );
     public function __construct() {
