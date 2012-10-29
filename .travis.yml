@@ -8,6 +8,8 @@ env:
 
 before_script:
   - mysql -e 'CREATE DATABASE cakephp_test;'
+  - mysql -e 'CREATE DATABASE cakephp_test2;'
+  - mysql -e 'CREATE DATABASE cakephp_test3;'
   - mkdir -p ./app/tmp
   - chmod -R 777 ./app/tmp
   - echo "var net = require('net');
