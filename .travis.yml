@@ -8,10 +8,10 @@ env:
 
 before_script:
   - mysql -e 'CREATE DATABASE cakephp_test;'
-  - mysql -e 'CREATE DATABASE cakephp_test2;'
-  - mysql -e 'CREATE DATABASE cakephp_test3;'
   - mkdir -p ./app/tmp
-  - chmod -R 777 ./app/tmp
+  - mkdir -p ./app/tmp/cache/{models, persistent, views}
+  - mkdir -p ./app/tmp/{logs, sessions, tests}
+  - chmod -R 777 ./app/tmp/
   - echo "var net = require('net');
     var server = net.createServer();
     server.listen(80, 'localhost');
@@ -32,39 +32,34 @@ before_script:
       'host' => '',
       'login' => '',
       'password' => '',
-      'database' => 'cakephp_test',
-      'prefix' => ''
+      'database' => 'cakento',
+      'prefix' => '',
+      'encoding' => 'utf8'
     );
-    public \$test = array(
+    public \$test1 = array(
       'persistent' => false,
       'host' => '',
       'login' => '',
       'password' => '',
-      'database' => 'cakento_test',
-      'prefix' => ''
+      'database' => 'cakento_test_1',
+      'prefix' => '',
+      'encoding' => 'utf8'
     );
     public \$test2 = array(
       'persistent' => false,
       'host' => '',
       'login' => '',
       'password' => '',
-      'database' => 'cakento_test2',
-      'prefix' => ''
-    );
-    public \$test3 = array(
-      'persistent' => false,
-      'host' => '',
-      'login' => '',
-      'password' => '',
-      'database' => 'cakento_test3',
-      'prefix' => ''
+      'database' => 'cakento_test_2',
+      'prefix' => '',
+      'encoding' => 'utf8'
     );
     public function __construct() {
       \$db = 'mysql';
       if (!empty(\$_SERVER['DB'])) {
         \$db = \$_SERVER['DB'];
       }
-      foreach (array('default', 'test', 'test2', 'test3') as \$source) {
+      foreach (array('default', 'test1', 'test2') as \$source) {
         \$config = array_merge(\$this->{\$source}, \$this->identities[\$db]);
         if (is_array(\$config['database'])) {
           \$config['database'] = \$config['database'][\$source];
