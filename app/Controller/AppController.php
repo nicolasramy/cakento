@@ -63,8 +63,12 @@ class AppController extends Controller {
      * @return boolean
      */
     public function isAuthorized($user = null) {
+        if (!isset($this->request->params['manager'])) {
+            return true;
+        }
+
         // Any registered user can access public functions
-        if ($this->Auth->loggedIn()) {
+        if (isset($this->request->params['manager']) && $this->Auth->loggedIn()) {
             $this->layout = 'manager';
             return true;
         }
