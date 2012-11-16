@@ -45,7 +45,7 @@
 						echo $this->Html->link($this->Html->image('fugue-icons/documents-stack.png',
 								array('class' => 'fugue-icon fugue-icon-push-right', 'alt' => __('Index'))
 							) . __('Index'),
-							array('controller' => 'product_types', 'action' => 'view', 'manager' => true, $this->data['ProductType']['id']),
+							array('controller' => 'product_types', 'action' => 'index', 'manager' => true),
 							array('escape' => false)
 						);
 					?>
@@ -58,9 +58,10 @@
 	<div class="row-fluid">
 		<div class="span12">
 			<ul class="breadcrumb">
-				<li><?php echo $this->Html->link(__('Configuration'), array('controller' => 'configuration', 'action' => 'index')); ?> <span class="divider">/</span></li>
-				<li><?php echo $this->Html->link(__('Products'), array('controller' => 'configuration', 'action' => 'products')); ?> <span class="divider">/</span></li>
-				<li><?php echo $this->Html->link(__('Types'), array('controller' => 'product_types', 'action' => 'index')); ?> <span class="divider">/</span></li>
+				<li><?php echo $this->Html->link(__('Dashboard'), array('controller' => 'dashboard', 'action' => 'index', 'manager' => true)); ?> <span class="divider">/</span></li>
+				<li><?php echo $this->Html->link(__('Configuration'), array('controller' => 'configuration', 'action' => 'index', 'manager' => true)); ?> <span class="divider">/</span></li>
+				<li><?php echo $this->Html->link(__('Products'), array('controller' => 'configuration', 'action' => 'products', 'manager' => true)); ?> <span class="divider">/</span></li>
+				<li><?php echo $this->Html->link(__('Types'), array('controller' => 'product_types', 'action' => 'index', 'manager' => true)); ?> <span class="divider">/</span></li>
 				<li class="active"><?php echo __('Edit # ') . $this->data['ProductType']['id']; ?></li>
 			</ul>
 		</div>
