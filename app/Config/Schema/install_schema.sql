@@ -12,6 +12,7 @@ USE `cakento`;
 DROP TABLE IF EXISTS `attributes`;
 CREATE TABLE `attributes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` tinyint(2) NOT NULL,
   `visible` tinyint(1) NOT NULL DEFAULT '1',
   `searchable` tinyint(1) NOT NULL DEFAULT '1',
   `name` varchar(255) NOT NULL,
@@ -213,20 +214,6 @@ CREATE TABLE `invoices` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `manufacturers`;
-CREATE TABLE `manufacturers` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `store_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `slug` varchar(255) NOT NULL,
-  `short_description` varchar(255) NOT NULL,
-  `description` text NOT NULL,
-  `created` datetime NOT NULL,
-  `modified` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
 DROP TABLE IF EXISTS `order_details`;
 CREATE TABLE `order_details` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -324,10 +311,12 @@ CREATE TABLE `products` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `store_id` int(11) NOT NULL,
   `product_type_id` int(11) NOT NULL,
-  `manufacturer_id` int(11) NOT NULL,
+  `brand_id` int(11) NOT NULL,
   `salable` tinyint(1) NOT NULL DEFAULT '1',
   `visible` tinyint(1) NOT NULL DEFAULT '1',
   `searchable` tinyint(1) NOT NULL DEFAULT '1',
+  `name` varchar(255) NOT NULL,
+  `sku` varchar(255) NOT NULL,
   `price` decimal(10,4) NOT NULL,
   `weight` decimal(10,4) NOT NULL,
   `created` datetime NOT NULL,
@@ -553,4 +542,4 @@ CREATE TABLE `zones` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
--- 2012-11-16 04:00:48
+-- 2012-11-16 12:55:39
