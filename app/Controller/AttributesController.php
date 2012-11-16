@@ -56,30 +56,29 @@ class AttributesController extends AppController {
 		$this->set('attributes', $this->paginate());
 	}
 
-/**
- * manager_view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
+	/**
+	 * manager_view method
+	 *
+	 * @param string $id
+	 * @return void
+	 */
 	public function manager_view($id = null) {
-		if (!$this->Attribute->exists($id)) {
+		$this->Attribute->id = $id;
+		if (!$this->Attribute->exists()) {
 			$this->Session->setFlash(__('Invalid attribute.'), 'Manager/Flash/error');
 			$this->redirect(array('action' => 'index'));
 		}
 		$this->set('attribute', $this->Attribute->read(null, $id));
 	}
 
-/**
- * manager_add method
- *
- * @return void
- */
+	/**
+	 * manager_add method
+	 *
+	 * @return void
+	 */
 	public function manager_add() {
 		if ($this->request->is('post')) {
 			$this->Attribute->create();
-			//$this->request->data['Attribute']['type']
 			if ($this->Attribute->save($this->request->data)) {
 				$this->Session->setFlash(__('The attribute has been saved'), 'Manager/Flash/success');
 				$this->redirect(array('action' => 'index'));
@@ -91,15 +90,15 @@ class AttributesController extends AppController {
 		$this->set(compact('types'));
 	}
 
-/**
- * manager_edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
+	/**
+	 * manager_edit method
+	 *
+	 * @param string $id
+	 * @return void
+	 */
 	public function manager_edit($id = null) {
-		if (!$this->Attribute->exists($id)) {
+		$this->Attribute->id = $id;
+		if (!$this->Attribute->exists()) {
 			$this->Session->setFlash(__('Invalid attribute.'), 'Manager/Flash/error');
 			$this->redirect(array('action' => 'index'));
 		}
@@ -117,19 +116,19 @@ class AttributesController extends AppController {
 		$this->set(compact('types'));
 	}
 
-/**
- * manager_delete method
- *
- * @throws MethodNotAllowedException
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
+	/**
+	 * manager_delete method
+	 *
+	 * @throws MethodNotAllowedException
+	 * @param string $id
+	 * @return void
+	 */
 	public function manager_delete($id = null) {
 		if (!$this->request->is('post')) {
 			throw new MethodNotAllowedException();
 		}
-		if (!$this->Attribute->exists($id)) {
+		$this->Attribute->id = $id;
+		if (!$this->Attribute->exists()) {
 			$this->Session->setFlash(__('Invalid attribute.'), 'Manager/Flash/error');
 			$this->redirect(array('action' => 'index'));
 		}

@@ -58,6 +58,7 @@
 	<div class="row-fluid">
 		<div class="span12">
 			<ul class="breadcrumb">
+				<li><?php echo $this->Html->link(__('Dashboard'), array('controller' => 'dashboard', 'action' => 'index', 'manager' => true)); ?> <span class="divider">/</span></li>
 				<li><?php echo $this->Html->link(__('Configuration'), array('controller' => 'configuration', 'action' => 'index')); ?> <span class="divider">/</span></li>
 				<li><?php echo $this->Html->link(__('Products'), array('controller' => 'configuration', 'action' => 'products')); ?> <span class="divider">/</span></li>
 				<li><?php echo $this->Html->link(__('Attributes'), array('controller' => 'attributes', 'action' => 'index')); ?> <span class="divider">/</span></li>
@@ -115,13 +116,13 @@
 		<div class="span4 actions">
 			<h3><?php echo __('Actions'); ?></h3>
 			<ul class="nav nav-pills nav-stacked">
-		<li><?php echo $this->Html->link(__('Edit Attribute'), array('action' => 'edit', $attribute['Attribute']['id'])); ?> </li>
-		<li><?php echo $this->Form->postLink(__('Delete Attribute'), array('action' => 'delete', $attribute['Attribute']['id']), null, __('Are you sure you want to delete # %s?', $attribute['Attribute']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(__('List Attributes'), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Attribute'), array('action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Products'), array('controller' => 'products', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Product'), array('controller' => 'products', 'action' => 'add')); ?> </li>
-<li><?php echo $this->Html->link(__('New Product'), array('controller' => 'products', 'action' => 'add')); ?> </li>
+				<li><?php echo $this->Html->link(__('Edit Attribute'), array('action' => 'edit', $attribute['Attribute']['id'])); ?> </li>
+				<li><?php echo $this->Form->postLink(__('Delete Attribute'), array('action' => 'delete', $attribute['Attribute']['id']), null, __('Are you sure you want to delete # %s?', $attribute['Attribute']['id'])); ?> </li>
+				<li><?php echo $this->Html->link(__('List Attributes'), array('action' => 'index')); ?> </li>
+				<li><?php echo $this->Html->link(__('New Attribute'), array('action' => 'add')); ?> </li>
+				<li><?php echo $this->Html->link(__('List Products'), array('controller' => 'products', 'action' => 'index')); ?> </li>
+				<li><?php echo $this->Html->link(__('New Product'), array('controller' => 'products', 'action' => 'add')); ?> </li>
+				<li><?php echo $this->Html->link(__('New Product'), array('controller' => 'products', 'action' => 'add')); ?> </li>
 
 			</ul>
 		</div>
