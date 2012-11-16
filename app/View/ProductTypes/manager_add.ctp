@@ -9,8 +9,8 @@
 				<button class="btn" type="button">
 					<?php
 						echo $this->Html->link($this->Html->image('fugue-icons/documents-stack.png',
-								array('class' => 'fugue-icon fugue-icon-push-right', 'alt' => __('Add'))
-							) . __('List'),
+								array('class' => 'fugue-icon fugue-icon-push-right', 'alt' => __('Index'))
+							) . __('Index'),
 							array('controller' => 'product_types', 'action' => 'index', 'manager' => true),
 							array('escape' => false)
 						);
@@ -50,8 +50,8 @@
 				<div class="span6">
 					<fieldset>
 					<?php
-						echo $this->Form->input('visible');
-						echo $this->Form->input('searchable');
+						echo $this->Form->input('visible', array('checked' => true));
+						echo $this->Form->input('searchable', array('checked' => true));
 					?>
 					</fieldset>
 				</div>

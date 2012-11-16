@@ -3,7 +3,7 @@
 
 	<div class="row-fluid header">
 		<div class="span12">
-			<h2><?php echo __('Product Type'); ?></h2>
+			<h2><?php echo __('Product Types'); ?></h2>
 
 			<div class="btn-group pull-right">
 				<button class="btn" type="button">
@@ -13,7 +13,7 @@
 							) . __('Delete'),
 							array('controller' => 'product_types', 'action' => 'delete', 'manager' => true),
 							array('escape' => false),
-							__('Are you sure you want to delete # %s?', $attribute['Attribute']['id'])
+							__('Are you sure you want to delete # %s?', $productType['ProductType']['id'])
 						);
 					?>
 				</button>
@@ -22,9 +22,29 @@
 			<div class="btn-group pull-left">
 				<button class="btn" type="button">
 					<?php
-						echo $this->Html->link($this->Html->image('fugue-icons/documents-stack.png',
+						echo $this->Html->link($this->Html->image('fugue-icons/plus-button.png',
 								array('class' => 'fugue-icon fugue-icon-push-right', 'alt' => __('Add'))
-							) . __('List'),
+							) . __('Add'),
+							array('controller' => 'product_types', 'action' => 'add'),
+							array('escape' => false)
+						);
+					?>
+				</button>
+				<button class="btn" type="button">
+					<?php
+						echo $this->Html->link($this->Html->image('fugue-icons/document--pencil.png',
+								array('class' => 'fugue-icon fugue-icon-push-right', 'alt' => __('Edit'))
+							) . __('Edit'),
+							array('controller' => 'product_types', 'action' => 'edit', $productType['ProductType']['id']),
+							array('escape' => false)
+						);
+					?>
+				</button>
+				<button class="btn" type="button">
+					<?php
+						echo $this->Html->link($this->Html->image('fugue-icons/documents-stack.png',
+								array('class' => 'fugue-icon fugue-icon-push-right', 'alt' => __('Index'))
+							) . __('Index'),
 							array('controller' => 'product_types', 'action' => 'index', 'manager' => true),
 							array('escape' => false)
 						);

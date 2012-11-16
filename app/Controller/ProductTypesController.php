@@ -13,6 +13,42 @@ class ProductTypesController extends AppController {
  * @return void
  */
 	public function manager_index() {
+		if ($this->request->is('post') || $this->request->is('put')) {
+			if (isset($this->request->data)) {
+				foreach($this->request->data['ProductType'] as $key => $id) {
+
+					// Perform Action
+					if ($id && $key != 'action' && $this->ProductType->exists($id)) {
+						switch($this->request->data['ProductType']['action']) {
+							case 'visible':
+								$field = 'visible';
+								$value = 1;
+								break;
+							case 'invisible':
+								$field = 'visible';
+								$value = 0;
+								break;
+							case 'searchable':
+								$field = 'searchable';
+								$value = 1;
+								break;
+							case 'unsearchable':
+								$field = 'searchable';
+								$value = 0;
+								break;
+
+								break;
+							default:
+								break;
+						}
+						$this->ProductType->read(null, $id);
+						$this->ProductType->saveField($field, $value);
+					}
+				}
+				$this->redirect($this->referer());
+			}
+        }
+
 		$this->ProductType->recursive = 0;
 		$this->set('productTypes', $this->paginate());
 	}
@@ -25,9 +61,9 @@ class ProductTypesController extends AppController {
  * @return void
  */
 	public function manager_view($id = null) {
-		$this->ProductType->id = $id;
-		if (!$this->ProductType->exists()) {
-			throw new NotFoundException(__('Invalid product type'));
+		if (!$this->ProductType->exists($id)) {
+			$this->Session->setFlash(__('Invalid product type.'), 'Manager/Flash/error');
+			$this->redirect(array('action' => 'index'));
 		}
 		$this->set('productType', $this->ProductType->read(null, $id));
 	}
@@ -57,9 +93,8 @@ class ProductTypesController extends AppController {
  * @return void
  */
 	public function manager_edit($id = null) {
-		$this->ProductType->id = $id;
-		if (!$this->ProductType->exists()) {
-			$this->Session->setFlash(__('Invalid product type.'), 'Manager/Flash/default');
+		if (!$this->ProductType->exists($id)) {
+			$this->Session->setFlash(__('Invalid product type.'), 'Manager/Flash/error');
 			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
@@ -88,7 +123,8 @@ class ProductTypesController extends AppController {
 		}
 		$this->ProductType->id = $id;
 		if (!$this->ProductType->exists()) {
-			throw new NotFoundException(__('Invalid product type'), 'Manager/Flash/default');
+			$this->Session->setFlash(__('Invalid product type.'), 'Manager/Flash/error');
+			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->ProductType->delete()) {
 			$this->Session->setFlash(__('Product type deleted'), 'Manager/Flash/error');
