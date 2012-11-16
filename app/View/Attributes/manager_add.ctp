@@ -9,8 +9,8 @@
 				<button class="btn" type="button">
 					<?php
 						echo $this->Html->link($this->Html->image('fugue-icons/documents-stack.png',
-								array('class' => 'fugue-icon fugue-icon-push-right', 'alt' => __('Add'))
-							) . __('List'),
+								array('class' => 'fugue-icon fugue-icon-push-right', 'alt' => __('Index'))
+							) . __('Index'),
 							array('controller' => 'attributes', 'action' => 'index', 'manager' => true),
 							array('escape' => false)
 						);
@@ -40,7 +40,10 @@
 			<div class="row-fluid">
 				<div class="span6">
 					<fieldset>
-						<?php echo $this->Form->input('name'); ?>
+						<?php
+							echo $this->Form->input('type', array('type' => 'select', 'options' => $types));
+							echo $this->Form->input('name');
+						?>
 					</fieldset>
 				</div>
 

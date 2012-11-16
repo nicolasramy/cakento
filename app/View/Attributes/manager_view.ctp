@@ -22,9 +22,29 @@
 			<div class="btn-group pull-left">
 				<button class="btn" type="button">
 					<?php
-						echo $this->Html->link($this->Html->image('fugue-icons/documents-stack.png',
+						echo $this->Html->link($this->Html->image('fugue-icons/plus-button.png',
 								array('class' => 'fugue-icon fugue-icon-push-right', 'alt' => __('Add'))
-							) . __('List'),
+							) . __('Add'),
+							array('controller' => 'attributes', 'action' => 'add'),
+							array('escape' => false)
+						);
+					?>
+				</button>
+				<button class="btn" type="button">
+					<?php
+						echo $this->Html->link($this->Html->image('fugue-icons/document--pencil.png',
+								array('class' => 'fugue-icon fugue-icon-push-right', 'alt' => __('Edit'))
+							) . __('Edit'),
+							array('controller' => 'attributes', 'action' => 'edit', $attribute['Attribute']['id']),
+							array('escape' => false)
+						);
+					?>
+				</button>
+				<button class="btn" type="button">
+					<?php
+						echo $this->Html->link($this->Html->image('fugue-icons/documents-stack.png',
+								array('class' => 'fugue-icon fugue-icon-push-right', 'alt' => __('Index'))
+							) . __('Index'),
 							array('controller' => 'attributes', 'action' => 'index', 'manager' => true),
 							array('escape' => false)
 						);
@@ -53,6 +73,11 @@
 				<dt><?php echo __('Id'); ?></dt>
 				<dd>
 					<?php echo h($attribute['Attribute']['id']); ?>
+					&nbsp;
+				</dd>
+				<dt><?php echo __('Type'); ?></dt>
+				<dd>
+					<?php echo h($attribute['Attribute']['type']); ?>
 					&nbsp;
 				</dd>
 				<dt><?php echo __('Visible'); ?></dt>

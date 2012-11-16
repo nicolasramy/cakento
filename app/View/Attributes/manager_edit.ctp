@@ -30,6 +30,26 @@
 						);
 					?>
 				</button>
+				<button class="btn" type="button">
+					<?php
+						echo $this->Html->link($this->Html->image('fugue-icons/magnifier.png',
+								array('class' => 'fugue-icon fugue-icon-push-right', 'alt' => __('View'))
+							) . __('View'),
+							array('controller' => 'attributes', 'action' => 'view', 'manager' => true, $this->data['Attribute']['id']),
+							array('escape' => false)
+						);
+					?>
+				</button>
+				<button class="btn" type="button">
+					<?php
+						echo $this->Html->link($this->Html->image('fugue-icons/documents-stack.png',
+								array('class' => 'fugue-icon fugue-icon-push-right', 'alt' => __('Index'))
+							) . __('Index'),
+							array('controller' => 'attributes', 'action' => 'view', 'manager' => true, $this->data['Attribute']['id']),
+							array('escape' => false)
+						);
+					?>
+				</button>
 			</div>
 		</div>
 	</div>
@@ -56,6 +76,7 @@
 					<fieldset>
 						<?php
 							echo $this->Form->input('id');
+							echo $this->Form->input('type', array('type' => 'select', 'options' => $types));
 							echo $this->Form->input('name');
 						?>
 					</fieldset>
@@ -71,7 +92,10 @@
 				</div>
 			</div>
 
-			<?php echo $this->Form->end(array('label' => __('Submit'), 'class' => 'btn')); ?>
+			<?php
+				echo $this->Form->button('Update', array('type' => 'submit', 'class' => 'btn'));
+				echo $this->Form->end();
+			?>
 		</div>
 		<div class="span4 actions">
 			<h3><?php echo __('Actions'); ?></h3>

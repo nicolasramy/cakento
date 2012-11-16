@@ -13,6 +13,45 @@ class AttributesController extends AppController {
  * @return void
  */
 	public function manager_index() {
+		/**
+		 *
+		 */
+		if ($this->request->is('post') || $this->request->is('put')) {
+			if (isset($this->request->data)) {
+				foreach($this->request->data['Attribute'] as $key => $id) {
+
+					// Perform Action
+					if ($id && $key != 'action' && $this->Attribute->exists($id)) {
+						switch($this->request->data['Attribute']['action']) {
+							case 'visible':
+								$field = 'visible';
+								$value = 1;
+								break;
+							case 'invisible':
+								$field = 'visible';
+								$value = 0;
+								break;
+							case 'searchable':
+								$field = 'searchable';
+								$value = 1;
+								break;
+							case 'unsearchable':
+								$field = 'searchable';
+								$value = 0;
+								break;
+
+								break;
+							default:
+								break;
+						}
+						$this->Attribute->read(null, $id);
+						$this->Attribute->saveField($field, $value);
+					}
+				}
+				$this->redirect($this->referer());
+			}
+        }
+
 		$this->Attribute->recursive = 0;
 		$this->set('attributes', $this->paginate());
 	}
@@ -25,9 +64,9 @@ class AttributesController extends AppController {
  * @return void
  */
 	public function manager_view($id = null) {
-		$this->Attribute->id = $id;
-		if (!$this->Attribute->exists()) {
-			throw new NotFoundException(__('Invalid attribute'));
+		if (!$this->Attribute->exists($id)) {
+			$this->Session->setFlash(__('Invalid attribute.'), 'Manager/Flash/error');
+			$this->redirect(array('action' => 'index'));
 		}
 		$this->set('attribute', $this->Attribute->read(null, $id));
 	}
@@ -40,6 +79,7 @@ class AttributesController extends AppController {
 	public function manager_add() {
 		if ($this->request->is('post')) {
 			$this->Attribute->create();
+			//$this->request->data['Attribute']['type']
 			if ($this->Attribute->save($this->request->data)) {
 				$this->Session->setFlash(__('The attribute has been saved'), 'Manager/Flash/success');
 				$this->redirect(array('action' => 'index'));
@@ -47,6 +87,8 @@ class AttributesController extends AppController {
 				$this->Session->setFlash(__('The attribute could not be saved. Please, try again.'), 'Manager/Flash/error');
 			}
 		}
+		$types = $this->Attribute->getTypes();
+		$this->set(compact('types'));
 	}
 
 /**
@@ -57,9 +99,9 @@ class AttributesController extends AppController {
  * @return void
  */
 	public function manager_edit($id = null) {
-		$this->Attribute->id = $id;
-		if (!$this->Attribute->exists()) {
-			throw new NotFoundException(__('Invalid attribute'));
+		if (!$this->Attribute->exists($id)) {
+			$this->Session->setFlash(__('Invalid attribute.'), 'Manager/Flash/error');
+			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Attribute->save($this->request->data)) {
@@ -71,6 +113,8 @@ class AttributesController extends AppController {
 		} else {
 			$this->request->data = $this->Attribute->read(null, $id);
 		}
+		$types = $this->Attribute->getTypes();
+		$this->set(compact('types'));
 	}
 
 /**
@@ -85,9 +129,9 @@ class AttributesController extends AppController {
 		if (!$this->request->is('post')) {
 			throw new MethodNotAllowedException();
 		}
-		$this->Attribute->id = $id;
-		if (!$this->Attribute->exists()) {
-			throw new NotFoundException(__('Invalid attribute'));
+		if (!$this->Attribute->exists($id)) {
+			$this->Session->setFlash(__('Invalid attribute.'), 'Manager/Flash/error');
+			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->Attribute->delete()) {
 			$this->Session->setFlash(__('Attribute deleted'), 'Manager/Flash/default');
