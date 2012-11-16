@@ -36,6 +36,16 @@
 			<?php echo h($product['Product']['searchable']); ?>
 			&nbsp;
 		</dd>
+		<dt><?php echo __('Name'); ?></dt>
+		<dd>
+			<?php echo h($product['Product']['name']); ?>
+			&nbsp;
+		</dd>
+		<dt><?php echo __('Sku'); ?></dt>
+		<dd>
+			<?php echo h($product['Product']['sku']); ?>
+			&nbsp;
+		</dd>
 		<dt><?php echo __('Price'); ?></dt>
 		<dd>
 			<?php echo h($product['Product']['price']); ?>

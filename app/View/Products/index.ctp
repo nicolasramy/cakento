@@ -9,6 +9,8 @@
 			<th><?php echo $this->Paginator->sort('salable'); ?></th>
 			<th><?php echo $this->Paginator->sort('visible'); ?></th>
 			<th><?php echo $this->Paginator->sort('searchable'); ?></th>
+			<th><?php echo $this->Paginator->sort('name'); ?></th>
+			<th><?php echo $this->Paginator->sort('sku'); ?></th>
 			<th><?php echo $this->Paginator->sort('price'); ?></th>
 			<th><?php echo $this->Paginator->sort('weight'); ?></th>
 			<th><?php echo $this->Paginator->sort('created'); ?></th>
@@ -32,6 +34,8 @@
 		<td><?php echo h($product['Product']['salable']); ?>&nbsp;</td>
 		<td><?php echo h($product['Product']['visible']); ?>&nbsp;</td>
 		<td><?php echo h($product['Product']['searchable']); ?>&nbsp;</td>
+		<td><?php echo h($product['Product']['name']); ?>&nbsp;</td>
+		<td><?php echo h($product['Product']['sku']); ?>&nbsp;</td>
 		<td><?php echo h($product['Product']['price']); ?>&nbsp;</td>
 		<td><?php echo h($product['Product']['weight']); ?>&nbsp;</td>
 		<td><?php echo h($product['Product']['created']); ?>&nbsp;</td>
