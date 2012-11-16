@@ -12,11 +12,12 @@ USE `cakento`;
 DROP TABLE IF EXISTS `attributes`;
 CREATE TABLE `attributes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `visible` tinyint(1) NOT NULL,
-  `searchable` tinyint(1) NOT NULL,
+  `visible` tinyint(1) NOT NULL DEFAULT '1',
+  `searchable` tinyint(1) NOT NULL DEFAULT '1',
   `name` varchar(255) NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
+  `deleted` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   KEY `visible` (`visible`),
@@ -61,8 +62,11 @@ CREATE TABLE `categories` (
   `slug` varchar(255) NOT NULL,
   `short_description` varchar(255) NOT NULL,
   `description` text NOT NULL,
+  `visible` tinyint(4) NOT NULL DEFAULT '1',
+  `searchable` tinyint(4) NOT NULL DEFAULT '1',
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
+  `deleted` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `parent_id` (`parent_id`),
   KEY `lft` (`lft`),
@@ -286,6 +290,7 @@ CREATE TABLE `product_attributes` (
   `datetime_value` datetime NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
+  `deleted` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -305,10 +310,11 @@ DROP TABLE IF EXISTS `product_types`;
 CREATE TABLE `product_types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `visible` tinyint(1) NOT NULL,
-  `searchable` tinyint(1) NOT NULL,
+  `visible` tinyint(1) NOT NULL DEFAULT '1',
+  `searchable` tinyint(1) NOT NULL DEFAULT '1',
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
+  `deleted` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -319,13 +325,14 @@ CREATE TABLE `products` (
   `store_id` int(11) NOT NULL,
   `product_type_id` int(11) NOT NULL,
   `manufacturer_id` int(11) NOT NULL,
-  `saleable` tinyint(1) NOT NULL,
-  `visible` tinyint(1) NOT NULL,
-  `searchable` tinyint(1) NOT NULL,
-  `price` decimal(40,4) NOT NULL,
-  `weight` decimal(40,4) NOT NULL,
+  `salable` tinyint(1) NOT NULL DEFAULT '1',
+  `visible` tinyint(1) NOT NULL DEFAULT '1',
+  `searchable` tinyint(1) NOT NULL DEFAULT '1',
+  `price` decimal(10,4) NOT NULL,
+  `weight` decimal(10,4) NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
+  `deleted` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -546,4 +553,4 @@ CREATE TABLE `zones` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
--- 2012-11-05 18:52:52
+-- 2012-11-16 04:00:48
