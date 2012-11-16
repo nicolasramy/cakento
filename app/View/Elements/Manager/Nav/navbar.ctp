@@ -5,8 +5,27 @@
             <li<?php if ($this->request->params['controller'] == 'dashboard') {echo ' class="active"';} ?>>
                 <?php echo $this->Html->link(__('Dashboard'), array('controller' => 'dashboard', 'action' => 'index', 'manager' => true)); ?>
             </li>
-            <li<?php if ($this->request->params['controller'] == 'products') {echo ' class="active"';} ?>>
-                <?php echo $this->Html->link(__('Catalog'), array('controller' => 'products', 'action' => 'index', 'manager' => true)); ?>
+            <li class="dropdown">
+                <?php echo $this->Html->link(__('Catalog'), '#', array('class' => 'dropdown-toggle', 'data-toggle' => 'dropdown')); ?>
+                <ul class="dropdown-menu">
+                    <li>
+                        <?php
+                            echo $this->Html->link(__('Brands'),
+                                array('controller' => 'brands', 'action' => 'index', 'manager' => true),
+                                array('tabindex' => '-1')
+                            );
+                        ?>
+                    </li>
+                    <li>
+                        <?php
+                            echo $this->Html->link(__('Products'),
+                                array('controller' => 'products', 'action' => 'index', 'manager' => true),
+                                array('tabindex' => '-1')
+                            );
+                        ?>
+                    </li>
+
+                </ul>
             </li>
             <li<?php if ($this->request->params['controller'] == 'carts') {echo ' class="active"';} ?>>
                 <?php echo $this->Html->link(__('Carts'), array('controller' => 'carts', 'action' => 'index', 'manager' => true)); ?>

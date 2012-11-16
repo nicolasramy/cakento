@@ -39,7 +39,7 @@
 </head>
 <body>
 
-	<?php echo $this->element('Manager/navbar'); ?>
+	<?php echo $this->element('Manager/Nav/navbar'); ?>
 
 	<div class="container">
 		<div class="row-fluid">
