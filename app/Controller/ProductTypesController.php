@@ -41,10 +41,10 @@ class ProductTypesController extends AppController {
 		if ($this->request->is('post')) {
 			$this->ProductType->create();
 			if ($this->ProductType->save($this->request->data)) {
-				$this->Session->setFlash(__('The product type has been saved'));
+				$this->Session->setFlash(__('The product type has been saved'), 'Manager/Flash/success');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The product type could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The product type could not be saved. Please, try again.'), 'Manager/Flash/error');
 			}
 		}
 	}
@@ -59,14 +59,15 @@ class ProductTypesController extends AppController {
 	public function manager_edit($id = null) {
 		$this->ProductType->id = $id;
 		if (!$this->ProductType->exists()) {
-			throw new NotFoundException(__('Invalid product type'));
+			$this->Session->setFlash(__('Invalid product type.'), 'Manager/Flash/default');
+			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->ProductType->save($this->request->data)) {
-				$this->Session->setFlash(__('The product type has been saved'));
+				$this->Session->setFlash(__('The product type has been updated'), 'Manager/Flash/information');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The product type could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The product type could not be saved. Please, try again.'), 'Manager/Flash/error');
 			}
 		} else {
 			$this->request->data = $this->ProductType->read(null, $id);
@@ -87,13 +88,13 @@ class ProductTypesController extends AppController {
 		}
 		$this->ProductType->id = $id;
 		if (!$this->ProductType->exists()) {
-			throw new NotFoundException(__('Invalid product type'));
+			throw new NotFoundException(__('Invalid product type'), 'Manager/Flash/default');
 		}
 		if ($this->ProductType->delete()) {
-			$this->Session->setFlash(__('Product type deleted'));
+			$this->Session->setFlash(__('Product type deleted'), 'Manager/Flash/error');
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('Product type was not deleted'));
+		$this->Session->setFlash(__('Product type was not deleted'), 'Manager/Flash/error');
 		$this->redirect(array('action' => 'index'));
 	}
 }
