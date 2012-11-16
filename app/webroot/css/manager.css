@@ -24,3 +24,8 @@
 .container .breadcrumb a {
     text-decoration: none;
 }
+
+
+.container form.table {
+    margin: 0;
+}

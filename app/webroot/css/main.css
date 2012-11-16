@@ -52,6 +52,7 @@
     text-align: left;
 }
 
+.table .id { width: 60px; }
 .table .icon { width: 32px; }
 .table .actions { width: 150px; }
 
