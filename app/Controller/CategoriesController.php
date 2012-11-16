@@ -8,31 +8,6 @@ App::uses('AppController', 'Controller');
 class CategoriesController extends AppController {
 
 /**
- * index method
- *
- * @return void
- */
-	public function index() {
-		$this->Category->recursive = 0;
-		$this->set('categories', $this->paginate());
-	}
-
-/**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function view($id = null) {
-		$this->Category->id = $id;
-		if (!$this->Category->exists()) {
-			throw new NotFoundException(__('Invalid category'));
-		}
-		$this->set('category', $this->Category->read(null, $id));
-	}
-
-/**
  * manager_index method
  *
  * @return void
