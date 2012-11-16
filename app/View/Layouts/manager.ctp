@@ -29,6 +29,7 @@
 		echo $this->Html->css('bootstrap.min');
 		echo $this->Html->css('bootstrap-responsive.min');
 		echo $this->Html->css('main');
+		echo $this->Html->css('manager');
 
 		echo $this->fetch('meta');
 

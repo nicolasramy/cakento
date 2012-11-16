@@ -1,0 +1,26 @@
+.container .alert-block {
+    margin: 15px 0 0;
+}
+
+.container .header h2 {
+    line-height: 30px;
+    margin: 15px 0;
+}
+.container .header .btn-group {
+    margin: 0;
+}
+.container .header .btn-group .btn a {
+    color: #888;
+    text-decoration: none;
+}
+.container .header .btn-group .btn a:hover {
+    color: #444;
+    text-decoration: none;
+}
+.container .breadcrumb {
+    margin: 15px 0;
+}
+
+.container .breadcrumb a {
+    text-decoration: none;
+}

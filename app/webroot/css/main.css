@@ -17,3 +17,62 @@
 {
 	outline:none;
 }
+
+
+.text-default { color: #999; }
+.text-success { color: #468847; }
+.text-warning { color: #f89406; }
+.text-important { color: #b94a48; }
+.text-info { color: #3a87ad; }
+.text-inverse { color: #fff; }
+
+.align-center { text-align: center; }
+.align-left { text-align: left; }
+.align-right { text-align: right; }
+
+.table .id,
+.table .number {
+    text-align: right;
+}
+
+.table .actions,
+.table .date,
+.table .datetime,
+.table .figure,
+.table .icon,
+.table .reference,
+.table .title {
+    text-align: center;
+}
+
+.table .name,
+.table .link,
+.table .list,
+.table .text {
+    text-align: left;
+}
+
+.table .icon { width: 32px; }
+.table .actions { width: 150px; }
+
+.table .icon .checkbox { padding: 0; }
+.table .icon .checkbox input[type="checkbox"]  {
+	float: none;
+	margin: 0;
+}
+
+
+.fugue-icon {
+	margin: 0;
+	padding: 0;
+	vertical-align: sub;
+}
+.fugue-icon-push-left {
+	padding: 0 0 0 8px;
+}
+.fugue-icon-push-right {
+	padding: 0 8px 0 0;
+}
+.fugue-icon-push-center {
+	padding: 0 8px;
+}
