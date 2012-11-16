@@ -1,102 +1,105 @@
-<div class="attributes view">
-<h2><?php  echo __('Attribute'); ?></h2>
-	<dl>
-		<dt><?php echo __('Id'); ?></dt>
-		<dd>
-			<?php echo h($attribute['Attribute']['id']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Visible'); ?></dt>
-		<dd>
-			<?php echo h($attribute['Attribute']['visible']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Searchable'); ?></dt>
-		<dd>
-			<?php echo h($attribute['Attribute']['searchable']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Name'); ?></dt>
-		<dd>
-			<?php echo h($attribute['Attribute']['name']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Created'); ?></dt>
-		<dd>
-			<?php echo h($attribute['Attribute']['created']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Modified'); ?></dt>
-		<dd>
-			<?php echo h($attribute['Attribute']['modified']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Deleted'); ?></dt>
-		<dd>
-			<?php echo h($attribute['Attribute']['deleted']); ?>
-			&nbsp;
-		</dd>
-	</dl>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
+<div class="row-fluid"><div class="span12">
+
+
+	<div class="row-fluid header">
+		<div class="span12">
+			<h2><?php echo __('Attributes'); ?></h2>
+
+			<div class="btn-group pull-right">
+				<button class="btn" type="button">
+					<?php
+						echo $this->Form->postLink($this->Html->image('fugue-icons/cross-button.png',
+								array('class' => 'fugue-icon fugue-icon-push-right', 'alt' => __('Delete'))
+							) . __('Delete'),
+							array('controller' => 'attributes', 'action' => 'delete', 'manager' => true),
+							array('escape' => false),
+							__('Are you sure you want to delete # %s?', $attribute['Attribute']['id'])
+						);
+					?>
+				</button>
+			</div>
+
+			<div class="btn-group pull-left">
+				<button class="btn" type="button">
+					<?php
+						echo $this->Html->link($this->Html->image('fugue-icons/documents-stack.png',
+								array('class' => 'fugue-icon fugue-icon-push-right', 'alt' => __('Add'))
+							) . __('List'),
+							array('controller' => 'attributes', 'action' => 'index', 'manager' => true),
+							array('escape' => false)
+						);
+					?>
+				</button>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="row-fluid">
+		<div class="span12">
+			<ul class="breadcrumb">
+				<li><?php echo $this->Html->link(__('Configuration'), array('controller' => 'configuration', 'action' => 'index')); ?> <span class="divider">/</span></li>
+				<li><?php echo $this->Html->link(__('Products'), array('controller' => 'configuration', 'action' => 'products')); ?> <span class="divider">/</span></li>
+				<li><?php echo $this->Html->link(__('Attributes'), array('controller' => 'attributes', 'action' => 'index')); ?> <span class="divider">/</span></li>
+				<li class="active"><?php echo __('View # ') . $attribute['Attribute']['id']; ?></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+		<div class="span8">
+			<h3><?php echo __('View'); ?></h3>
+			<dl>
+				<dt><?php echo __('Id'); ?></dt>
+				<dd>
+					<?php echo h($attribute['Attribute']['id']); ?>
+					&nbsp;
+				</dd>
+				<dt><?php echo __('Visible'); ?></dt>
+				<dd>
+					<?php echo h($attribute['Attribute']['visible']); ?>
+					&nbsp;
+				</dd>
+				<dt><?php echo __('Searchable'); ?></dt>
+				<dd>
+					<?php echo h($attribute['Attribute']['searchable']); ?>
+					&nbsp;
+				</dd>
+				<dt><?php echo __('Name'); ?></dt>
+				<dd>
+					<?php echo h($attribute['Attribute']['name']); ?>
+					&nbsp;
+				</dd>
+				<dt><?php echo __('Created'); ?></dt>
+				<dd>
+					<?php echo h($attribute['Attribute']['created']); ?>
+					&nbsp;
+				</dd>
+				<dt><?php echo __('Modified'); ?></dt>
+				<dd>
+					<?php echo h($attribute['Attribute']['modified']); ?>
+					&nbsp;
+				</dd>
+				<dt><?php echo __('Deleted'); ?></dt>
+				<dd>
+					<?php echo h($attribute['Attribute']['deleted']); ?>
+					&nbsp;
+				</dd>
+			</dl>
+		</div>
+		<div class="span4 actions">
+			<h3><?php echo __('Actions'); ?></h3>
+			<ul class="nav nav-pills nav-stacked">
 		<li><?php echo $this->Html->link(__('Edit Attribute'), array('action' => 'edit', $attribute['Attribute']['id'])); ?> </li>
 		<li><?php echo $this->Form->postLink(__('Delete Attribute'), array('action' => 'delete', $attribute['Attribute']['id']), null, __('Are you sure you want to delete # %s?', $attribute['Attribute']['id'])); ?> </li>
 		<li><?php echo $this->Html->link(__('List Attributes'), array('action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Attribute'), array('action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Products'), array('controller' => 'products', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Product'), array('controller' => 'products', 'action' => 'add')); ?> </li>
-	</ul>
-</div>
-<div class="related">
-	<h3><?php echo __('Related Products'); ?></h3>
-	<?php if (!empty($attribute['Product'])): ?>
-	<table cellpadding = "0" cellspacing = "0">
-	<tr>
-		<th><?php echo __('Id'); ?></th>
-		<th><?php echo __('Store Id'); ?></th>
-		<th><?php echo __('Product Type Id'); ?></th>
-		<th><?php echo __('Manufacturer Id'); ?></th>
-		<th><?php echo __('Salable'); ?></th>
-		<th><?php echo __('Visible'); ?></th>
-		<th><?php echo __('Searchable'); ?></th>
-		<th><?php echo __('Price'); ?></th>
-		<th><?php echo __('Weight'); ?></th>
-		<th><?php echo __('Created'); ?></th>
-		<th><?php echo __('Modified'); ?></th>
-		<th><?php echo __('Deleted'); ?></th>
-		<th class="actions"><?php echo __('Actions'); ?></th>
-	</tr>
-	<?php
-		$i = 0;
-		foreach ($attribute['Product'] as $product): ?>
-		<tr>
-			<td><?php echo $product['id']; ?></td>
-			<td><?php echo $product['store_id']; ?></td>
-			<td><?php echo $product['product_type_id']; ?></td>
-			<td><?php echo $product['manufacturer_id']; ?></td>
-			<td><?php echo $product['salable']; ?></td>
-			<td><?php echo $product['visible']; ?></td>
-			<td><?php echo $product['searchable']; ?></td>
-			<td><?php echo $product['price']; ?></td>
-			<td><?php echo $product['weight']; ?></td>
-			<td><?php echo $product['created']; ?></td>
-			<td><?php echo $product['modified']; ?></td>
-			<td><?php echo $product['deleted']; ?></td>
-			<td class="actions">
-				<?php echo $this->Html->link(__('View'), array('controller' => 'products', 'action' => 'view', $product['id'])); ?>
-				<?php echo $this->Html->link(__('Edit'), array('controller' => 'products', 'action' => 'edit', $product['id'])); ?>
-				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'products', 'action' => 'delete', $product['id']), null, __('Are you sure you want to delete # %s?', $product['id'])); ?>
-			</td>
-		</tr>
-	<?php endforeach; ?>
-	</table>
-<?php endif; ?>
+<li><?php echo $this->Html->link(__('New Product'), array('controller' => 'products', 'action' => 'add')); ?> </li>
 
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(__('New Product'), array('controller' => 'products', 'action' => 'add')); ?> </li>
-		</ul>
+			</ul>
+		</div>
 	</div>
-</div>
+
+</div></div>

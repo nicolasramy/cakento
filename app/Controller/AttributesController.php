@@ -41,14 +41,12 @@ class AttributesController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Attribute->create();
 			if ($this->Attribute->save($this->request->data)) {
-				$this->Session->setFlash(__('The attribute has been saved'));
+				$this->Session->setFlash(__('The attribute has been saved'), 'Manager/Flash/success');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The attribute could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The attribute could not be saved. Please, try again.'), 'Manager/Flash/error');
 			}
 		}
-		$products = $this->Attribute->Product->find('list');
-		$this->set(compact('products'));
 	}
 
 /**
@@ -65,16 +63,14 @@ class AttributesController extends AppController {
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Attribute->save($this->request->data)) {
-				$this->Session->setFlash(__('The attribute has been saved'));
+				$this->Session->setFlash(__('The attribute has been updated'), 'Manager/Flash/information');
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The attribute could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The attribute could not be saved. Please, try again.'), 'Manager/Flash/error');
 			}
 		} else {
 			$this->request->data = $this->Attribute->read(null, $id);
 		}
-		$products = $this->Attribute->Product->find('list');
-		$this->set(compact('products'));
 	}
 
 /**
@@ -94,10 +90,10 @@ class AttributesController extends AppController {
 			throw new NotFoundException(__('Invalid attribute'));
 		}
 		if ($this->Attribute->delete()) {
-			$this->Session->setFlash(__('Attribute deleted'));
+			$this->Session->setFlash(__('Attribute deleted'), 'Manager/Flash/default');
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('Attribute was not deleted'));
+		$this->Session->setFlash(__('Attribute was not deleted'), 'Manager/Flash/error');
 		$this->redirect(array('action' => 'index'));
 	}
 }
