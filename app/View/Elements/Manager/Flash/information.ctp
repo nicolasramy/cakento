@@ -5,3 +5,8 @@
         echo $message;
     ?>
 </div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.alert.alert-block').delay(3000).slideUp(2000);
+    });
+</script>
