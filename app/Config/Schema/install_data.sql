@@ -5,8 +5,6 @@ SET foreign_key_checks = 0;
 SET time_zone = 'SYSTEM';
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
-DROP DATABASE IF EXISTS `cakento`;
-CREATE DATABASE `cakento` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `cakento`;
 
 INSERT INTO `attributes` (`id`, `type`, `visible`, `searchable`, `name`, `created`, `modified`, `deleted`) VALUES

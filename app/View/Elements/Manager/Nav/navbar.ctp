@@ -101,6 +101,14 @@
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <?php
+                            echo $this->Html->link(__('Stores'),
+                                array('controller' => 'stores', 'action' => 'index', 'manager' => true),
+                                array('tabindex' => '-1')
+                            );
+                        ?>
+                    </li>
                 </ul>
             </li>
         </ul>

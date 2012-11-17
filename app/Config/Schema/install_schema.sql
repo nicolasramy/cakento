@@ -25,6 +25,24 @@ CREATE TABLE `attributes` (
   KEY `searchable` (`searchable`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE `brands` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `visible` tinyint NOT NULL DEFAULT '1',
+  `searchable` tinyint NOT NULL DEFAULT '1',
+  `parent_id` int NOT NULL,
+  `description` text NOT NULL,
+  `short_description` varchar(255) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  `deleted` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`),
+  KEY `slug` (`slug`),
+  KEY `visible` (`visible`),
+  KEY `searchable` (`searchable`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `cart_details`;
 CREATE TABLE `cart_details` (
