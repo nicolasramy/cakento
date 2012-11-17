@@ -33,21 +33,7 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 
-    public $components = array(
-        'Auth' => array(
-            'authenticate' => array(
-                'Form' => array(
-                    'fields' => array('username' => 'email'),
-                    'scope' => array('User.archived' => 0)
-                )
-            ),
-            'authorize' => 'Controller',
-            'loginAction' => array('controller' => 'users', 'action' => 'login', 'manager' => false),
-            'loginRedirect' => array('controller' => 'dashboard', 'action' => 'index', 'manager' => true),
-            'logoutRedirect' => array('controller' => 'users', 'action' => 'logout', 'manager' => false)
-        ),
-        'Session'
-    );
+    public $components = array('Session');
 
     /**
      * beforeFilter
@@ -55,24 +41,8 @@ class AppController extends Controller {
      * @return void
      */
     public function beforeFilter() {
-    }
-
-    /**
-     * Check user authorization
-     * @param object $user
-     * @return boolean
-     */
-    public function isAuthorized($user = null) {
-        if (!isset($this->request->params['manager'])) {
-            return true;
-        }
-
-        // Any registered user can access public functions
-        if (isset($this->request->params['manager']) && $this->Auth->loggedIn()) {
+        if (isset($this->request->params['manager'])) {
             $this->layout = 'manager';
-            return true;
         }
-
-        return false;
     }
 }
