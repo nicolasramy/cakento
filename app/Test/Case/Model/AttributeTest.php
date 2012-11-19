@@ -1,18 +1,17 @@
 <?php
-App::uses('User', 'Model');
+App::uses('Attribute', 'Model');
 
 /**
- * User Test Case
+ * Attribute Test Case
  */
-class UserTest extends CakeTestCase {
+class AttributeTest extends CakeTestCase {
 
 	/**
 	 * Fixtures
 	 * @var array
 	 */
 	public $fixtures = array(
-		'app.user',
-		'app.user_group'
+		'app.attribute'
 	);
 
 	/**
@@ -21,7 +20,7 @@ class UserTest extends CakeTestCase {
 	 */
 	public function setUp() {
 		parent::setUp();
-		$this->User = ClassRegistry::init('User');
+		$this->Attribute = ClassRegistry::init('Attribute');
 	}
 
 	/**
@@ -29,7 +28,7 @@ class UserTest extends CakeTestCase {
 	 * @return void
 	 */
 	public function tearDown() {
-		unset($this->User);
+		unset($this->Attribute);
 
 		parent::tearDown();
 	}

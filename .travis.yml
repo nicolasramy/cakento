@@ -74,7 +74,7 @@ before_script:
     }" > app/Config/database.php
 
 script:
-  - ./lib/Cake/Console/cake test core AllTests --stderr
+  - ./lib/Cake/Console/cake test app AllTests --stderr
 
 notifications:
   email:
