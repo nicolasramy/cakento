@@ -25,27 +25,26 @@ CREATE TABLE `attributes` (
   KEY `searchable` (`searchable`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+
+DROP TABLE IF EXISTS `brands`;
 CREATE TABLE `brands` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
-  `visible` tinyint NOT NULL DEFAULT '1',
-  `searchable` tinyint NOT NULL DEFAULT '1',
-  `parent_id` int NOT NULL,
+  `visible` tinyint(4) NOT NULL DEFAULT '1',
+  `searchable` tinyint(4) NOT NULL DEFAULT '1',
+  `parent_id` int(11) NOT NULL,
   `description` text NOT NULL,
   `short_description` varchar(255) NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
   `deleted` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`),
-  KEY `slug` (`slug`),
-  KEY `visible` (`visible`),
-  KEY `searchable` (`searchable`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `cart_details`;
-CREATE TABLE `cart_details` (
+
+DROP TABLE IF EXISTS `cart_items`;
+CREATE TABLE `cart_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `cart_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -109,8 +108,8 @@ CREATE TABLE `countries` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `credit_memo_details`;
-CREATE TABLE `credit_memo_details` (
+DROP TABLE IF EXISTS `credit_memo_items`;
+CREATE TABLE `credit_memo_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `credit_name_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -209,8 +208,8 @@ CREATE TABLE `discounts` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `invoice_details`;
-CREATE TABLE `invoice_details` (
+DROP TABLE IF EXISTS `invoice_items`;
+CREATE TABLE `invoice_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `invoice_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -232,8 +231,8 @@ CREATE TABLE `invoices` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `order_details`;
-CREATE TABLE `order_details` (
+DROP TABLE IF EXISTS `order_items`;
+CREATE TABLE `order_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `created` datetime NOT NULL,
@@ -259,16 +258,60 @@ CREATE TABLE `orders` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
+DROP TABLE IF EXISTS `page_article_items`;
+CREATE TABLE `page_article_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` int(11) NOT NULL,
+  `int_value` int(11) NOT NULL,
+  `decimal_value` decimal(10,4) NOT NULL,
+  `datetime_value` datetime NOT NULL,
+  `varchar_value` varchar(255) NOT NULL,
+  `text_value` text NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  `deleted` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `page_articles`;
+CREATE TABLE `page_articles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `page_id` int(11) NOT NULL,
+  `position` int(11) NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  `author_id` int(11) NOT NULL,
+  `block_id` int(11) NOT NULL,
+  `keywords` text NOT NULL,
+  `description` text NOT NULL,
+  `visible` tinyint(1) NOT NULL,
+  `searchable` tinyint(1) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  `deleted` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
 DROP TABLE IF EXISTS `pages`;
 CREATE TABLE `pages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `website_id` int(11) NOT NULL,
+  `type` int(11) NOT NULL,
+  `parent_id` int(11) NOT NULL,
+  `lft` int(11) NOT NULL,
+  `rght` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
   `visible` tinyint(1) NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
+  `robots` varchar(255) NOT NULL,
+  `cached` tinyint(1) NOT NULL,
+  `public` tinyint(1) NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
+  `deleted` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -370,8 +413,8 @@ CREATE TABLE `stores` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `subscription_details`;
-CREATE TABLE `subscription_details` (
+DROP TABLE IF EXISTS `subscription_items`;
+CREATE TABLE `subscription_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `subscription_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -499,8 +542,8 @@ CREATE TABLE `users` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS `warehouse_details`;
-CREATE TABLE `warehouse_details` (
+DROP TABLE IF EXISTS `warehouse_items`;
+CREATE TABLE `warehouse_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `warehouse_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
@@ -542,10 +585,22 @@ CREATE TABLE `websites` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `store_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `domain` varchar(255) NOT NULL,
   `unsecure_url` varchar(255) NOT NULL,
   `secure_url` varchar(255) NOT NULL,
+  `files_url` varchar(255) NOT NULL,
+  `ressources_url` varchar(255) NOT NULL,
+  `locale` varchar(255) NOT NULL,
+  `date_format` varchar(255) NOT NULL,
+  `time_format` varchar(255) NOT NULL,
+  `datetime_format` varchar(255) NOT NULL,
+  `admin_email` varchar(255) NOT NULL,
+  `theme_id` int(11) NOT NULL,
+  `online` tinyint(1) NOT NULL,
   `created` datetime NOT NULL,
   `modified` datetime NOT NULL,
+  `deleted` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -560,4 +615,4 @@ CREATE TABLE `zones` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
--- 2012-11-16 12:55:39
+-- 2012-11-19 23:41:24

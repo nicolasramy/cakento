@@ -5,8 +5,6 @@ SET foreign_key_checks = 0;
 SET time_zone = 'SYSTEM';
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
-USE `cakento`;
-
 INSERT INTO `attributes` (`id`, `type`, `visible`, `searchable`, `name`, `created`, `modified`, `deleted`) VALUES
 (1,	1,	1,	0,	'weight',	'2012-11-16 06:22:46',	'2012-11-16 11:24:39',	'0000-00-00 00:00:00'),
 (5,	1,	1,	0,	'volume',	'2012-11-16 08:03:18',	'2012-11-16 11:24:39',	'0000-00-00 00:00:00'),
@@ -20,13 +18,50 @@ INSERT INTO `attributes` (`id`, `type`, `visible`, `searchable`, `name`, `create
 (13,	6,	1,	0,	'lifetime',	'2012-11-16 08:47:29',	'2012-11-16 11:24:39',	'0000-00-00 00:00:00'),
 (14,	1,	1,	0,	'sub_product_id',	'2012-11-16 08:49:59',	'2012-11-16 11:24:39',	'0000-00-00 00:00:00');
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 INSERT INTO `product_types` (`id`, `name`, `visible`, `searchable`, `created`, `modified`, `deleted`) VALUES
 (1,	'Normal',	1,	1,	'2012-11-16 05:05:52',	'2012-11-16 11:26:11',	'0000-00-00 00:00:00'),
 (2,	'Bundle',	1,	1,	'2012-11-16 05:08:51',	'2012-11-16 11:26:11',	'0000-00-00 00:00:00'),
 (3,	'Virtual',	1,	1,	'2012-11-16 05:11:16',	'2012-11-16 12:22:23',	'0000-00-00 00:00:00');
 
 
+
 INSERT INTO `stores` (`id`, `zone_id`, `country_id`, `state_id`, `name`, `status`, `created`, `modified`) VALUES
 (1,	1,	1,	1,	'Default Store',	1,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00');
 
--- 2012-11-16 12:56:26
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- 2012-11-19 23:41:39
