@@ -17,7 +17,7 @@ class AttributeFixture extends CakeTestFixture {
 		'name' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 128, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null),
-		'deleted' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
+		'deleted' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1)
 		),
@@ -37,7 +37,7 @@ class AttributeFixture extends CakeTestFixture {
 			'name' => 'Lorem ipsum dolor sit amet',
 			'created' => '2012-10-21 04:52:01',
 			'modified' => '2012-10-21 04:52:01',
-			'deleted' => '0000-00-00 00:00:00'
+			'deleted' => null
 		),
 		array(
 			'id' => 2,
@@ -47,7 +47,7 @@ class AttributeFixture extends CakeTestFixture {
 			'name' => 'Lorem',
 			'created' => '2012-10-21 04:53:47',
 			'modified' => '2012-10-21 04:55:35',
-			'deleted' => '0000-00-00 00:00:00'
+			'deleted' => null
 		),
 		array(
 			'id' => 3,
@@ -56,8 +56,8 @@ class AttributeFixture extends CakeTestFixture {
 			'searchable' => 1,
 			'name' => 'Dolor sit amet',
 			'created' => '2012-10-21 04:58:24',
-			'modified' => '0000-00-00 00:00:00',
-			'deleted' => '0000-00-00 00:00:00'
+			'modified' => null,
+			'deleted' => null
 		),
 	);
 
