@@ -33,4 +33,37 @@ class AttributeTest extends CakeTestCase {
 		parent::tearDown();
 	}
 
+	public function testVisible($fields = null) {
+        $params = array(
+            'conditions' => array(
+                'Attribute.visible' => 1
+            ),
+            'fields' => $fields
+        );
+
+        return $this->Attribute->find('all', $params);
+    }
+
+	public function testSearchable($fields = null) {
+        $params = array(
+            'conditions' => array(
+                'Attribute.searchable' => 1
+            ),
+            'fields' => $fields
+        );
+
+        return $this->Attribute->find('all', $params);
+    }
+
+
+	public function testDeleted($fields = null) {
+        $params = array(
+            'conditions' => array(
+                'Attribute.deleted' => 1
+            ),
+            'fields' => $fields
+        );
+
+        return $this->Attribute->find('all', $params);
+    }
 }
