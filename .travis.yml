@@ -74,8 +74,8 @@ before_script:
     }" > app/Config/database.php
 
 script:
-  - ./lib/Cake/Console/cake test app Controller/AttributesController --stderr
-  - ./lib/Cake/Console/cake test app Model/Attribute --stderr
+  - ./lib/Cake/Console/cake test app Controller/AttributesController
+  - ./lib/Cake/Console/cake test app Model/Attributes
 
 notifications:
   email:
