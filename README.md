@@ -14,3 +14,5 @@ An eCommerce solution based on CakePHP and Bootstrap Twitter for all developers 
 5. Execute app/Config/Schema/install_schema.sql
 6. (Optional) Execute app/Config/Schema/install_data.sql
 
+## CI
+[![Build Status](https://secure.travis-ci.org/nicolasramy/cakento.png?branch=master)](https://travis-ci.org/nicolasramy/cakento)
