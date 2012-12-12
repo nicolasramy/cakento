@@ -110,6 +110,13 @@
 			<?php
 				echo "<?php foreach (\${$pluralVar} as \${$singularVar}): ?>\n";
 				echo "\t\t\t<tr>\n";
+				echo "\t\t\t\t<td class=\"icon\">\n";
+					echo "\t\t\t\t\t<?php
+						echo \$this->Form->input('{$modelClass}.{$primaryKey}_' . \${$singularVar}['{$modelClass}']['{$primaryKey}'],
+							array('type' => 'checkbox', 'label' => '', 'value' => \${$singularVar}['{$modelClass}']['{$primaryKey}'])
+						);
+					?>\n";
+				echo "\t\t\t\t</td>\n";
 					foreach ($fields as $field) {
 						$isKey = false;
 						if (!empty($associations['belongsTo'])) {
@@ -123,13 +130,41 @@
 						}
 						if ($isKey !== true) {
 							switch ($field) {
+
+								case 'id':
+									echo "\t\t\t\t<td class=\"id\"><?php echo h(\${$singularVar}['{$modelClass}']['{$field}']); ?></td>\n";
+									break;
+
 								case 'visible':
+									echo "\t\t\t\t<td>
+					<?php
+						echo \$this->Html->image('fugue-icons/eye' . (\${$singularVar}['{$modelClass}']['{$field}'] ? '' : '-grayscale') . '.png',
+						array('class' => 'fugue-icon', 'alt' => __('Visible'))
+						);
+					?>\n\t\t\t\t</td>\n";
+								break;
 
-									break;
+								case 'searchable':
+									echo "\t\t\t\t<td>
+					<?php
+						echo \$this->Html->image('fugue-icons/magnifier-zoom' . (\${$singularVar}['{$modelClass}']['{$field}'] ? '' : '-grayscale') . '.png',
+						array('class' => 'fugue-icon', 'alt' => __('Visible'))
+						);
+					?>\n\t\t\t\t</td>\n";
+								break;
 
-								default:
-									echo "\t\t\t\t<td><?php echo h(\${$singularVar}['{$modelClass}']['{$field}']); ?></td>\n";
-									break;
+								case 'salable':
+									echo "\t\t\t\t<td>
+					<?php
+						echo \$this->Html->image('fugue-icons/eye' . (\${$singularVar}['{$modelClass}']['{$field}'] ? '' : '-grayscale') . '.png',
+						array('class' => 'fugue-icon', 'alt' => __('Visible'))
+						);
+					?>\n\t\t\t\t</td>\n";
+								break;
+
+							default:
+								echo "\t\t\t\t<td><?php echo h(\${$singularVar}['{$modelClass}']['{$field}']); ?></td>\n";
+								break;
 							}
 
 						}
@@ -144,14 +179,14 @@
 							array('escape' => false)
 						);\n";
 
-					echo "\t\t\t\t\t\t\techo \$this->Html->link(\$this->Html->image('fugue-icons/document--pencil.png',
+					echo "\t\t\t\t\t\techo \$this->Html->link(\$this->Html->image('fugue-icons/document--pencil.png',
 								array('class' => 'fugue-icon fugue-icon-push-center', 'alt' => __('Edit'))
 							),
 							array('controller' => '{$pluralVar}', 'action' => 'edit', \${$singularVar}['{$modelClass}']['{$primaryKey}']),
 							array('escape' => false)
 						);\n";
 
-					echo "\t\t\t\t\t\t\techo \$this->Form->postLink(\$this->Html->image('fugue-icons/document--minus.png',
+					echo "\t\t\t\t\t\techo \$this->Form->postLink(\$this->Html->image('fugue-icons/document--minus.png',
 								array('class' => 'fugue-icon', 'alt' => __('Delete'))
 							),
 							array('controller' => '{$pluralVar}', 'action' => 'delete', \${$singularVar}['{$modelClass}']['{$primaryKey}']),
