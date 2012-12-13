@@ -22,17 +22,9 @@
 	<div class="row-fluid">
 		<div class="span12">
 			<ul class="breadcrumb">
-				<li>
-					<?php
-						echo $this->Html->link(
-							__('Dashboard'),
-							array(
-								'controller' => 'dashboard',
-								'action' => 'index',
-								'manager' => true
-							)
-						);
-					?> <span class="divider">/</span></li>
+				<li><?php echo $this->Html->link(__('Dashboard'), array('controller' => 'dashboard', 'action' => 'index', 'manager' => true)); ?> <span class="divider">/</span></li>
+				<li><?php echo $this->Html->link(__('Configuration'), array('controller' => 'configuration', 'action' => 'index', 'manager' => true)); ?> <span class="divider">/</span></li>
+				<li><?php echo $this->Html->link(__('Localisation'), array('controller' => 'localisation', 'action' => 'index', 'manager' => true)); ?> <span class="divider">/</span></li>
 				<li class="active"><?php echo __('States'); ?></li>
 			</ul>
 		</div>
