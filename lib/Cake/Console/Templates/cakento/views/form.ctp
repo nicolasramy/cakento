@@ -104,6 +104,7 @@
 		<div class="span12">
 			<ul class="breadcrumb">
 				<li><?php echo "<?php echo \$this->Html->link(__('Dashboard'), array('controller' => 'dashboard', 'action' => 'index', 'manager' => true)); ?> <span class=\"divider\">/</span>"; ?></li>
+				<li><?php echo "<?php echo \$this->Html->link(__('{$pluralHumanName}'), array('controller' => '{$pluralVar}', 'action' => 'index', 'manager' => true)); ?> <span class=\"divider\">/</span>"; ?></li>
 				<?php
 					if (strpos($action, 'edit') !== false) {
 						echo "<li class=\"active\"><?php echo __('Edit # ') . \$this->data['{$modelClass}']['{$primaryKey}']; ?></li>\n";
