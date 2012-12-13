@@ -61,8 +61,7 @@
 				<th class="id"><?php echo $this->Paginator->sort('id'); ?></th>
 				<th><?php echo $this->Paginator->sort('zone_id'); ?></th>
 				<th><?php echo $this->Paginator->sort('name'); ?></th>
-				<th class="reference"><?php echo $this->Paginator->sort('iso_code_2'); ?></th>
-				<th class="reference"><?php echo $this->Paginator->sort('iso_code_3'); ?></th>
+				<th class="reference"><?php echo $this->Paginator->sort('iso_code'); ?></th>
 				<th class="actions"><?php echo __('Actions'); ?></th>
 			</tr>
 			</thead>
@@ -81,8 +80,7 @@
 					<?php echo $this->Html->link($country['Zone']['name'], array('controller' => 'zones', 'action' => 'view', $country['Zone']['id'])); ?>
 					</td>
 				<td><?php echo h($country['Country']['name']); ?></td>
-				<td class="reference"><?php echo h($country['Country']['iso_code_2']); ?></td>
-				<td class="reference"><?php echo h($country['Country']['iso_code_3']); ?></td>
+				<td class="reference"><?php echo h($country['Country']['iso_code']); ?></td>
 				<td class="actions">
 					<?php
 						echo $this->Html->link($this->Html->image('fugue-icons/document.png',

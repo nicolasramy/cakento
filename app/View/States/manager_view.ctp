@@ -86,10 +86,6 @@
 				<dd>
 					<?php echo $this->Html->link($state['Country']['name'], array('controller' => 'countries', 'action' => 'view', $state['Country']['id'])); ?>
 				</dd>
-				<dt><?php echo __('Zone Id'); ?></dt>
-				<dd>
-					<?php echo h($state['State']['zone_id']); ?>
-				</dd>
 				<dt><?php echo __('Name'); ?></dt>
 				<dd>
 					<?php echo h($state['State']['name']); ?>

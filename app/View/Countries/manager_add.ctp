@@ -4,7 +4,7 @@
 		<div class="span12">
 			<h2><?php echo __('Countries'); ?></h2>
 
-		
+
 			<div class="btn-group">
 				<button class="btn" type="button">
 					<?php
@@ -36,8 +36,7 @@
 		<?php
 			echo $this->Form->input('zone_id');
 			echo $this->Form->input('name');
-			echo $this->Form->input('iso_code_2');
-			echo $this->Form->input('iso_code_3');
+			echo $this->Form->input('iso_code');
 		?>
 
 		<?php

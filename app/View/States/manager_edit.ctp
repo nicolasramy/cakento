@@ -68,7 +68,6 @@
 		<?php
 			echo $this->Form->input('id');
 			echo $this->Form->input('country_id');
-			echo $this->Form->input('zone_id');
 			echo $this->Form->input('name');
 		?>
 

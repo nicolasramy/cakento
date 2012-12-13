@@ -60,7 +60,6 @@
 				</th>
 				<th class="id"><?php echo $this->Paginator->sort('id'); ?></th>
 				<th><?php echo $this->Paginator->sort('country_id'); ?></th>
-				<th><?php echo $this->Paginator->sort('zone_id'); ?></th>
 				<th><?php echo $this->Paginator->sort('name'); ?></th>
 				<th class="actions"><?php echo __('Actions'); ?></th>
 			</tr>
@@ -79,7 +78,6 @@
 				<td>
 					<?php echo $this->Html->link($state['Country']['name'], array('controller' => 'countries', 'action' => 'view', $state['Country']['id'])); ?>
 					</td>
-				<td><?php echo h($state['State']['zone_id']); ?></td>
 				<td><?php echo h($state['State']['name']); ?></td>
 				<td class="actions">
 					<?php

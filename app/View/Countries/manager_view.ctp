@@ -90,13 +90,9 @@
 				<dd>
 					<?php echo h($country['Country']['name']); ?>
 				</dd>
-				<dt><?php echo __('Iso Code 2'); ?></dt>
+				<dt><?php echo __('Iso Code'); ?></dt>
 				<dd>
-					<?php echo h($country['Country']['iso_code_2']); ?>
-				</dd>
-				<dt><?php echo __('Iso Code 3'); ?></dt>
-				<dd>
-					<?php echo h($country['Country']['iso_code_3']); ?>
+					<?php echo h($country['Country']['iso_code']); ?>
 				</dd>
 				<dt><?php echo __('Created'); ?></dt>
 				<dd>

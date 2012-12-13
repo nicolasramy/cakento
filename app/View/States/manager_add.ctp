@@ -4,7 +4,7 @@
 		<div class="span12">
 			<h2><?php echo __('States'); ?></h2>
 
-		
+
 			<div class="btn-group">
 				<button class="btn" type="button">
 					<?php
@@ -35,7 +35,6 @@
 		<?php echo $this->Form->create('State'); ?>
 		<?php
 			echo $this->Form->input('country_id');
-			echo $this->Form->input('zone_id');
 			echo $this->Form->input('name');
 		?>
 
