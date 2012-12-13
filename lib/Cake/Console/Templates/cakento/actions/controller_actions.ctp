@@ -23,25 +23,28 @@
 	 *
 	 * @return void
 	 */
-	public function <?php echo $admin ?>index() {
+	public function <?php echo $admin ?>index()
+	{
 		$this-><?php echo $currentModelName ?>->recursive = 0;
-		<?php echo "\t\t\${$pluralName} = \$this->paginate();\n"; ?>
+		<?php echo "\${$pluralName} = \$this->paginate();\n"; ?>
 		$this->set(compact('<?php echo $pluralName ?>'));
 	}
 
 	/**
 	 * <?php echo $admin ?>view method
 	 *
-	 * @throws NotFoundException
 	 * @param string $id
 	 * @return void
 	 */
-	public function <?php echo $admin ?>view($id = null) {
+	public function <?php echo $admin ?>view($id = null)
+	{
 		$this-><?php echo $currentModelName; ?>->id = $id;
 		if (!$this-><?php echo $currentModelName; ?>->exists()) {
-			throw new NotFoundException(__('Invalid <?php echo strtolower($singularHumanName); ?>'));
+			$this->Session->setFlash(__('Invalid <?php echo strtolower($singularHumanName); ?>.'), '<?php echo strlen($admin) ? 'Manager' : 'Default' ?>/Flash/error');
+			$this->redirect(array('action' => 'index'));
 		}
-		$this->set('<?php echo $singularName; ?>', $this-><?php echo $currentModelName; ?>->read(null, $id));
+		$<?php echo $singularName; ?> = $this-><?php echo $currentModelName; ?>->read(null, $id);
+		$this->set(compact('<?php echo $singularName; ?>'));
 	}
 
 <?php $compact = array(); ?>
@@ -50,19 +53,21 @@
 	 *
 	 * @return void
 	 */
-	public function <?php echo $admin ?>add() {
+	public function <?php echo $admin ?>add()
+	{
 		if ($this->request->is('post')) {
 			$this-><?php echo $currentModelName; ?>->create();
 			if ($this-><?php echo $currentModelName; ?>->save($this->request->data)) {
 <?php if ($wannaUseSession): ?>
-				$this->Session->setFlash(__('The <?php echo strtolower($singularHumanName); ?> has been saved'));
+				$this->Session->setFlash(__('The <?php echo strtolower($singularHumanName); ?> has been saved'), '<?php echo strlen($admin) ? 'Manager' : 'Default' ?>/Flash/success');
 				$this->redirect(array('action' => 'index'));
 <?php else: ?>
 				$this->flash(__('<?php echo ucfirst(strtolower($currentModelName)); ?> saved.'), array('action' => 'index'));
 <?php endif; ?>
 			} else {
 <?php if ($wannaUseSession): ?>
-				$this->Session->setFlash(__('The <?php echo strtolower($singularHumanName); ?> could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The <?php echo strtolower($singularHumanName); ?> could not be saved. Please, try again.', '<?php echo strlen($admin) ? 'Manager' : 'Default' ?>/Flash/error'));
+				$this->redirect($this->referer());
 <?php endif; ?>
 			}
 		}
@@ -87,26 +92,28 @@
 	/**
 	 * <?php echo $admin ?>edit method
 	 *
-	 * @throws NotFoundException
 	 * @param string $id
 	 * @return void
 	 */
-	public function <?php echo $admin; ?>edit($id = null) {
+	public function <?php echo $admin; ?>edit($id = null)
+	{
 		$this-><?php echo $currentModelName; ?>->id = $id;
 		if (!$this-><?php echo $currentModelName; ?>->exists()) {
-			throw new NotFoundException(__('Invalid <?php echo strtolower($singularHumanName); ?>'));
+			$this->Session->setFlash(__('Invalid <?php echo strtolower($singularHumanName); ?>.'), '<?php echo strlen($admin) ? 'Manager' : 'Default' ?>/Flash/error');
+			$this->redirect(array('action' => 'index'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this-><?php echo $currentModelName; ?>->save($this->request->data)) {
 <?php if ($wannaUseSession): ?>
-				$this->Session->setFlash(__('The <?php echo strtolower($singularHumanName); ?> has been saved'));
+				$this->Session->setFlash(__('The <?php echo strtolower($singularHumanName); ?> has been updated.'), '<?php echo strlen($admin) ? 'Manager' : 'Default' ?>/Flash/information');
 				$this->redirect(array('action' => 'index'));
 <?php else: ?>
 				$this->flash(__('The <?php echo strtolower($singularHumanName); ?> has been saved.'), array('action' => 'index'));
 <?php endif; ?>
 			} else {
 <?php if ($wannaUseSession): ?>
-				$this->Session->setFlash(__('The <?php echo strtolower($singularHumanName); ?> could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The <?php echo strtolower($singularHumanName); ?> could not be saved. Please, try again.', '<?php echo strlen($admin) ? 'Manager' : 'Default' ?>/Flash/error'));
+				$this->redirect($this->referer());
 <?php endif; ?>
 			}
 		} else {
@@ -137,24 +144,26 @@
 	 * @param string $id
 	 * @return void
 	 */
-	public function <?php echo $admin; ?>delete($id = null) {
+	public function <?php echo $admin; ?>delete($id = null)
+	{
 		if (!$this->request->is('post')) {
 			throw new MethodNotAllowedException();
 		}
 		$this-><?php echo $currentModelName; ?>->id = $id;
 		if (!$this-><?php echo $currentModelName; ?>->exists()) {
-			throw new NotFoundException(__('Invalid <?php echo strtolower($singularHumanName); ?>'));
+			$this->Session->setFlash(__('Invalid <?php echo ucfirst(strtolower($singularHumanName)); ?>'), '<?php echo strlen($admin) ? 'Manager' : 'Default' ?>/Flash/error');
+			$this->redirect(array('action' => 'index'));
 		}
 		if ($this-><?php echo $currentModelName; ?>->delete()) {
 <?php if ($wannaUseSession): ?>
-			$this->Session->setFlash(__('<?php echo ucfirst(strtolower($singularHumanName)); ?> deleted'));
+			$this->Session->setFlash(__('<?php echo ucfirst(strtolower($singularHumanName)); ?> deleted'), '<?php echo strlen($admin) ? 'Manager' : 'Default' ?>/Flash/default');
 			$this->redirect(array('action' => 'index'));
 <?php else: ?>
 			$this->flash(__('<?php echo ucfirst(strtolower($singularHumanName)); ?> deleted'), array('action' => 'index'));
 <?php endif; ?>
 		}
 <?php if ($wannaUseSession): ?>
-		$this->Session->setFlash(__('<?php echo ucfirst(strtolower($singularHumanName)); ?> was not deleted'));
+		$this->Session->setFlash(__('<?php echo ucfirst(strtolower($singularHumanName)); ?> was not deleted'), '<?php echo strlen($admin) ? 'Manager' : 'Default' ?>/Flash/error');
 <?php else: ?>
 		$this->flash(__('<?php echo ucfirst(strtolower($singularHumanName)); ?> was not deleted'), array('action' => 'index'));
 <?php endif; ?>
