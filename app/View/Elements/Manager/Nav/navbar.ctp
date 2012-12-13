@@ -69,9 +69,6 @@
             <li class="dropdown">
                 <?php echo $this->Html->link(__('Configuration'), '#', array('class' => 'dropdown-toggle', 'data-toggle' => 'dropdown')); ?>
                 <ul class="dropdown-menu">
-                    <li>
-
-                    </li>
                     <li class="dropdown-submenu">
                         <?php echo $this->Html->link(__('Catalog'), '#', array('tabindex' => '-1')); ?>
                         <ul class="dropdown-menu">
@@ -95,6 +92,35 @@
                                 <?php
                                     echo $this->Html->link(__('Types'),
                                         array('controller' => 'product_types', 'action' => 'index', 'manager' => true),
+                                        array('tabindex' => '-1')
+                                    );
+                                ?>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown-submenu">
+                        <?php echo $this->Html->link(__('Localisation'), '#', array('tabindex' => '-1')); ?>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <?php
+                                    echo $this->Html->link(__('Zones'),
+                                        array('controller' => 'zones', 'action' => 'index', 'manager' => true),
+                                        array('tabindex' => '-1')
+                                    );
+                                ?>
+                            </li>
+                            <li>
+                                <?php
+                                    echo $this->Html->link(__('Countries'),
+                                        array('controller' => 'countries', 'action' => 'index', 'manager' => true),
+                                        array('tabindex' => '-1')
+                                    );
+                                ?>
+                            </li>
+                            <li>
+                                <?php
+                                    echo $this->Html->link(__('States'),
+                                        array('controller' => 'states', 'action' => 'index', 'manager' => true),
                                         array('tabindex' => '-1')
                                     );
                                 ?>
