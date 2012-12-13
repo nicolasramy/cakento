@@ -159,6 +159,27 @@
                             );
                         ?>
                     </li>
+                    <li class="dropdown-submenu">
+                        <?php echo $this->Html->link(__('Core'), '#', array('tabindex' => '-1')); ?>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <?php
+                                    echo $this->Html->link(__('Users'),
+                                        array('controller' => 'users', 'action' => 'index', 'manager' => true),
+                                        array('tabindex' => '-1')
+                                    );
+                                ?>
+                            </li>
+                            <li>
+                                <?php
+                                    echo $this->Html->link(__('User Groups'),
+                                        array('controller' => 'user_groups', 'action' => 'index', 'manager' => true),
+                                        array('tabindex' => '-1')
+                                    );
+                                ?>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
         </ul>
