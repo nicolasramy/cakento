@@ -125,6 +125,14 @@
                                     );
                                 ?>
                             </li>
+                            <li>
+                                <?php
+                                    echo $this->Html->link(__('Cities'),
+                                        array('controller' => 'cities', 'action' => 'index', 'manager' => true),
+                                        array('tabindex' => '-1')
+                                    );
+                                ?>
+                            </li>
                         </ul>
                     </li>
                     <li>
