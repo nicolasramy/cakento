@@ -143,6 +143,22 @@
                             );
                         ?>
                     </li>
+                    <li>
+                        <?php
+                            echo $this->Html->link(__('Warehouses'),
+                                array('controller' => 'warehouses', 'action' => 'index', 'manager' => true),
+                                array('tabindex' => '-1')
+                            );
+                        ?>
+                    </li>
+                    <li>
+                        <?php
+                            echo $this->Html->link(__('Payment Gateways'),
+                                array('controller' => 'payment_gateways', 'action' => 'index', 'manager' => true),
+                                array('tabindex' => '-1')
+                            );
+                        ?>
+                    </li>
                 </ul>
             </li>
         </ul>
