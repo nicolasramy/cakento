@@ -38,4 +38,12 @@ class UserGroup extends AppModel {
 		)
 	);
 
+    /**
+     *
+     */
+    public function parentNode()
+    {
+        return null;
+    }
+
 }

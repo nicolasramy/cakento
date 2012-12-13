@@ -7,7 +7,16 @@ App::uses('AppController', 'Controller');
  */
 class UsersController extends AppController
 {
-
+	/**
+	 * beforeFilter method
+	 *
+	 * @return void
+	 */
+	public function beforeFilter()
+	{
+		parent::beforeFilter();
+		$this->Auth->allow('*');
+	}
 	/**
 	 * login method
 	 *
@@ -15,7 +24,13 @@ class UsersController extends AppController
 	 */
 	public function login()
 	{
-
+		if ($this->request->is('post')) {
+			if ($this->Auth->login()) {
+				$this->redirect($this->Auth->redirect());
+			} else {
+				$this->Session->setFlash(__('Invalid username or password, try again'));
+			}
+		}
 	}
 
 	/**
@@ -25,7 +40,7 @@ class UsersController extends AppController
 	 */
 	public function logout()
 	{
-
+		$this->redirect($this->Auth->logout());
 	}
 
 	/**

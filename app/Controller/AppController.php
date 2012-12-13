@@ -31,16 +31,36 @@ App::uses('Controller', 'Controller');
  * @package       app.Controller
  * @link http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
-class AppController extends Controller {
+class AppController extends Controller
+{
 
-    public $components = array('Session');
+    public $components = array(
+        'Acl',
+        'Session',
+        'Auth' => array(
+            'authorize' => array(
+                'Actions' => array('actionPath' => 'controllers')
+            ),
+            'authenticate' => array(
+                'Form' => array(
+                    'fields' => array('username' => 'email')
+                )
+            )
+        )
+    );
 
     /**
      * beforeFilter
      * @param
      * @return void
      */
-    public function beforeFilter() {
+    public function beforeFilter()
+    {
+        //Configure AuthComponent
+        $this->Auth->loginAction = array('controller' => 'users', 'action' => 'login', 'manager' => false);
+        $this->Auth->logoutRedirect = array('controller' => 'users', 'action' => 'login', 'manager' => false);
+        $this->Auth->loginRedirect = array('controller' => 'dashboard', 'action' => 'index', 'manager' => true);
+
         if (isset($this->request->params['manager'])) {
             $this->layout = 'manager';
         }
