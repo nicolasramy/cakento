@@ -40,19 +40,7 @@
 	<div class="row-fluid">
 		<div class="span12">
 			<ul class="breadcrumb">
-				<li>
-				<?php
-					echo "\t<?php
-						echo \$this->Html->link(
-							__('Dashboard'),
-							array(
-								'controller' => 'dashboard',
-								'action' => 'index',
-								'manager' => true
-							)
-						);
-					?>";
-				?> <span class="divider">/</span></li>
+				<li><?php echo "<?php echo \$this->Html->link(__('Dashboard'),array('controller' => 'dashboard', 'action' => 'index', 'manager' => true));?>";?> <span class="divider">/</span></li>
 				<li class="active"><?php echo "<?php echo __('{$pluralHumanName}'); ?>"; ?></li>
 			</ul>
 		</div>
@@ -60,7 +48,7 @@
 
 	<div class="row-fluid">
 		<div class="span12">
-			<?php echo "<?php echo \$this->Form->create('Attribute', array('class' => 'table')); ?>\n"; ?>
+			<?php echo "<?php echo \$this->Form->create('{$modelClass}', array('class' => 'table')); ?>\n"; ?>
 			<table cellpadding="0" cellspacing="0" class="table table-striped table-hover table-condensed">
 			<thead>
 			<tr>
@@ -202,7 +190,7 @@
 
 			<?php echo "<?php
 				echo \$this->Form->button('Update', array('type' => 'submit', 'class' => 'btn pull-right'));
-				echo \$this->Form->input('Attribute.action',
+				echo \$this->Form->input('{$modelClass}.action',
 					array(
 						'label' => '',
 						'type' => 'select',
