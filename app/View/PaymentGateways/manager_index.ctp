@@ -23,6 +23,7 @@
 		<div class="span12">
 			<ul class="breadcrumb">
 				<li><?php echo $this->Html->link(__('Dashboard'),array('controller' => 'dashboard', 'action' => 'index', 'manager' => true));?> <span class="divider">/</span></li>
+				<li><?php echo $this->Html->link(__('Configuration'), array('controller' => 'configuration', 'action' => 'index')); ?> <span class="divider">/</span></li>
 				<li class="active"><?php echo __('Payment Gateways'); ?></li>
 			</ul>
 		</div>
@@ -50,8 +51,6 @@
 				</th>
 				<th class="id"><?php echo $this->Paginator->sort('id'); ?></th>
 				<th><?php echo $this->Paginator->sort('name'); ?></th>
-				<th class="datetime"><?php echo $this->Paginator->sort('created'); ?></th>
-				<th class="datetime"><?php echo $this->Paginator->sort('modified'); ?></th>
 				<th class="actions"><?php echo __('Actions'); ?></th>
 			</tr>
 			</thead>
@@ -67,8 +66,6 @@
 				</td>
 				<td class="id"><?php echo h($paymentGateway['PaymentGateway']['id']); ?></td>
 				<td><?php echo h($paymentGateway['PaymentGateway']['name']); ?></td>
-				<td><?php echo h($paymentGateway['PaymentGateway']['created']); ?></td>
-				<td><?php echo h($paymentGateway['PaymentGateway']['modified']); ?></td>
 				<td class="actions">
 					<?php
 						echo $this->Html->link($this->Html->image('fugue-icons/document.png',
