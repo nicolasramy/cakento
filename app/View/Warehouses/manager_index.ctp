@@ -52,8 +52,6 @@
 				<th class="id"><?php echo $this->Paginator->sort('id'); ?></th>
 				<th><?php echo $this->Paginator->sort('store_id'); ?></th>
 				<th><?php echo $this->Paginator->sort('name'); ?></th>
-				<th class="datetime"><?php echo $this->Paginator->sort('created'); ?></th>
-				<th class="datetime"><?php echo $this->Paginator->sort('modified'); ?></th>
 				<th class="actions"><?php echo __('Actions'); ?></th>
 			</tr>
 			</thead>
@@ -72,8 +70,6 @@
 					<?php echo $this->Html->link($warehouse['Store']['name'], array('controller' => 'stores', 'action' => 'view', $warehouse['Store']['id'])); ?>
 					</td>
 				<td><?php echo h($warehouse['Warehouse']['name']); ?></td>
-				<td><?php echo h($warehouse['Warehouse']['created']); ?></td>
-				<td><?php echo h($warehouse['Warehouse']['modified']); ?></td>
 				<td class="actions">
 					<?php
 						echo $this->Html->link($this->Html->image('fugue-icons/document.png',
