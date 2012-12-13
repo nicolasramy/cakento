@@ -23,6 +23,8 @@
 		<div class="span12">
 			<ul class="breadcrumb">
 				<li><?php echo $this->Html->link(__('Dashboard'),array('controller' => 'dashboard', 'action' => 'index', 'manager' => true));?> <span class="divider">/</span></li>
+				<li><?php echo $this->Html->link(__('Configuration'),array('controller' => 'configuration', 'action' => 'index', 'manager' => true));?> <span class="divider">/</span></li>
+				<li><?php echo $this->Html->link(__('Core'),array('controller' => 'core', 'action' => 'index', 'manager' => true));?> <span class="divider">/</span></li>
 				<li class="active"><?php echo __('Users'); ?></li>
 			</ul>
 		</div>
@@ -51,13 +53,10 @@
 				<th class="id"><?php echo $this->Paginator->sort('id'); ?></th>
 				<th><?php echo $this->Paginator->sort('user_group_id'); ?></th>
 				<th><?php echo $this->Paginator->sort('name'); ?></th>
-				<th><?php echo $this->Paginator->sort('password'); ?></th>
 				<th><?php echo $this->Paginator->sort('firstname'); ?></th>
 				<th><?php echo $this->Paginator->sort('lastname'); ?></th>
 				<th><?php echo $this->Paginator->sort('email'); ?></th>
-				<th><?php echo $this->Paginator->sort('archived'); ?></th>
-				<th class="datetime"><?php echo $this->Paginator->sort('created'); ?></th>
-				<th class="datetime"><?php echo $this->Paginator->sort('modified'); ?></th>
+				<th class="icon"><?php echo $this->Paginator->sort('archived'); ?></th>
 				<th class="actions"><?php echo __('Actions'); ?></th>
 			</tr>
 			</thead>
@@ -76,13 +75,10 @@
 					<?php echo $this->Html->link($user['UserGroup']['name'], array('controller' => 'user_groups', 'action' => 'view', $user['UserGroup']['id'])); ?>
 					</td>
 				<td><?php echo h($user['User']['name']); ?></td>
-				<td><?php echo h($user['User']['password']); ?></td>
 				<td><?php echo h($user['User']['firstname']); ?></td>
 				<td><?php echo h($user['User']['lastname']); ?></td>
 				<td><?php echo h($user['User']['email']); ?></td>
-				<td><?php echo h($user['User']['archived']); ?></td>
-				<td><?php echo h($user['User']['created']); ?></td>
-				<td><?php echo h($user['User']['modified']); ?></td>
+				<td class="icon"><?php echo h($user['User']['archived']); ?></td>
 				<td class="actions">
 					<?php
 						echo $this->Html->link($this->Html->image('fugue-icons/document.png',

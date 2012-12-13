@@ -23,6 +23,8 @@
 		<div class="span12">
 			<ul class="breadcrumb">
 				<li><?php echo $this->Html->link(__('Dashboard'),array('controller' => 'dashboard', 'action' => 'index', 'manager' => true));?> <span class="divider">/</span></li>
+				<li><?php echo $this->Html->link(__('Configuration'),array('controller' => 'configuration', 'action' => 'index', 'manager' => true));?> <span class="divider">/</span></li>
+				<li><?php echo $this->Html->link(__('Core'),array('controller' => 'core', 'action' => 'index', 'manager' => true));?> <span class="divider">/</span></li>
 				<li class="active"><?php echo __('User Groups'); ?></li>
 			</ul>
 		</div>
@@ -50,9 +52,7 @@
 				</th>
 				<th class="id"><?php echo $this->Paginator->sort('id'); ?></th>
 				<th><?php echo $this->Paginator->sort('name'); ?></th>
-				<th><?php echo $this->Paginator->sort('archived'); ?></th>
-				<th class="datetime"><?php echo $this->Paginator->sort('created'); ?></th>
-				<th class="datetime"><?php echo $this->Paginator->sort('modified'); ?></th>
+				<th class="icon"><?php echo $this->Paginator->sort('archived'); ?></th>
 				<th class="actions"><?php echo __('Actions'); ?></th>
 			</tr>
 			</thead>
@@ -68,9 +68,7 @@
 				</td>
 				<td class="id"><?php echo h($userGroup['UserGroup']['id']); ?></td>
 				<td><?php echo h($userGroup['UserGroup']['name']); ?></td>
-				<td><?php echo h($userGroup['UserGroup']['archived']); ?></td>
-				<td><?php echo h($userGroup['UserGroup']['created']); ?></td>
-				<td><?php echo h($userGroup['UserGroup']['modified']); ?></td>
+				<td class="icon"><?php echo h($userGroup['UserGroup']['archived']); ?></td>
 				<td class="actions">
 					<?php
 						echo $this->Html->link($this->Html->image('fugue-icons/document.png',
