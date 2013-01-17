@@ -16,3 +16,18 @@ An eCommerce solution based on CakePHP and Bootstrap Twitter for all developers 
 
 ## CI
 [![Build Status](https://secure.travis-ci.org/nicolasramy/cakento.png?branch=master)](https://travis-ci.org/nicolasramy/cakento)
+
+## Development Roadmap
+
+- website/store
+- CMS
+- brands
+- products
+- warehouses
+- catalogs
+- subscriptions
+- carts/orders/invoices/creditmemos
+- payments
+- surveys
+- newsletters
+- reports
