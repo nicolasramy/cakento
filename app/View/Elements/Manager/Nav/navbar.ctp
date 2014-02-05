@@ -6,7 +6,10 @@
                 <?php echo $this->Html->link(__('Dashboard'), array('controller' => 'dashboard', 'action' => 'index', 'manager' => true)); ?>
             </li>
             <li class="dropdown">
-                <?php echo $this->Html->link(__('Catalog'), '#', array('class' => 'dropdown-toggle', 'data-toggle' => 'dropdown')); ?>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <b class="caret"></b>
+                    <?php echo __('Catalog'); ?>
+                </a>
                 <ul class="dropdown-menu">
                     <li>
                         <?php
@@ -37,7 +40,10 @@
                 <?php echo $this->Html->link(__('Subscriptions'), array('controller' => 'subscriptions', 'action' => 'index', 'manager' => true)); ?>
             </li>
             <li class="dropdown">
-                <?php echo $this->Html->link(__('CMS'), '#', array('class' => 'dropdown-toggle', 'data-toggle' => 'dropdown')); ?>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <b class="caret"></b>
+                    <?php echo __('CMS'); ?>
+                </a>
                 <ul class="dropdown-menu">
                     <li>
                         <?php
@@ -67,7 +73,10 @@
                 </ul>
             </li>
             <li class="dropdown">
-                <?php echo $this->Html->link(__('Configuration'), '#', array('class' => 'dropdown-toggle', 'data-toggle' => 'dropdown')); ?>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <b class="caret"></b>
+                    <?php echo __('Configuration'); ?>
+                </a>
                 <ul class="dropdown-menu">
                     <li>
 
