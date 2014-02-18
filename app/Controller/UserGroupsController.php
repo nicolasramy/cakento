@@ -7,11 +7,11 @@ App::uses('AppController', 'Controller');
  */
 class UserGroupsController extends AppController
 {
-	/**
-	 * manager_index method
-	 *
-	 * @return void
-	 */
+/**
+ * manager_index method
+ *
+ * @return void
+ */
 	public function manager_index()
 	{
 		$this->UserGroup->recursive = 0;
@@ -19,12 +19,12 @@ class UserGroupsController extends AppController
 		$this->set(compact('userGroups'));
 	}
 
-	/**
-	 * manager_view method
-	 *
-	 * @param string $id
-	 * @return void
-	 */
+/**
+ * manager_view method
+ *
+ * @param string $id
+ * @return void
+ */
 	public function manager_view($id = null)
 	{
 		$this->UserGroup->id = $id;
@@ -36,11 +36,11 @@ class UserGroupsController extends AppController
 		$this->set(compact('userGroup'));
 	}
 
-	/**
-	 * manager_add method
-	 *
-	 * @return void
-	 */
+/**
+ * manager_add method
+ *
+ * @return void
+ */
 	public function manager_add()
 	{
 		if ($this->request->is('post')) {
@@ -55,12 +55,12 @@ class UserGroupsController extends AppController
 		}
 	}
 
-	/**
-	 * manager_edit method
-	 *
-	 * @param string $id
-	 * @return void
-	 */
+/**
+ * manager_edit method
+ *
+ * @param string $id
+ * @return void
+ */
 	public function manager_edit($id = null)
 	{
 		$this->UserGroup->id = $id;
@@ -81,14 +81,14 @@ class UserGroupsController extends AppController
 		}
 	}
 
-	/**
-	 * manager_delete method
-	 *
-	 * @throws MethodNotAllowedException
-	 * @throws NotFoundException
-	 * @param string $id
-	 * @return void
-	 */
+/**
+ * manager_delete method
+ *
+ * @throws MethodNotAllowedException
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
 	public function manager_delete($id = null)
 	{
 		if (!$this->request->is('post')) {

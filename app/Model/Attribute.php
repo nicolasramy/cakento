@@ -16,13 +16,13 @@ class Attribute extends AppModel {
     const TYPE_DATETIME = 6;
 
     // Callbacks
-    /**
-     * Before Save
-     *
-     * @access  public
-     * @param   array $results, boolean $primary
-     * @return  array
-     */
+/**
+ * Before Save
+ *
+ * @access  public
+ * @param   array $results, boolean $primary
+ * @return  array
+ */
     public function beforeSave($options = array()) {
         if (strlen($this->data['Attribute']['name'])) {
             $this->data['Attribute']['name'] = Inflector::slug(strtolower($this->data['Attribute']['name']));
@@ -33,13 +33,13 @@ class Attribute extends AppModel {
         return true;
     }
 
-    /**
-     * After Find
-     *
-     * @access  public
-     * @param   array $results, boolean $primary
-     * @return  array
-     */
+/**
+ * After Find
+ *
+ * @access  public
+ * @param   array $results, boolean $primary
+ * @return  array
+ */
     public function afterFind($results, $primary = false) {
         foreach ($results as $key => $value) {
             if (isset($value['Attribute']['type'])) {

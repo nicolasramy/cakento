@@ -5,130 +5,124 @@ App::uses('AppController', 'Controller');
  *
  * @property User $User
  */
-class UsersController extends AppController
-{
+class UsersController extends AppController {
 
-	/**
-	 * login method
-	 *
-	 * @return void
-	 */
-	public function login()
-	{
-
+	public function logMe() {
+		$this->Auth->user('id');
 	}
 
-	/**
-	 * logout method
-	 *
-	 * @return void
-	 */
-	public function logout()
-	{
-
+/**
+ * login method
+ *
+ * @return void
+ */
+	public function login() {
+		if ($this->request->is('post')) {
+			if ($this->Auth->login($this->request->data)) {
+				//$this->Session->setFlash(__('You are now logged in'), 'Flash/success');
+				return $this->redirect($this->Auth->redirect());
+			} else {
+				$this->Session->setFlash(__('Username or Password is incorrect'), 'Flash/error');
+			}
+		}
 	}
 
-	/**
-	 * manager_index method
-	 *
-	 * @return void
-	 */
-	public function manager_index()
-	{
+/**
+ * logout
+ * @return void
+ */
+	public function logout() {
+		$this->redirect($this->Auth->logout());
+	}
+
+/**
+ * index method
+ *
+ * @return void
+ */
+	public function manager_index() {
 		$this->User->recursive = 0;
-		$users = $this->paginate();
-		$this->set(compact('users'));
+		$this->set('users', $this->paginate());
 	}
 
-	/**
-	 * manager_view method
-	 *
-	 * @param string $id
-	 * @return void
-	 */
-	public function manager_view($id = null)
-	{
+/**
+ * view method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
+	public function manager_view($id = null) {
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
-			$this->Session->setFlash(__('Invalid user.'), 'Manager/Flash/error');
-			$this->redirect(array('action' => 'index'));
+			throw new NotFoundException(__('Invalid user'));
 		}
-		$user = $this->User->read(null, $id);
-		$this->set(compact('user'));
+		$this->set('user', $this->User->read(null, $id));
 	}
 
-	/**
-	 * manager_add method
-	 *
-	 * @return void
-	 */
-	public function manager_add()
-	{
+/**
+ * add method
+ *
+ * @return void
+ */
+	public function manager_add() {
 		if ($this->request->is('post')) {
 			$this->User->create();
 			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(__('The user has been saved'), 'Manager/Flash/success');
+				$this->Session->setFlash(__('The user has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The user could not be saved. Please, try again.', 'Manager/Flash/error'));
-				$this->redirect($this->referer());
+				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
 			}
 		}
-		$userGroups = $this->User->UserGroup->find('list');
-		$this->set(compact('userGroups'));
 	}
 
-	/**
-	 * manager_edit method
-	 *
-	 * @param string $id
-	 * @return void
-	 */
-	public function manager_edit($id = null)
-	{
+/**
+ * edit method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
+	public function manager_edit($id = null) {
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
-			$this->Session->setFlash(__('Invalid user.'), 'Manager/Flash/error');
-			$this->redirect(array('action' => 'index'));
+			throw new NotFoundException(__('Invalid user'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(__('The user has been updated.'), 'Manager/Flash/information');
+				$this->Session->setFlash(__('The user has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The user could not be saved. Please, try again.', 'Manager/Flash/error'));
-				$this->redirect($this->referer());
+				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
 			}
 		} else {
 			$this->request->data = $this->User->read(null, $id);
 		}
-		$userGroups = $this->User->UserGroup->find('list');
-		$this->set(compact('userGroups'));
 	}
 
-	/**
-	 * manager_delete method
-	 *
-	 * @throws MethodNotAllowedException
-	 * @throws NotFoundException
-	 * @param string $id
-	 * @return void
-	 */
-	public function manager_delete($id = null)
-	{
+
+/**
+ * delete method
+ *
+ * @throws MethodNotAllowedException
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
+	public function manager_delete($id = null) {
 		if (!$this->request->is('post')) {
 			throw new MethodNotAllowedException();
 		}
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
-			$this->Session->setFlash(__('Invalid User'), 'Manager/Flash/error');
-			$this->redirect(array('action' => 'index'));
+			throw new NotFoundException(__('Invalid user'));
 		}
 		if ($this->User->delete()) {
-			$this->Session->setFlash(__('User deleted'), 'Manager/Flash/default');
+			$this->Session->setFlash(__('User deleted'));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('User was not deleted'), 'Manager/Flash/error');
+		$this->Session->setFlash(__('User was not deleted'));
 		$this->redirect(array('action' => 'index'));
 	}
 }
