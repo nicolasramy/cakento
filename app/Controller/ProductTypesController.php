@@ -53,12 +53,12 @@ class ProductTypesController extends AppController {
 		$this->set('productTypes', $this->paginate());
 	}
 
-	/**
-	 * manager_view method
-	 *
-	 * @param string $id
-	 * @return void
-	 */
+/**
+ * manager_view method
+ *
+ * @param string $id
+ * @return void
+ */
 	public function manager_view($id = null) {
 		$this->ProductType->id = $id;
 		if (!$this->ProductType->exists()) {
@@ -68,11 +68,11 @@ class ProductTypesController extends AppController {
 		$this->set('productType', $this->ProductType->read(null, $id));
 	}
 
-	/**
-	 * manager_add method
-	 *
-	 * @return void
-	 */
+/**
+ * manager_add method
+ *
+ * @return void
+ */
 	public function manager_add() {
 		if ($this->request->is('post')) {
 			$this->ProductType->create();
@@ -85,12 +85,12 @@ class ProductTypesController extends AppController {
 		}
 	}
 
-	/**
-	 * manager_edit method
-	 *
-	 * @param string $id
-	 * @return void
-	 */
+/**
+ * manager_edit method
+ *
+ * @param string $id
+ * @return void
+ */
 	public function manager_edit($id = null) {
 		$this->ProductType->id = $id;
 		if (!$this->ProductType->exists()) {
@@ -109,13 +109,13 @@ class ProductTypesController extends AppController {
 		}
 	}
 
-	/**
-	 * manager_delete method
-	 *
-	 * @throws MethodNotAllowedException
-	 * @param string $id
-	 * @return void
-	 */
+/**
+ * manager_delete method
+ *
+ * @throws MethodNotAllowedException
+ * @param string $id
+ * @return void
+ */
 	public function manager_delete($id = null) {
 		if (!$this->request->is('post')) {
 			throw new MethodNotAllowedException();

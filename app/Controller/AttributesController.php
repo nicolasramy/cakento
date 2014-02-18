@@ -56,12 +56,12 @@ class AttributesController extends AppController {
 		$this->set('attributes', $this->paginate());
 	}
 
-	/**
-	 * manager_view method
-	 *
-	 * @param string $id
-	 * @return void
-	 */
+/**
+ * manager_view method
+ *
+ * @param string $id
+ * @return void
+ */
 	public function manager_view($id = null) {
 		$this->Attribute->id = $id;
 		if (!$this->Attribute->exists()) {
@@ -71,11 +71,11 @@ class AttributesController extends AppController {
 		$this->set('attribute', $this->Attribute->read(null, $id));
 	}
 
-	/**
-	 * manager_add method
-	 *
-	 * @return void
-	 */
+/**
+ * manager_add method
+ *
+ * @return void
+ */
 	public function manager_add() {
 		if ($this->request->is('post')) {
 			$this->Attribute->create();
@@ -90,12 +90,12 @@ class AttributesController extends AppController {
 		$this->set(compact('types'));
 	}
 
-	/**
-	 * manager_edit method
-	 *
-	 * @param string $id
-	 * @return void
-	 */
+/**
+ * manager_edit method
+ *
+ * @param string $id
+ * @return void
+ */
 	public function manager_edit($id = null) {
 		$this->Attribute->id = $id;
 		if (!$this->Attribute->exists()) {
@@ -116,13 +116,13 @@ class AttributesController extends AppController {
 		$this->set(compact('types'));
 	}
 
-	/**
-	 * manager_delete method
-	 *
-	 * @throws MethodNotAllowedException
-	 * @param string $id
-	 * @return void
-	 */
+/**
+ * manager_delete method
+ *
+ * @throws MethodNotAllowedException
+ * @param string $id
+ * @return void
+ */
 	public function manager_delete($id = null) {
 		if (!$this->request->is('post')) {
 			throw new MethodNotAllowedException();

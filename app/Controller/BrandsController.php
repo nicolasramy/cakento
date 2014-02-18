@@ -14,23 +14,23 @@ class BrandsController extends AppController {
 	);
 
 	// Public actions
-	/**
-	 * index method
-	 *
-	 * @return void
-	 */
+/**
+ * index method
+ *
+ * @return void
+ */
 	public function index() {
 		$this->Brand->recursive = 0;
 		$this->set('brands', $this->paginate());
 	}
 
-	/**
-	 * view method
-	 *
-	 * @throws NotFoundException
-	 * @param string $id
-	 * @return void
-	 */
+/**
+ * view method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
 	public function view($id = null) {
 		if (!$this->Brand->exists($id)) {
 			throw new NotFoundException(__('Invalid brand'));
@@ -39,12 +39,12 @@ class BrandsController extends AppController {
 		$this->set(compact('brand'));
 	}
 
-	// Manager Actions
-	/**
-	 * manager_index method
-	 *
-	 * @return void
-	 */
+// Manager Actions
+/**
+ * manager_index method
+ *
+ * @return void
+ */
 	public function manager_index() {
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if (isset($this->request->data)) {
@@ -86,13 +86,13 @@ class BrandsController extends AppController {
 		$this->set('brands', $this->paginate());
 	}
 
-	/**
-	 * manager_view method
-	 *
-	 * @throws NotFoundException
-	 * @param string $id
-	 * @return void
-	 */
+/**
+ * manager_view method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
 	public function manager_view($id = null) {
 		if (!$this->Brand->exists($id)) {
 			throw new NotFoundException(__('Invalid brand'));
@@ -100,13 +100,18 @@ class BrandsController extends AppController {
 		$this->set('brand', $this->Brand->read(null, $id));
 	}
 
-	/**
-	 * manager_add method
-	 *
-	 * @return void
-	 */
+/**
+ * manager_add method
+ *
+ * @return void
+ */
 	public function manager_add() {
 		if ($this->request->is('post')) {
+
+			if (empty($this->request->data['Brand']['slug'])) {
+				$this->request->data['Brand']['slug'] = strtolower(str_replace(' ', '-', $this->request->data['Brand']['name']));
+			}
+
 			$this->Brand->create();
 			if ($this->Brand->save($this->request->data)) {
 				$this->Session->setFlash(__('The brand has been saved'), 'Manager/Flash/success');
@@ -119,13 +124,13 @@ class BrandsController extends AppController {
 		$this->set(compact('stores'));
 	}
 
-	/**
-	 * manager_edit method
-	 *
-	 * @throws NotFoundException
-	 * @param string $id
-	 * @return void
-	 */
+/**
+ * manager_edit method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
 	public function manager_edit($id = null) {
 		if (!$this->Brand->exists($id)) {
 			throw new NotFoundException(__('Invalid brand'));
@@ -144,13 +149,13 @@ class BrandsController extends AppController {
 		$this->set(compact('stores'));
 	}
 
-	/**
-	 * manager_delete method
-	 *
-	 * @throws MethodNotAllowedException
-	 * @param string $id
-	 * @return void
-	 */
+/**
+ * manager_delete method
+ *
+ * @throws MethodNotAllowedException
+ * @param string $id
+ * @return void
+ */
 	public function manager_delete($id = null) {
 		if (!$this->request->is('post')) {
 			throw new MethodNotAllowedException();

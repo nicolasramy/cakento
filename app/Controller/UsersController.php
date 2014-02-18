@@ -11,11 +11,11 @@ class UsersController extends AppController {
 		$this->Auth->user('id');
 	}
 
-	/**
-	 * login method
-	 *
-	 * @return void
-	 */
+/**
+ * login method
+ *
+ * @return void
+ */
 	public function login() {
 		if ($this->request->is('post')) {
 			if ($this->Auth->login($this->request->data)) {
@@ -27,31 +27,31 @@ class UsersController extends AppController {
 		}
 	}
 
-	/**
-	 * logout
-	 * @return void
-	 */
+/**
+ * logout
+ * @return void
+ */
 	public function logout() {
 		$this->redirect($this->Auth->logout());
 	}
 
-	/**
-	 * index method
-	 *
-	 * @return void
-	 */
+/**
+ * index method
+ *
+ * @return void
+ */
 	public function manager_index() {
 		$this->User->recursive = 0;
 		$this->set('users', $this->paginate());
 	}
 
-	/**
-	 * view method
-	 *
-	 * @throws NotFoundException
-	 * @param string $id
-	 * @return void
-	 */
+/**
+ * view method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
 	public function manager_view($id = null) {
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
@@ -60,11 +60,11 @@ class UsersController extends AppController {
 		$this->set('user', $this->User->read(null, $id));
 	}
 
-	/**
-	 * add method
-	 *
-	 * @return void
-	 */
+/**
+ * add method
+ *
+ * @return void
+ */
 	public function manager_add() {
 		if ($this->request->is('post')) {
 			$this->User->create();
@@ -77,13 +77,13 @@ class UsersController extends AppController {
 		}
 	}
 
-	/**
-	 * edit method
-	 *
-	 * @throws NotFoundException
-	 * @param string $id
-	 * @return void
-	 */
+/**
+ * edit method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
 	public function manager_edit($id = null) {
 		$this->User->id = $id;
 		if (!$this->User->exists()) {
@@ -102,14 +102,14 @@ class UsersController extends AppController {
 	}
 
 
-	/**
-	 * delete method
-	 *
-	 * @throws MethodNotAllowedException
-	 * @throws NotFoundException
-	 * @param string $id
-	 * @return void
-	 */
+/**
+ * delete method
+ *
+ * @throws MethodNotAllowedException
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
 	public function manager_delete($id = null) {
 		if (!$this->request->is('post')) {
 			throw new MethodNotAllowedException();
