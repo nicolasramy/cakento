@@ -2026,9 +2026,7 @@ class Model extends Object implements CakeEventListener {
  * @return void
  */
 	public function updateCounterCache($keys = array(), $created = false) {
-		if (empty($keys) && isset($this->data[$this->alias])) {
-			$keys = $this->data[$this->alias];
-		}
+		$keys = empty($keys) ? $this->data[$this->alias] : $keys;
 		$keys['old'] = isset($keys['old']) ? $keys['old'] : array();
 
 		foreach ($this->belongsTo as $parent => $assoc) {

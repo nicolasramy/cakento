@@ -41,8 +41,8 @@
 				<div class="span6">
 					<fieldset>
 						<?php
+							echo $this->Form->input('store_id');
 							echo $this->Form->input('name');
-							echo $this->Form->input('slug');
 						?>
 					</fieldset>
 				</div>

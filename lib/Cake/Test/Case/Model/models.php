@@ -3258,7 +3258,7 @@ class TranslatedArticle extends CakeTestModel {
 	public $belongsTo = array('User');
 
 /**
- * hasMany property
+ * belongsTo property
  *
  * @var array
  */

@@ -139,8 +139,6 @@ class TranslateBehavior extends ModelBehavior {
 			}
 			unset($this->_joinTable, $this->_runtimeModel);
 			return $query;
-		} elseif (is_string($query['fields'])) {
-			$query['fields'] = String::tokenize($query['fields']);
 		}
 
 		$fields = array_merge(

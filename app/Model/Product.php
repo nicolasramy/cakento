@@ -5,23 +5,10 @@ App::uses('AppModel', 'Model');
  *
  * @property Store $Store
  * @property ProductType $ProductType
- * @property Brand $Brand
- * @property CartItem $CartItem
- * @property CreditMemoItem $CreditMemoItem
- * @property InvoiceItem $InvoiceItem
+ * @property Manufacturer $Manufacturer
  * @property ProductCategory $ProductCategory
- * @property SubscriptionItem $SubscriptionItem
- * @property Subscription $Subscription
- * @property WarehouseItem $WarehouseItem
  */
 class Product extends AppModel {
-
-/**
- * Display field
- *
- * @var string
- */
-	public $displayField = 'name';
 
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -46,9 +33,9 @@ class Product extends AppModel {
 			'fields' => '',
 			'order' => ''
 		),
-		'Brand' => array(
-			'className' => 'Brand',
-			'foreignKey' => 'brand_id',
+		'Manufacturer' => array(
+			'className' => 'Manufacturer',
+			'foreignKey' => 'manufacturer_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
@@ -61,86 +48,8 @@ class Product extends AppModel {
  * @var array
  */
 	public $hasMany = array(
-		'CartItem' => array(
-			'className' => 'CartItem',
-			'foreignKey' => 'product_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'CreditMemoItem' => array(
-			'className' => 'CreditMemoItem',
-			'foreignKey' => 'product_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'InvoiceItem' => array(
-			'className' => 'InvoiceItem',
-			'foreignKey' => 'product_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
 		'ProductCategory' => array(
 			'className' => 'ProductCategory',
-			'foreignKey' => 'product_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'SubscriptionItem' => array(
-			'className' => 'SubscriptionItem',
-			'foreignKey' => 'product_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'Subscription' => array(
-			'className' => 'Subscription',
-			'foreignKey' => 'product_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
-		'WarehouseItem' => array(
-			'className' => 'WarehouseItem',
 			'foreignKey' => 'product_id',
 			'dependent' => false,
 			'conditions' => '',

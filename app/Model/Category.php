@@ -3,12 +3,14 @@ App::uses('AppModel', 'Model');
 /**
  * Category Model
  *
- * @property Category $ParentCategory
- * @property Category $ChildCategory
  */
 class Category extends AppModel {
 
-	public $actsAs = array('Tree');
-
+/**
+ * Display field
+ *
+ * @var string
+ */
+	public $displayField = 'name';
 
 }

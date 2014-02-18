@@ -107,11 +107,6 @@ class BrandsController extends AppController {
 	 */
 	public function manager_add() {
 		if ($this->request->is('post')) {
-
-			if (empty($this->request->data['Brand']['slug'])) {
-				$this->request->data['Brand']['slug'] = strtolower(str_replace(' ', '-', $this->request->data['Brand']['name']));
-			}
-
 			$this->Brand->create();
 			if ($this->Brand->save($this->request->data)) {
 				$this->Session->setFlash(__('The brand has been saved'), 'Manager/Flash/success');
@@ -158,12 +153,10 @@ class BrandsController extends AppController {
 	 */
 	public function manager_delete($id = null) {
 		if (!$this->request->is('post')) {
-			die();
 			throw new MethodNotAllowedException();
 		}
 		$this->Brand->id = $id;
 		if (!$this->ProductType->exists()) {
-			die();
 			$this->Session->setFlash(__('Invalid brand.'), 'Manager/Flash/error');
 			$this->redirect(array('action' => 'index'));
 		}

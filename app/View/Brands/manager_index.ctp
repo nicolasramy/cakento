@@ -50,6 +50,7 @@
 					?>
 				</th>
 				<th><?php echo $this->Paginator->sort('id'); ?></th>
+				<th><?php echo $this->Paginator->sort('store_id'); ?></th>
 				<th><?php echo $this->Paginator->sort('name'); ?></th>
 				<th><?php echo $this->Paginator->sort('slug'); ?></th>
 				<th class="icon"><?php echo $this->Paginator->sort('visible'); ?></th>
@@ -68,6 +69,7 @@
 					?>
 				</td>
 				<td><?php echo h($brand['Brand']['id']); ?>&nbsp;</td>
+				<td><?php echo h($brand['Brand']['store_id']); ?>&nbsp;</td>
 				<td><?php echo h($brand['Brand']['name']); ?>&nbsp;</td>
 				<td><?php echo h($brand['Brand']['slug']); ?>&nbsp;</td>
 				<td class="icon">
@@ -105,7 +107,7 @@
 							),
 							array('controller' => 'brands', 'action' => 'delete', $brand['Brand']['id']),
 							array('escape' => false),
-							__('Are you sure you want to delete # %s?', $brand['Brand']['name'])
+							__('Are you sure you want to delete # %s?', $brand['Brand']['id'])
 						);
 					?>
 				</td>

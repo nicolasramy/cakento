@@ -7,23 +7,23 @@ App::uses('AppController', 'Controller');
  */
 class ProductsController extends AppController {
 
-	/**
-	 * index method
-	 *
-	 * @return void
-	 */
+/**
+ * index method
+ *
+ * @return void
+ */
 	public function index() {
 		$this->Product->recursive = 0;
 		$this->set('products', $this->paginate());
 	}
 
-	/**
-	 * view method
-	 *
-	 * @throws NotFoundException
-	 * @param string $id
-	 * @return void
-	 */
+/**
+ * view method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
 	public function view($id = null) {
 		$this->Product->id = $id;
 		if (!$this->Product->exists()) {
@@ -32,23 +32,23 @@ class ProductsController extends AppController {
 		$this->set('product', $this->Product->read(null, $id));
 	}
 
-	/**
-	 * manager_index method
-	 *
-	 * @return void
-	 */
+/**
+ * manager_index method
+ *
+ * @return void
+ */
 	public function manager_index() {
 		$this->Product->recursive = 0;
 		$this->set('products', $this->paginate());
 	}
 
-	/**
-	 * manager_view method
-	 *
-	 * @throws NotFoundException
-	 * @param string $id
-	 * @return void
-	 */
+/**
+ * manager_view method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
 	public function manager_view($id = null) {
 		$this->Product->id = $id;
 		if (!$this->Product->exists()) {
@@ -57,11 +57,11 @@ class ProductsController extends AppController {
 		$this->set('product', $this->Product->read(null, $id));
 	}
 
-	/**
-	 * manager_add method
-	 *
-	 * @return void
-	 */
+/**
+ * manager_add method
+ *
+ * @return void
+ */
 	public function manager_add() {
 		if ($this->request->is('post')) {
 			$this->Product->create();
@@ -78,13 +78,13 @@ class ProductsController extends AppController {
 		$this->set(compact('stores', 'productTypes', 'manufacturers'));
 	}
 
-	/**
-	 * manager_edit method
-	 *
-	 * @throws NotFoundException
-	 * @param string $id
-	 * @return void
-	 */
+/**
+ * manager_edit method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
 	public function manager_edit($id = null) {
 		$this->Product->id = $id;
 		if (!$this->Product->exists()) {
@@ -106,14 +106,14 @@ class ProductsController extends AppController {
 		$this->set(compact('stores', 'productTypes', 'manufacturers'));
 	}
 
-	/**
-	 * manager_delete method
-	 *
-	 * @throws MethodNotAllowedException
-	 * @throws NotFoundException
-	 * @param string $id
-	 * @return void
-	 */
+/**
+ * manager_delete method
+ *
+ * @throws MethodNotAllowedException
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
 	public function manager_delete($id = null) {
 		if (!$this->request->is('post')) {
 			throw new MethodNotAllowedException();
